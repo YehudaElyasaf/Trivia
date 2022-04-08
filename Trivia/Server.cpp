@@ -15,3 +15,7 @@ void Server::run() {
 		std::cin >> cmd;
 	}
 }
+
+Server::~Server() {
+	_communicator.stop();
+}

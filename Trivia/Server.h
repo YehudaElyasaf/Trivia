@@ -6,6 +6,7 @@ class Server
 {
 public:
 	void run();
+	~Server();
 
 private:
 	Communicator _communicator;
