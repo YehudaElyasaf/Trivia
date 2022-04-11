@@ -2,6 +2,10 @@
 #include "LoginRequestHandler.h"
 #include <thread>
 #include <iostream>
+#include "Helper.h"
+
+#define HELLO_MSG "Hello"
+#define EXIT_MSG  "Exit"
 
 Communicator::Communicator() : _running(true) {};
 
@@ -47,7 +51,7 @@ void Communicator::bindAndListen() {
 			std::cout << "Client accepted. Server and client can speak" << std::endl;
 			// the function that handle the conversation with the client
 			std::thread(&Communicator::handleNewClient, this, clientSocket).detach();
-			_clients.emplace(clientSocket, new LoginRequestHandler());
+			_clients.emplace(clientSocket, new LoginRequestHandler);
 		}
 		catch (const std::exception& e) {
 			std::cout << e.what() << std::endl;
@@ -56,7 +60,12 @@ void Communicator::bindAndListen() {
 }
 
 void Communicator::handleNewClient(SOCKET sock) {
-	while (_running) {
+	bool saidHello = false;
+	std::string lastMsg;
+	Helper::sendData(sock, HELLO_MSG);
 
+	while (_running && lastMsg != EXIT_MSG) {
+		lastMsg = Helper::getStringPartFromSocket(sock, 1024);
+		std::cout << lastMsg << std::endl;
 	}
 }
