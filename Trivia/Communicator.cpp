@@ -7,7 +7,17 @@
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
 
-Communicator::Communicator() : _running(true) {};
+Communicator::Communicator() : _running(true), _initServer() {
+	try {
+		_serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+		if (_serverSocket == INVALID_SOCKET)
+			throw std::exception(__FUNCTION__ " - socket");
+	}
+	catch (const std::exception& e) {
+		std::cerr << e.what() << "\n Error Code: " << WSAGetLastError() << std::endl;
+	}
+};
 
 void Communicator::startHandleRequests() {
 	std::thread t(&Communicator::bindAndListen, this);
@@ -39,14 +49,14 @@ void Communicator::bindAndListen() {
 		std::cout << "Listening on port " << PORT << std::endl;
 	}
 	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << "\nError Code: " << WSAGetLastError() << std::endl;
 	}
-
+	
 	while (_running) {
 		try {
 			SOCKET clientSocket = accept(_serverSocket, NULL, NULL);
 			if (clientSocket == INVALID_SOCKET)
-				throw std::exception(__FUNCTION__);
+				throw std::exception(__FUNCTION__ " - invalid socket");
 
 			std::cout << "Client accepted. Server and client can speak" << std::endl;
 			// the function that handle the conversation with the client
@@ -54,7 +64,8 @@ void Communicator::bindAndListen() {
 			_clients.emplace(clientSocket, new LoginRequestHandler);
 		}
 		catch (const std::exception& e) {
-			std::cout << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
+			std::cerr << "Error Code: " << WSAGetLastError() << std::endl;
 		}
 	}
 }
@@ -65,7 +76,9 @@ void Communicator::handleNewClient(SOCKET sock) {
 	Helper::sendData(sock, HELLO_MSG);
 
 	while (_running && lastMsg != EXIT_MSG) {
-		lastMsg = Helper::getStringPartFromSocket(sock, 1024);
+		lastMsg = Helper::getStringPartFromSocket(sock, 4);
 		std::cout << lastMsg << std::endl;
 	}
+
+	closesocket(sock);
 }
