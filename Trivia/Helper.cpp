@@ -25,8 +25,7 @@ int Helper::getMessageTypeCode(const SOCKET sc)
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
 	const char* intPart = getPartFromSocket(sc, bytesNum, 0).c_str();
-	std::reverse(intPart, intPart + bytesNum);
-	
+
 	return *((int*)intPart);
 }
 
