@@ -3,6 +3,7 @@
 #include <WinSock2.h>
 #include <Windows.h>
 
+#define SOCKET_VERSION MAKEWORD(2, 2)
 
 class WSAInitializer
 {

@@ -1,10 +1,9 @@
 #pragma once
-#include <WinSock2.h>
-#include <Windows.h>
+#include "WSAInitializer.h"
 #include <map>
 #include "IRequestHandler.h"
 
-#define PORT 424242
+#define SERVER_PORT 4242
 
 class Communicator
 {
@@ -17,6 +16,7 @@ public:
 	void stop();
 
 private:
+	WSAInitializer _initServer;
 	SOCKET _serverSocket;
 	std::map<SOCKET, IRequestHandler*> _clients;
 	// added to stop all of the threads
