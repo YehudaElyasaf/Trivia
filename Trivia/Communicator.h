@@ -3,7 +3,7 @@
 #include <map>
 #include "IRequestHandler.h"
 
-#define PORT 4242
+#define SERVER_PORT 4242
 
 class Communicator
 {

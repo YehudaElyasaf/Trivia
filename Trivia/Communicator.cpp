@@ -35,7 +35,7 @@ void Communicator::bindAndListen() {
 	try {
 		struct sockaddr_in sockAddrIn = { 0 };
 
-		sockAddrIn.sin_port = htons(PORT); // port that server will listen for
+		sockAddrIn.sin_port = htons(SERVER_PORT); // port that server will listen for
 		sockAddrIn.sin_family = AF_INET;   // must be AF_INET
 		sockAddrIn.sin_addr.s_addr = INADDR_ANY;    // when there are few ip's for the machine. We will use always "INADDR_ANY"
 
@@ -46,7 +46,7 @@ void Communicator::bindAndListen() {
 		// Start listening for incoming requests of clients
 		if (listen(_serverSocket, SOMAXCONN) == SOCKET_ERROR)
 			throw std::exception(__FUNCTION__ " - listen");
-		std::cout << "Listening on port " << PORT << std::endl;
+		std::cout << "Listening on port " << SERVER_PORT << std::endl;
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << "\nError Code: " << WSAGetLastError() << std::endl;
@@ -71,7 +71,6 @@ void Communicator::bindAndListen() {
 }
 
 void Communicator::handleNewClient(SOCKET sock) {
-	bool saidHello = false;
 	std::string lastMsg;
 	Helper::sendData(sock, HELLO_MSG);
 
