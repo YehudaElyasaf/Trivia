@@ -1,7 +1,7 @@
 import socket
 
-PORT = 4242
-IP = '127.0.0.1'
+SERVER_PORT = 4242
+SERVER_IP = '127.0.0.1'
 
 BUFFER_SIZE = 1024
 
