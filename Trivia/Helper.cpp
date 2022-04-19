@@ -7,10 +7,10 @@
 using std::string;
 
 // recieves the type code of the message from socket (3 bytes)
-// and returns the code. if no message found in the socket returns 0 (which means the client disconnected)
+// and returns the code. if no message found in the socket returns 0
 int Helper::getMessageTypeCode(const SOCKET sc)
 {
-	std::string msg = getPartFromSocket(sc, 3, 0);
+	std::string msg = getPartFromSocket(sc, MESSAGE_TYPE_LENGTH, 0);
 
 	if (msg == "")
 		return 0;
@@ -24,7 +24,9 @@ int Helper::getMessageTypeCode(const SOCKET sc)
 // returns the data as int
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
-	return atoi(getPartFromSocket(sc, bytesNum, 0).c_str());
+	const char* intPart = getPartFromSocket(sc, bytesNum, 0).c_str();
+
+	return *((int*)intPart);
 }
 
 // recieve data from socket according byteSize

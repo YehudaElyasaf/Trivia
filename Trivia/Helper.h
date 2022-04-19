@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+#define MESSAGE_TYPE_LENGTH 3
 
 class Helper
 {
