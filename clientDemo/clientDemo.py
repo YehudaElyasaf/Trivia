@@ -7,12 +7,12 @@ BUFFER_SIZE = 1024
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     try:
-        sock.connect((IP, PORT))
+        sock.connect((SERVER_IP, SERVER_PORT))
         print(sock.recv(BUFFER_SIZE).decode())
 
         while True:
-            command = input('Enter message to server: ')
-            sock.send(command.encode());
+            messageToServer = input('Enter message to server: ')
+            sock.send(messageToServer.encode());
 
     except socket.error as e:
         print('Error!')
