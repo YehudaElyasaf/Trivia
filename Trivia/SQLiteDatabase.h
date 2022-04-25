@@ -18,4 +18,8 @@ public:
 	const bool doesPasswordMatch(const std::string& name, const std::string& password) override;
 	//add a user to table
 	const bool addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
+
+private:
+	sqlite3* _db;
+	char* _errMessage;
 };
