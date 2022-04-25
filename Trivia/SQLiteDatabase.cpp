@@ -5,6 +5,7 @@
 #include<iostream>
 
 SQLiteDatabase::SQLiteDatabase() {
+	_errMessage = nullptr;
 	bool isNewDB = _access(DATABASE_FILENAME, DOES_EXIST) == NOT_EXIST;
 
 	if (sqlite3_open(DATABASE_FILENAME, &_db) != SQLITE_OK) {
@@ -19,7 +20,6 @@ SQLiteDatabase::SQLiteDatabase() {
 		std::cout << "opened an existing database!";
 
 	if (isNewDB) {
-		char* errMessage;
 		char sqlStatement[] = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";;
 		executeAndValidate(sqlStatement);
 	}
@@ -30,7 +30,14 @@ SQLiteDatabase::~SQLiteDatabase() {
 }
 
 const bool SQLiteDatabase::doesUserExists(const std::string& name) {
+	std::string sqlStatement;
+	bool doesExists = false;
 
+	sqlStatement = "SELECT FROM USERS WHERE NAME='" + name + "';";
+	if (sqlite3_exec(_db, sqlStatement.c_str(), doesUserExistsCallback, &doesExists, &_errMessage) != SQLITE_OK)
+		throw std::exception(_errMessage);
+
+	return doesExists;
 }
 const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::string& password) {
 
@@ -39,6 +46,9 @@ const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string
 
 }
 
+//private functions
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
 
+	if (sqlite3_exec(_db, sqlStatement.c_str(), nullptr, nullptr, &_errMessage) != SQLITE_OK)
+		throw std::exception(_errMessage);
 }
