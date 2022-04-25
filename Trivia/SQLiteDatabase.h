@@ -22,4 +22,8 @@ public:
 private:
 	sqlite3* _db;
 	char* _errMessage;
+
+	//execute sql statement
+	//and throw an exception in case of failture
+	void executeAndValidate(const std::string& sqlStatement);
 };

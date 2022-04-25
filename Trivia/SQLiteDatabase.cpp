@@ -39,3 +39,6 @@ const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string
 
 }
 
+void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
+
+}
