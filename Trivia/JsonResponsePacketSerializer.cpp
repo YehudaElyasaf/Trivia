@@ -1,31 +1,43 @@
 #include "JsonResponsePacketSerializer.h"
 
-#include "json.h"
+std::string JsonResponsePacketSerializer::bitwiseLen(json data) {
+    std::string out;
+    int dataLen = data.dump().length();
+    unsigned char* len = (unsigned char*)&dataLen;
 
-using json = nlohmann::json;
+    for (int i = 0; i < sizeof(int); i++) {
+        out += len[i];
+    }
+    return out;
+}
 
 std::string JsonResponsePacketSerializer::serializeResponse(ErrorResponse resp) {
     std::string out = { (unsigned char)ERROR, 0 };
     json data;
     data["message"] = resp.message;
 
-    // add the length of the json in bytes
-    int dataLen = data.dump().length();
-    unsigned char *len = (unsigned char*) &dataLen;
-
-    for (int i = 0; i < sizeof(int); i++) {
-        out += len[i];
-    }
-
+    out += bitwiseLen(data);
+    
     out += data.dump();
     return out;
 }
 
-std::string JsonResponsePacketSerializer::serializeResponse(LoginResponse resp)
-{
-    return std::string();
+std::string JsonResponsePacketSerializer::serializeResponse(LoginResponse resp) {
+    std::string out = { (unsigned char)LOGIN, 0 };
+    json data;
+    data["status"] = resp.status;
+
+    out += bitwiseLen(data);
+    out += data.dump();
+    return out;
 }
 
 std::string JsonResponsePacketSerializer::serializeResponse(SignupResponse resp) {
-    return std::string();
+    std::string out = { (unsigned char)SIGNUP, 0 };
+    json data;
+    data["status"] = resp.status;
+
+    out += bitwiseLen(data);
+    out += data.dump();
+    return out;
 }
