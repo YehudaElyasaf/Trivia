@@ -50,7 +50,10 @@ const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std:
 	return doesMatch;
 }
 const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
+	std::string sqlStatement;
+	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
+	executeAndValidate(sqlStatement);
 }
 
 //private functions
