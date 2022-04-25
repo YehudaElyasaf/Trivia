@@ -6,10 +6,10 @@ using json = nlohmann::json;
 
 class JsonResponsePacketSerializer {
 public:
-	static std::string serializeResponse(ErrorResponse resp);
-	static std::string serializeResponse(LoginResponse resp);
-	static std::string serializeResponse(SignupResponse resp);
+	static std::string serializeResponse(const ErrorResponse& resp);
+	static std::string serializeResponse(const LoginResponse& resp);
+	static std::string serializeResponse(const SignupResponse& resp);
 
 private:
-	static std::string bitwiseLen(json data);
+	static std::string bitwiseLen(const json& data);
 };

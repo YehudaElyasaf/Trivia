@@ -1,7 +1,7 @@
 #include "JsonResponsePacketSerializer.h"
 #include "msgCodes.h"
 
-std::string JsonResponsePacketSerializer::bitwiseLen(json data) {
+std::string JsonResponsePacketSerializer::bitwiseLen(const json& data) {
     std::string out;
     int dataLen = data.dump().length();
     unsigned char* len = (unsigned char*)&dataLen;
@@ -12,7 +12,7 @@ std::string JsonResponsePacketSerializer::bitwiseLen(json data) {
     return out;
 }
 
-std::string JsonResponsePacketSerializer::serializeResponse(ErrorResponse resp) {
+std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& resp) {
     std::string out = { (unsigned char)ERROR, 0 };
     json data;
     data["message"] = resp.message;
@@ -23,7 +23,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(ErrorResponse resp) 
     return out;
 }
 
-std::string JsonResponsePacketSerializer::serializeResponse(LoginResponse resp) {
+std::string JsonResponsePacketSerializer::serializeResponse(const LoginResponse& resp) {
     std::string out = { (unsigned char)LOGIN, 0 };
     json data;
     data["status"] = resp.status;
@@ -33,7 +33,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(LoginResponse resp) 
     return out;
 }
 
-std::string JsonResponsePacketSerializer::serializeResponse(SignupResponse resp) {
+std::string JsonResponsePacketSerializer::serializeResponse(const SignupResponse& resp) {
     std::string out = { (unsigned char)SIGNUP, 0 };
     json data;
     data["status"] = resp.status;
