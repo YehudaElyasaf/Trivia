@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+enum MsgCodes{ ERROR, LOGIN, SIGNUP };
+
 struct LoginResponse {
 	unsigned int status;
 };
