@@ -4,9 +4,11 @@
 
 class IDatabase {
 public:
-	virtual bool doesUserExists(std::string name) = 0;
-	virtual bool doesPasswordMatch(std::string name, std::string password) = 0;
-	// change last string to what it needs to be
-	virtual bool addNewUser(std::string name, std::string password, std::string s) = 0;
+	//ask the database if a user exists
+	const virtual bool doesUserExists(const std::string& name) = 0;
+	//check the if the password is correct
+	const virtual bool doesPasswordMatch(const std::string& name, const std::string& password) = 0;
+	//add a user to table
+	const virtual bool addNewUser(const std::string& name, const std::string& password, const std::string& mail) = 0;
 };
 
