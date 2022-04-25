@@ -11,7 +11,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         print(sock.recv(BUFFER_SIZE).decode())
 
         while True:
-            messageToServer = input('Enter message to server: ')
+            messageToServer = input('Enter a kind of message to send: ')
             sock.send(messageToServer.encode());
 
     except socket.error as e:
