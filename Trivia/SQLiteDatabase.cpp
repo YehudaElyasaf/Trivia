@@ -33,14 +33,21 @@ const bool SQLiteDatabase::doesUserExists(const std::string& name) {
 	std::string sqlStatement;
 	bool doesExists = false;
 
-	sqlStatement = "SELECT FROM USERS WHERE NAME='" + name + "';";
-	if (sqlite3_exec(_db, sqlStatement.c_str(), doesUserExistsCallback, &doesExists, &_errMessage) != SQLITE_OK)
+	sqlStatement = "SELECT * FROM USERS WHERE NAME='" + name + "';";
+	if (sqlite3_exec(_db, sqlStatement.c_str(), doesExistCallback, &doesExists, &_errMessage) != SQLITE_OK)
 		throw std::exception(_errMessage);
 
 	return doesExists;
 }
 const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::string& password) {
+	std::string sqlStatement;
+	bool doesMatch = false;
 
+	sqlStatement = "SELECT FROM USERS WHERE NAME='" + name + "' AND PASSWORD='" + password + "';";
+	if (sqlite3_exec(_db, sqlStatement.c_str(), doesExistCallback, &doesMatch, &_errMessage) != SQLITE_OK)
+		throw std::exception(_errMessage);
+
+	return doesMatch;
 }
 const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
 
