@@ -13,11 +13,11 @@ public:
 	~SQLiteDatabase();
 
 	//ask the database if a user exists
-	const bool doesUserExists(const std::string& name) override;
+	bool doesUserExists(const std::string& name) override;
 	//check the if the password is correct
-	const bool doesPasswordMatch(const std::string& name, const std::string& password) override;
+	bool doesPasswordMatch(const std::string& name, const std::string& password) override;
 	//add a user to table
-	const void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
+	void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
 
 private:
 	sqlite3* _db;
@@ -26,4 +26,6 @@ private:
 	//execute sql statement
 	//and throw an exception in case of failture
 	void executeAndValidate(const std::string& sqlStatement);
+
+	void createDummyDatabase();
 };

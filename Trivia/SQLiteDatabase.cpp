@@ -32,7 +32,7 @@ SQLiteDatabase::~SQLiteDatabase() {
 }
 
 
-const bool SQLiteDatabase::doesUserExists(const std::string& name) {
+bool SQLiteDatabase::doesUserExists(const std::string& name) {
 	std::string sqlStatement;
 	bool doesExists = false;
 
@@ -43,7 +43,7 @@ const bool SQLiteDatabase::doesUserExists(const std::string& name) {
 	return doesExists;
 }
 
-const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::string& password) {
+bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::string& password) {
 	std::string sqlStatement;
 	bool doesMatch = false;
 
@@ -54,7 +54,7 @@ const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std:
 	return doesMatch;
 }
 
-const void SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
+void SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) const {
 	std::string sqlStatement;
 	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
