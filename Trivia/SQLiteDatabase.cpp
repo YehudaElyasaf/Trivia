@@ -3,6 +3,7 @@
 #include<io.h>
 #include<string>
 #include<iostream>
+#include"SQLiteCallbacks.h"
 
 SQLiteDatabase::SQLiteDatabase() {
 	_errMessage = nullptr;
@@ -24,10 +25,12 @@ SQLiteDatabase::SQLiteDatabase() {
 		executeAndValidate(sqlStatement);
 	}
 }
+
 SQLiteDatabase::~SQLiteDatabase() {
 	sqlite3_close(_db);
 	_db = nullptr;
 }
+
 
 const bool SQLiteDatabase::doesUserExists(const std::string& name) {
 	std::string sqlStatement;
@@ -39,6 +42,7 @@ const bool SQLiteDatabase::doesUserExists(const std::string& name) {
 
 	return doesExists;
 }
+
 const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::string& password) {
 	std::string sqlStatement;
 	bool doesMatch = false;
@@ -49,7 +53,8 @@ const bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std:
 
 	return doesMatch;
 }
-const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
+
+const void SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
 	std::string sqlStatement;
 	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
@@ -58,7 +63,6 @@ const bool SQLiteDatabase::addNewUser(const std::string& name, const std::string
 
 //private functions
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
-
 	if (sqlite3_exec(_db, sqlStatement.c_str(), nullptr, nullptr, &_errMessage) != SQLITE_OK)
 		throw std::exception(_errMessage);
 }

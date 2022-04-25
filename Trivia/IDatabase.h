@@ -9,6 +9,6 @@ public:
 	//check the if the password is correct
 	const virtual bool doesPasswordMatch(const std::string& name, const std::string& password) = 0;
 	//add a user to table
-	const virtual bool addNewUser(const std::string& name, const std::string& password, const std::string& mail) = 0;
+	const virtual void addNewUser(const std::string& name, const std::string& password, const std::string& mail) = 0;
 };
 
