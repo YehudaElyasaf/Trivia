@@ -1,4 +1,5 @@
 #include "JsonResponsePacketSerializer.h"
+#include "msgCodes.h"
 
 std::string JsonResponsePacketSerializer::bitwiseLen(json data) {
     std::string out;
