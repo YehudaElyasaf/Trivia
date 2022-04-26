@@ -1,4 +1,3 @@
-#include"sqlite3.h"
 #include"SQLiteDatabase.h"
 #include<io.h>
 #include<string>
@@ -16,13 +15,15 @@ SQLiteDatabase::SQLiteDatabase() {
 	}
 
 	if (isNewDB)
-		std::cout << "opened a new database!";
+		std::cout << "opened a new database!\n";
 	else
-		std::cout << "opened an existing database!";
+		std::cout << "opened an existing database!\n";
 
 	if (isNewDB) {
-		char sqlStatement[] = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";;
+		char sqlStatement[] = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
 		executeAndValidate(sqlStatement);
+
+		testDatabase();
 	}
 }
 
@@ -47,14 +48,14 @@ bool SQLiteDatabase::doesPasswordMatch(const std::string& name, const std::strin
 	std::string sqlStatement;
 	bool doesMatch = false;
 
-	sqlStatement = "SELECT FROM USERS WHERE NAME='" + name + "' AND PASSWORD='" + password + "';";
+	sqlStatement = "SELECT * FROM USERS WHERE NAME='" + name + "' AND PASSWORD='" + password + "';";
 	if (sqlite3_exec(_db, sqlStatement.c_str(), doesExistCallback, &doesMatch, &_errMessage) != SQLITE_OK)
 		throw std::exception(_errMessage);
 
 	return doesMatch;
 }
 
-void SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) const {
+void SQLiteDatabase::addNewUser(const std::string& name, const std::string& password, const std::string& mail) {
 	std::string sqlStatement;
 	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
@@ -65,4 +66,15 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
 	if (sqlite3_exec(_db, sqlStatement.c_str(), nullptr, nullptr, &_errMessage) != SQLITE_OK)
 		throw std::exception(_errMessage);
+}
+
+void SQLiteDatabase::testDatabase() {
+	this->addNewUser("user1", "123", "user1@shovinism.com");
+	this->addNewUser("user2", "456", "user2@homofobism.com");
+
+	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
+	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
+
+	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
+	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include"sqlite3.h"
 #include"IDatabase.h"
 
 #define DATABASE_FILENAME "DB.sqlite"
@@ -27,5 +28,6 @@ private:
 	//and throw an exception in case of failture
 	void executeAndValidate(const std::string& sqlStatement);
 
-	void createDummyDatabase();
+	//auto create a database 
+	void testDatabase();
 };
