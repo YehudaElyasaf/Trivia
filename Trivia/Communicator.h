@@ -5,8 +5,7 @@
 
 #define SERVER_PORT 4242
 
-class Communicator
-{
+class Communicator {
 public:
 	Communicator();
 

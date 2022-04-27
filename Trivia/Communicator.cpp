@@ -3,9 +3,13 @@
 #include <thread>
 #include <iostream>
 #include "Helper.h"
+#include "LoginRequestHandler.h"
+#include "JsonResponsePacketSerializer.h"
+#include "JsonRequestPacketDeserializer.h"
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
+#define MIN_PACKET_SIZE 5
 
 Communicator::Communicator() : _running(true), _initServer() {
 	try {
@@ -73,11 +77,40 @@ void Communicator::bindAndListen() {
 void Communicator::handleNewClient(SOCKET sock) {
 	std::string lastMsg;
 	Helper::sendData(sock, HELLO_MSG);
+	try {
+		while (_running && lastMsg != EXIT_MSG) {
+			lastMsg = Helper::getStringPartFromSocket(sock, MIN_PACKET_SIZE);
 
-	while (_running && lastMsg != EXIT_MSG) {
-		lastMsg = Helper::getStringPartFromSocket(sock, 4);
-		std::cout << lastMsg << std::endl;
+			int dataLen;
+			*(&dataLen) = *((int*)lastMsg.c_str() + 1);
+			lastMsg += Helper::getStringPartFromSocket(sock, dataLen);
+
+			LoginRequestHandler log;
+			RequestInfo req = { 0, time(0), lastMsg };
+			std::string responseBytes;
+			if (log.isRequestRelevant(req)) {
+				if (lastMsg[0] == LOGIN_CODE) {
+					LoginResponse resp = { 1 };
+					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+					std::cout << "login" << responseBytes << std::endl;
+				}
+				else {
+					SignupResponse resp = { 1 };
+					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+					std::cout << "signup " << responseBytes << std::endl;
+				}
+			}
+			else {
+				ErrorResponse resp = { "Err" };
+				responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+				std::cout << "error " << responseBytes << std::endl;
+			}
+
+			Helper::sendData(sock, responseBytes);
+		}
 	}
-
+	catch (const std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
 	closesocket(sock);
 }

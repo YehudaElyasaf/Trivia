@@ -1,3 +1,3 @@
 #pragma once
 
-enum MsgCodes { ERROR, LOGIN, SIGNUP };
+enum MsgCodes { ERROR_CODE, LOGIN_CODE, SIGNUP_CODE };

@@ -2,6 +2,8 @@
 #include <ctime>
 #include <string>
 
+class IRequestHandler;
+
 struct RequestInfo {
 	int id;
 	time_t receivalTime;
@@ -9,12 +11,13 @@ struct RequestInfo {
 };
 
 struct RequestResult {
-	std::string result;
+	std::string response;
 	IRequestHandler* newHandler;
 };
 
+
 class IRequestHandler {
 public:
-	virtual bool isRequestRelevant(RequestInfo req)=0;
-	virtual RequestResult handleRequest(RequestInfo req)=0;
+	virtual bool isRequestRelevant(struct RequestInfo req)=0;
+	virtual RequestResult handleRequest(struct RequestInfo req)=0;
 };
