@@ -9,7 +9,7 @@
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
-#define MIN_PACKET_SIZE 5
+#define MIN_PACKET_SIZE 1 + sizeof(int)
 
 Communicator::Communicator() : _running(true), _initServer() {
 	try {
@@ -79,12 +79,20 @@ void Communicator::handleNewClient(SOCKET sock) {
 	Helper::sendData(sock, HELLO_MSG);
 	try {
 		while (_running && lastMsg != EXIT_MSG) {
+			// get first 5 bytes of the message
+			
+			// if there are 0's on the back it won't get it because it's a string,
+			// so im adding to it until it's size of int + 1
 			lastMsg = Helper::getStringPartFromSocket(sock, MIN_PACKET_SIZE);
+			while (lastMsg.size() < MIN_PACKET_SIZE)
+				lastMsg += '\0';
 
-			int dataLen;
-			*(&dataLen) = *((int*)lastMsg.c_str() + 1);
+			// convert length bytes to int
+			int dataLen = 0;
+			*(&dataLen) = *((int*)(lastMsg.c_str() + 1));
 			lastMsg += Helper::getStringPartFromSocket(sock, dataLen);
 
+			// check it request relevant and serialize and send a response based on the request type
 			LoginRequestHandler log;
 			RequestInfo req = { 0, time(0), lastMsg };
 			std::string responseBytes;
@@ -92,18 +100,15 @@ void Communicator::handleNewClient(SOCKET sock) {
 				if (lastMsg[0] == LOGIN_CODE) {
 					LoginResponse resp = { 1 };
 					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
-					std::cout << "login" << responseBytes << std::endl;
 				}
 				else {
 					SignupResponse resp = { 1 };
 					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
-					std::cout << "signup " << responseBytes << std::endl;
 				}
 			}
 			else {
 				ErrorResponse resp = { "Err" };
 				responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
-				std::cout << "error " << responseBytes << std::endl;
 			}
 
 			Helper::sendData(sock, responseBytes);

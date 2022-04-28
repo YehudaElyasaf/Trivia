@@ -13,7 +13,7 @@ std::string JsonResponsePacketSerializer::bitwiseLen(const json& data) {
 }
 
 std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& resp) {
-    std::string out = { (unsigned char)ERROR_CODE, 0 };
+    std::string out = { (unsigned char)ERROR_CODE };
     json data;
     data["message"] = resp.message;
 
@@ -24,7 +24,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse&
 }
 
 std::string JsonResponsePacketSerializer::serializeResponse(const LoginResponse& resp) {
-    std::string out = { (unsigned char)LOGIN_CODE, 0 };
+    std::string out = { (unsigned char)LOGIN_CODE };
     json data;
     data["status"] = resp.status;
 
@@ -34,7 +34,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(const LoginResponse&
 }
 
 std::string JsonResponsePacketSerializer::serializeResponse(const SignupResponse& resp) {
-    std::string out = { (unsigned char)SIGNUP_CODE, 0 };
+    std::string out = { (unsigned char)SIGNUP_CODE };
     json data;
     data["status"] = resp.status;
 
