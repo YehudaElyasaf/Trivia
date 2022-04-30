@@ -3,9 +3,13 @@
 #include <thread>
 #include <iostream>
 #include "Helper.h"
+#include "LoginRequestHandler.h"
+#include "JsonResponsePacketSerializer.h"
+#include "JsonRequestPacketDeserializer.h"
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
+#define MIN_PACKET_SIZE 1 + sizeof(int)
 
 Communicator::Communicator() : _running(true), _initServer() {
 	try {
@@ -73,11 +77,45 @@ void Communicator::bindAndListen() {
 void Communicator::handleNewClient(SOCKET sock) {
 	std::string lastMsg;
 	Helper::sendData(sock, HELLO_MSG);
+	try {
+		while (_running && lastMsg != EXIT_MSG) {
+			// get first 5 bytes of the message
+			
+			// if there are 0's on the back it won't get it because it's a string,
+			// so im adding to it until it's size of int + 1
+			lastMsg = Helper::getStringPartFromSocket(sock, MIN_PACKET_SIZE);
+			while (lastMsg.size() < MIN_PACKET_SIZE)
+				lastMsg += '\0';
 
-	while (_running && lastMsg != EXIT_MSG) {
-		lastMsg = Helper::getStringPartFromSocket(sock, 4);
-		std::cout << lastMsg << std::endl;
+			// convert length bytes to int
+			int dataLen = 0;
+			*(&dataLen) = *((int*)(lastMsg.c_str() + 1));
+			lastMsg += Helper::getStringPartFromSocket(sock, dataLen);
+
+			// check it request relevant and serialize and send a response based on the request type
+			LoginRequestHandler log;
+			RequestInfo req = { 0, time(0), lastMsg };
+			std::string responseBytes;
+			if (log.isRequestRelevant(req)) {
+				if (lastMsg[0] == LOGIN_CODE) {
+					LoginResponse resp = { 1 };
+					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+				}
+				else {
+					SignupResponse resp = { 1 };
+					responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+				}
+			}
+			else {
+				ErrorResponse resp = { "Err" };
+				responseBytes = JsonResponsePacketSerializer::serializeResponse(resp);
+			}
+
+			Helper::sendData(sock, responseBytes);
+		}
 	}
-
+	catch (const std::exception& e) {
+		std::cout << e.what() << std::endl;
+	}
 	closesocket(sock);
 }
