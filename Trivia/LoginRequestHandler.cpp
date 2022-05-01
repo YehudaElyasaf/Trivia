@@ -9,12 +9,20 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo req) {
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo req) {
     if ((unsigned char)req.buffer[0] == LOGIN_CODE) {
-        LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
-        std::cout << logReq.username << '\n' << logReq.password << std::endl;
-        return RequestResult();
+        return login(req);
     }
 
+    return signup(req);
+}
+
+RequestResult LoginRequestHandler::login(RequestInfo req) {
+    LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
+
+    return RequestResult(m_loginManager.login(logReq.username, logReq.password));
+}
+
+RequestResult LoginRequestHandler::signup(RequestInfo req) {
     SignupRequest signupReq = JsonRequestPacketDeserializer::deserializeSignupRequest(req.buffer);
-    std::cout << signupReq.username << '\n' << signupReq.password << '\n' << signupReq.email << std::endl;
-    return RequestResult();
+    
+    return RequestResult(m_loginManager.signup(signupReq.username, signupReq.password, signupReq.email));
 }
