@@ -7,19 +7,20 @@
 
 class Communicator {
 public:
-	Communicator();
-
+	Communicator(RequestHandlerFactory& factory);
 	void startHandleRequests();
 
 	// added to stop all of the threads
 	void stop();
 
 private:
-	WSAInitializer _initServer;
-	SOCKET _serverSocket;
-	std::map<SOCKET, IRequestHandler*> _clients;
+	WSAInitializer m_initServer;
+	SOCKET m_serverSocket;
+	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handlerFactory;
+
 	// added to stop all of the threads
-	bool _running;
+	bool m_running;
 
 	void bindAndListen();
 	void handleNewClient(SOCKET sock);

@@ -1,9 +1,11 @@
 #pragma once
-#include "IRequestHandler.h"
 #include "msgCodes.h"
+#include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 class LoginRequestHandler : public IRequestHandler {
 public:
+	LoginRequestHandler(LoginManager& manager, RequestHandlerFactory& factory);
 	//check if the message code is valid
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
