@@ -6,8 +6,7 @@
 class LoginManager {
 public:
 	//c'tor and d'tor
-	LoginManager();
-	~LoginManager();
+	LoginManager(IDatabase* database);
 
 	//add user to DB
 	bool signup(const std::string& name, const std::string& password, const std::string& mail);
