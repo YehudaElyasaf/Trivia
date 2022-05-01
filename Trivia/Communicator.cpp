@@ -66,7 +66,7 @@ void Communicator::bindAndListen() {
 			std::cout << "Client accepted. Server and client can speak" << std::endl;
 			// the function that handle the conversation with the client
 			std::thread(&Communicator::handleNewClient, this, clientSocket).detach();
-			m_clients.emplace(clientSocket, new LoginRequestHandler);
+			m_clients.emplace(clientSocket, nullptr); // !!!replace later!!!
 		}
 		catch (const std::exception& e) {
 			std::cerr << e.what() << std::endl;
@@ -101,4 +101,5 @@ void Communicator::handleNewClient(SOCKET sock) {
 		std::cout << e.what() << std::endl;
 	}
 	closesocket(sock);
+	delete m_clients[sock];
 }
