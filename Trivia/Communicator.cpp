@@ -9,7 +9,7 @@
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
-#define MIN_PACKET_SIZE 1 + sizeof(int)
+#define MESSAGE_CODE_LENGTH 1
 
 Communicator::Communicator() : _running(true), _initServer() {
 	try {
@@ -80,16 +80,8 @@ void Communicator::handleNewClient(SOCKET sock) {
 	try {
 		while (_running && lastMsg != EXIT_MSG) {
 			// get first 5 bytes of the message
-			
-			// if there are 0's on the back it won't get it because it's a string,
-			// so im adding to it until it's size of int + 1
-			lastMsg = Helper::getStringPartFromSocket(sock, MIN_PACKET_SIZE);
-			while (lastMsg.size() < MIN_PACKET_SIZE)
-				lastMsg += '\0';
-
-			// convert length bytes to int
-			int dataLen = 0;
-			*(&dataLen) = *((int*)(lastMsg.c_str() + 1));
+			lastMsg = Helper::getStringPartFromSocket(sock, MESSAGE_CODE_LENGTH);
+			int dataLen = Helper::getDataLengthFromSockect(sock);
 			lastMsg += Helper::getStringPartFromSocket(sock, dataLen);
 
 			// check it request relevant and serialize and send a response based on the request type

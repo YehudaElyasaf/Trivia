@@ -4,6 +4,8 @@
 #include <iomanip>
 #include <sstream>
 
+#define MESSAGE_LENGTH_FIELD_LENGTH sizeof(int)
+
 using std::string;
 
 // recieves the type code of the message from socket (3 bytes)
@@ -19,15 +21,6 @@ int Helper::getMessageTypeCode(const SOCKET sc)
 	return res;
 }
 
-
-// recieve data from socket according byteSize
-// returns the data as int
-int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
-{
-	const char* intPart = getPartFromSocket(sc, bytesNum, 0).c_str();
-
-	return *((int*)intPart);
-}
 
 // recieve data from socket according byteSize
 // returns the data as string
@@ -83,4 +76,19 @@ std::string Helper::getPartFromSocket(const SOCKET sc, const int bytesNum, const
 	std::string received(data);
 	delete[] data;
 	return received;
+}
+
+int Helper::getDataLengthFromSockect(const SOCKET sock) {
+
+	// if there are 0's on the back it won't get it because it's a string,
+	// so im adding to it until it's size of int + 1
+	std::string lastMsg = Helper::getStringPartFromSocket(sock, MESSAGE_LENGTH_FIELD_LENGTH);
+	while (lastMsg.size() < MESSAGE_LENGTH_FIELD_LENGTH)
+		lastMsg += '\0';
+
+	// convert length bytes to int
+	int dataLen = 0;
+	*(&dataLen) = *((int*)(lastMsg.c_str() + 1));
+
+	return dataLen;
 }
