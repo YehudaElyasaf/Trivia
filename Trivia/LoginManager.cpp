@@ -10,7 +10,8 @@ LoginManager::~LoginManager() {
 }
 
 void LoginManager::signup(const std::string& name, const std::string& password, const std::string& mail) {
-
+	if (!m_database->doesUserExists(name))
+		m_database->addNewUser(name, password, mail);
 }
 
 void LoginManager::login(const std::string& name, const std::string& password) {
