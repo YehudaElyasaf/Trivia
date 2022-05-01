@@ -1,5 +1,9 @@
 #include<vector>
+#include<string>
 
-class LoggedUser{
-
+class LoggedUser {
+public:
+	std::string getUserName() const;
+private:
+	std::string m_username;
 };
