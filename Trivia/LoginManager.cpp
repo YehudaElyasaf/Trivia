@@ -9,15 +9,24 @@ LoginManager::~LoginManager() {
 	delete m_database;
 }
 
-void LoginManager::signup(const std::string& name, const std::string& password, const std::string& mail) {
-	if (!m_database->doesUserExists(name))
+bool LoginManager::signup(const std::string& name, const std::string& password, const std::string& mail) {
+	if (!m_database->doesUserExists(name)) {
 		m_database->addNewUser(name, password, mail);
+		return true;
+	}
+
+	return false;
 }
 
-void LoginManager::login(const std::string& name, const std::string& password) {
+bool LoginManager::login(const std::string& name, const std::string& password) {
+	if (m_database->doesPasswordMatch(name, password)) {
+		m_loggedUsers.push_back(name);
+		return true;
+	}
 
+	return false;
 }
 
-void LoginManager::logout(const std::string& name) {
+bool LoginManager::logout(const std::string& name) {
 
 }
