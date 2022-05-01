@@ -1,5 +1,6 @@
 #pragma once
 #include "IDatabase.h"
+#include "LoginRequestHandler.h"
 
 class RequestHandlerFactory {
 public:
