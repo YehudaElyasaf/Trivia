@@ -151,11 +151,10 @@
     <ClInclude Include="requests.h" />
     <ClInclude Include="responses.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="WSAInitializer.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SQLiteCallbacks.h" />
     <ClInclude Include="SQLiteDatabase.h" />
-
+    <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Communicator.cpp" />
@@ -164,11 +163,10 @@
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="WSAInitializer.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SQLiteCallbacks.cpp" />
     <ClCompile Include="SQLiteDatabase.cpp" />
-
+    <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
