@@ -14,11 +14,6 @@ SQLiteDatabase::SQLiteDatabase() {
 		throw std::exception("Failed to open DB");
 	}
 
-	if (isNewDB)
-		std::cout << "opened a new database!\n";
-	else
-		std::cout << "opened an existing database!\n";
-
 	if (isNewDB) {
 		char sqlStatement[] = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
 		executeAndValidate(sqlStatement);
