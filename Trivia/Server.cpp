@@ -1,4 +1,5 @@
 #include "Server.h"
+#include "SQLiteDatabase.h"
 #include <string>
 #include <iostream>
 
@@ -7,8 +8,11 @@ int main() {
 	s.run();
 }
 
+Server::Server() :
+	m_database(new SQLiteDatabase()), m_handlerFactory(m_database), m_communicator(m_handlerFactory) {}
+
 void Server::run() {
-	_communicator.startHandleRequests();
+	m_communicator.startHandleRequests();
 
 	std::string cmd;
 	while (cmd != "EXIT") {
@@ -17,5 +21,6 @@ void Server::run() {
 }
 
 Server::~Server() {
-	_communicator.stop();
+	m_communicator.stop();
+	delete m_database;
 }

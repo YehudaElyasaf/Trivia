@@ -4,16 +4,15 @@
 #include <vector>
 #include <string>
 
-#define MESSAGE_TYPE_LENGTH 3
+#define MESSAGE_LENGTH_FIELD_LENGTH sizeof(int)
 
 class Helper
 {
 public:
-	static int getMessageTypeCode(const SOCKET sc);
-	static int getIntPartFromSocket(const SOCKET sc, const int bytesNum);
 	static std::string getStringPartFromSocket(SOCKET sc, const int bytesNum);
 	static void sendData(const SOCKET sc, const std::string message);
 	static std::string getPaddedNumber(const int num, const int digits);
+	static int getDataLengthFromSockect(const SOCKET sock);
 
 private:
 	static std::string getPartFromSocket(const SOCKET sc, const int bytesNum);
