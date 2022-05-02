@@ -1,4 +1,5 @@
 import socket
+import json
 
 SERVER_PORT = 4242
 SERVER_IP = '127.0.0.1'
@@ -18,9 +19,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             messageToServer = chr(loginOrSignup + 2).encode()
 
             # assemble json based of if it's login or signup
-            jsonData = '{"username"="' + input("Enter username: ") + '","password"="' + input("Enter passowrd: ") + '"'
+            jsonData = '{"username": "' + input("Enter username: ") + '","password": "' + input("Enter passowrd: ") + '"'
             if loginOrSignup:
-                jsonData += ',"email"="' + input("Enter email: ") + '"'
+                jsonData += ',"email": "' + input("Enter email: ") + '"'
             jsonData += "}"
             
             # first the length in bytes, then the json data encoded

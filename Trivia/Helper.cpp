@@ -88,7 +88,7 @@ int Helper::getDataLengthFromSockect(const SOCKET sock) {
 
 	// convert length bytes to int
 	int dataLen = 0;
-	*(&dataLen) = *((int*)(lastMsg.c_str() + 1));
+	*(&dataLen) = *((int*)lastMsg.c_str());
 
 	return dataLen;
 }

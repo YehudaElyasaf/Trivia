@@ -3,7 +3,7 @@
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const std::string& buffer) {
     LoginRequest out = { "", "" };
     //ignore code field
-    json data = buffer.substr(1);
+    json data = json::parse(buffer.substr(1));
 
     out.username = data["username"];
     out.password = data["password"];
@@ -14,7 +14,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const std::s
 SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(const std::string& buffer) {
     SignupRequest out = { "", "", "" };
     //ignore code field
-    json data = buffer.substr(1);
+    json data = json::parse(buffer.substr(1));
 
     out.username = data["username"];
     out.password = data["password"];
