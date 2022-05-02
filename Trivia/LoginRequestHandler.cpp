@@ -3,10 +3,8 @@
 #include "JsonResponsePacketSerializer.h"
 #include <iostream>
 
-LoginRequestHandler::LoginRequestHandler(LoginManager& manager, RequestHandlerFactory& factory) {
-	m_loginManager = manager;
-	m_handlerFactory = factory;
-}
+LoginRequestHandler::LoginRequestHandler(LoginManager& manager, RequestHandlerFactory& factory) :
+	m_handlerFactory(factory), m_loginManager(manager) { }
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo req) {
 	int code = ((unsigned char)req.buffer[0]);

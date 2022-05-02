@@ -8,10 +8,8 @@ int main() {
 	s.run();
 }
 
-Server::Server() {
-	m_database = new SQLiteDatabase();
-	m_handlerFactory = RequestHandlerFactory(m_database);
-}
+Server::Server() :
+	m_database(new SQLiteDatabase()), m_handlerFactory(m_database), m_communicator(m_handlerFactory) {}
 
 void Server::run() {
 	m_communicator.startHandleRequests();

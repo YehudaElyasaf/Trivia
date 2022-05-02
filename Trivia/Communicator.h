@@ -2,6 +2,7 @@
 #include "WSAInitializer.h"
 #include <map>
 #include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 #define SERVER_PORT 4242
 

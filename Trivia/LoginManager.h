@@ -1,7 +1,8 @@
-#include"LoggedUser.h"
-#include"IDatabase.h"
-#include<string>
-#include<vector>
+#pragma once
+#include "LoggedUser.h"
+#include "IDatabase.h"
+#include <string>
+#include <vector>
 
 class LoginManager {
 public:

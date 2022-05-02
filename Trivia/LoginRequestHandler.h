@@ -1,7 +1,8 @@
 #pragma once
 #include "msgCodes.h"
-#include "IRequestHandler.h"
 #include "RequestHandlerFactory.h"
+#include "IRequestHandler.h"
+#include "LoginManager.h"
 
 class LoginRequestHandler : public IRequestHandler {
 public:

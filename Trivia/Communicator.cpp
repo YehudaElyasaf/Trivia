@@ -6,13 +6,12 @@
 #include "LoginRequestHandler.h"
 #include "JsonResponsePacketSerializer.h"
 #include "JsonRequestPacketDeserializer.h"
-#include "RequestHandlerFactory.h"
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
 #define MESSAGE_CODE_LENGTH 1
 
-Communicator::Communicator(RequestHandlerFactory& factory) : m_running(true), m_initServer() {
+Communicator::Communicator(RequestHandlerFactory& factory) : m_running(true), m_initServer(), m_handlerFactory(factory) {
 	try {
 		m_serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
