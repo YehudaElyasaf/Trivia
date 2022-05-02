@@ -3,6 +3,8 @@
 #include "LoginRequestHandler.h"
 #include "LoginManager.h"
 
+class LoginRequestHandler;
+
 class RequestHandlerFactory {
 public:
 	RequestHandlerFactory(IDatabase* database);

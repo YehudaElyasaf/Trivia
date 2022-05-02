@@ -13,6 +13,11 @@ Server::Server() :
 
 void Server::run() {
 	m_communicator.startHandleRequests();
+
+	std::string cmd;
+	while (cmd != "EXIT") {
+		std::cin >> cmd;
+	}
 }
 
 Server::~Server() {
