@@ -55,7 +55,7 @@ void Communicator::bindAndListen() {
 	catch (const std::exception& e) {
 		std::cerr << e.what() << "\nError Code: " << WSAGetLastError() << std::endl;
 	}
-	
+
 	while (m_running) {
 		try {
 			SOCKET clientSocket = accept(m_serverSocket, NULL, NULL);
@@ -93,7 +93,8 @@ void Communicator::handleNewClient(SOCKET sock) {
 
 			if (loginHandler->isRequestRelevant(req)) {
 				res = loginHandler->handleRequest(req);
-				if (json::parse(res.response.substr(MESSAGE_CODE_LENGTH + MESSAGE_LENGTH_FIELD_LENGTH))["status"]) {
+				json responseJson = json::parse(res.response.substr(MESSAGE_CODE_LENGTH + MESSAGE_LENGTH_FIELD_LENGTH));
+				if (responseJson["status"] == 1) {
 					username = json::parse(req.buffer.substr(MESSAGE_CODE_LENGTH))["username"];
 				}
 			}
@@ -105,9 +106,10 @@ void Communicator::handleNewClient(SOCKET sock) {
 		}
 	}
 	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cout << e.what() << ". socket " << sock << " disconnected\n";
+		closesocket(sock);
+		delete m_clients[sock];
+		m_handlerFactory.getLoginManager().logout(username);
 		delete loginHandler;
 	}
-	closesocket(sock);
-	delete m_clients[sock];
 }
