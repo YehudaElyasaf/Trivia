@@ -25,8 +25,10 @@ bool LoginManager::login(const std::string& name, const std::string& password) {
 
 bool LoginManager::logout(const std::string& name) {
 	for (int i = 0; i < m_loggedUsers.size(); i++)
-		if (m_loggedUsers[i].getUserName() == name) {
+		if (m_loggedUsers[i].m_username == name) {
 			m_loggedUsers.erase(m_loggedUsers.begin() + i);
 			return true;
 		}
+
+	return false;
 }
