@@ -55,7 +55,7 @@ void Communicator::bindAndListen() {
 	catch (const std::exception& e) {
 		std::cerr << e.what() << "\nError Code: " << WSAGetLastError() << std::endl;
 	}
-	
+
 	while (m_running) {
 		try {
 			SOCKET clientSocket = accept(m_serverSocket, NULL, NULL);
@@ -92,13 +92,14 @@ void Communicator::handleNewClient(SOCKET sock) {
 
 			if (loginHandler->isRequestRelevant(req))
 				res = loginHandler->handleRequest(req);
-			
+
 			Helper::sendData(sock, res.response);
 		}
 	}
 	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cout << e.what() << ". socket " << sock << " disconnected\n";
+		closesocket(sock);
+		delete m_clients[sock];
+		m_handlerFactory.getLoginManager().logout(username);
 	}
-	closesocket(sock);
-	delete m_clients[sock];
 }
