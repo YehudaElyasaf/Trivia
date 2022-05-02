@@ -4,23 +4,7 @@
 #include <iomanip>
 #include <sstream>
 
-#define MESSAGE_LENGTH_FIELD_LENGTH sizeof(int)
-
 using std::string;
-
-// recieves the type code of the message from socket (3 bytes)
-// and returns the code. if no message found in the socket returns 0
-int Helper::getMessageTypeCode(const SOCKET sc)
-{
-	std::string msg = getPartFromSocket(sc, MESSAGE_TYPE_LENGTH, 0);
-
-	if (msg == "")
-		return 0;
-
-	int res = std::atoi(msg.c_str());
-	return res;
-}
-
 
 // recieve data from socket according byteSize
 // returns the data as string

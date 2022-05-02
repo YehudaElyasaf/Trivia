@@ -75,8 +75,10 @@ void Communicator::bindAndListen() {
 }
 
 void Communicator::handleNewClient(SOCKET sock) {
-	std::string lastMsg;
+	std::string lastMsg, username;
+	LoginRequestHandler* loginHandler = m_handlerFactory.createLoginRequestHandler();
 	Helper::sendData(sock, HELLO_MSG);
+
 	try {
 		while (m_running && lastMsg != EXIT_MSG) {
 			// get first 5 bytes of the message
@@ -87,17 +89,24 @@ void Communicator::handleNewClient(SOCKET sock) {
 			// check it request relevant and serialize and send a response based on the request type
 			RequestInfo req = { 0, time(0), lastMsg };
 			std::string responseBytes;
-			LoginRequestHandler* loginHandler = m_handlerFactory.createLoginRequestHandler();
 			RequestResult res;
 
-			if (loginHandler->isRequestRelevant(req))
+			if (loginHandler->isRequestRelevant(req)) {
 				res = loginHandler->handleRequest(req);
-			
+				if (json::parse(res.response.substr(MESSAGE_CODE_LENGTH + MESSAGE_LENGTH_FIELD_LENGTH))["status"]) {
+					username = json::parse(req.buffer.substr(MESSAGE_CODE_LENGTH))["username"];
+				}
+			}
+			else {
+				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), nullptr };
+			}
+
 			Helper::sendData(sock, res.response);
 		}
 	}
 	catch (const std::exception& e) {
 		std::cout << e.what() << std::endl;
+		delete loginHandler;
 	}
 	closesocket(sock);
 	delete m_clients[sock];
