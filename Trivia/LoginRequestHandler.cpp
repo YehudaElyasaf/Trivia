@@ -1,20 +1,34 @@
 #include "LoginRequestHandler.h"
 #include "JsonRequestPacketDeserializer.h"
+#include "JsonResponsePacketSerializer.h"
 #include <iostream>
 
+LoginRequestHandler::LoginRequestHandler(LoginManager& manager, RequestHandlerFactory& factory) {
+	m_loginManager = manager;
+	m_handlerFactory = factory;
+}
+
 bool LoginRequestHandler::isRequestRelevant(RequestInfo req) {
-    int code = ((unsigned char)req.buffer[0]);
-    return code == LOGIN_CODE || code == SIGNUP_CODE;
+	int code = ((unsigned char)req.buffer[0]);
+	return code == LOGIN_CODE || code == SIGNUP_CODE;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo req) {
-    if ((unsigned char)req.buffer[0] == LOGIN_CODE) {
-        LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
-        std::cout << logReq.username << '\n' << logReq.password << std::endl;
-        return RequestResult();
-    }
+	if ((unsigned char)req.buffer[0] == LOGIN_CODE) {
+		return login(req);
+	}
 
-    SignupRequest signupReq = JsonRequestPacketDeserializer::deserializeSignupRequest(req.buffer);
-    std::cout << signupReq.username << '\n' << signupReq.password << '\n' << signupReq.email << std::endl;
-    return RequestResult();
+	return signup(req);
+}
+
+RequestResult LoginRequestHandler::login(RequestInfo req) {
+	LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
+	LoginResponse resp = { m_loginManager.login(logReq.username, logReq.password) };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
+}
+
+RequestResult LoginRequestHandler::signup(RequestInfo req) {
+	SignupRequest signupReq = JsonRequestPacketDeserializer::deserializeSignupRequest(req.buffer);
+	SignupResponse resp = { m_loginManager.signup(signupReq.username, signupReq.password, signupReq.email) };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
