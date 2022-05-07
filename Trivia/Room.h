@@ -16,6 +16,7 @@ struct RoomData
 class Room
 {
 public:
+    Room();
     Room(const LoggedUser& firstUser, const RoomData& roomData);
     bool addUser(const LoggedUser& userToAdd);
     bool removeUser(const LoggedUser& userToRemove);

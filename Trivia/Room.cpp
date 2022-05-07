@@ -1,5 +1,8 @@
 #include"Room.h"
 
+//must have a default c'tor
+Room::Room() {}
+
 Room::Room(const LoggedUser& firstUser, const RoomData& roomData) : m_roomdata(roomData)
 {
 	m_users.push_back(firstUser);
