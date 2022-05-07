@@ -2,7 +2,7 @@
 
 Room::Room(const LoggedUser& firstUser, const RoomData& roomData) {
 	m_users.push_back(firstUser);
-	m_metadata = roomData;
+	m_roomdata = roomData;
 }
 
 bool Room::addUser(const LoggedUser& userToAdd) {
@@ -25,4 +25,9 @@ bool Room::removeUser(const LoggedUser& userToRemove) {
 
 std::vector<LoggedUser> Room::getAllUsers() const {
 	return m_users;
+}
+
+RoomData Room::getRoomData() const
+{
+	return m_roomdata;
 }

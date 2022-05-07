@@ -20,7 +20,8 @@ public:
     bool addUser(const LoggedUser& userToAdd);
     bool removeUser(const LoggedUser& userToRemove);
     std::vector<LoggedUser> getAllUsers() const;
+    RoomData getRoomData() const;
 private:
-    RoomData m_metadata;
+    RoomData m_roomdata;
     std::vector<LoggedUser> m_users;
 };
