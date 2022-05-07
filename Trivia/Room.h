@@ -17,8 +17,8 @@ class Room
 {
 public:
     Room(const LoggedUser& firstUser, const RoomData& roomData);
-    bool addUser(const LoggedUser& user);
-    bool removeUser(const LoggedUser& user);
+    bool addUser(const LoggedUser& userToAdd);
+    bool removeUser(const LoggedUser& userToRemove);
     std::vector<LoggedUser> getAllUsers() const;
 private:
     RoomData m_metadata;
