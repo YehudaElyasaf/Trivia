@@ -13,5 +13,5 @@ bool Room::removeUser(const LoggedUser& user){
 }
 
 std::vector<LoggedUser> Room::getAllUsers() const{
-
+    return m_users;
 }
