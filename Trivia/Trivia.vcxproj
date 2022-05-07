@@ -154,6 +154,7 @@
     <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="requests.h" />
     <ClInclude Include="responses.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SQLiteCallbacks.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="MenuRequestHandler.cpp" />
     <ClCompile Include="RequestHandlerFactory.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SQLiteCallbacks.cpp" />
