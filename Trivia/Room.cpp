@@ -1,8 +1,8 @@
 #include"Room.h"
 
-Room::Room(const LoggedUser& firstUser, const RoomData& roomData) {
+Room::Room(const LoggedUser& firstUser, const RoomData& roomData) : m_roomdata(roomData)
+{
 	m_users.push_back(firstUser);
-	m_roomdata = roomData;
 }
 
 bool Room::addUser(const LoggedUser& userToAdd) {
