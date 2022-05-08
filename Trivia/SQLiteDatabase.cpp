@@ -58,6 +58,13 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 	executeAndValidate(sqlStatement);
 }
 
+void SQLiteDatabase::addNewQuestion(const std::string& question, const std::string[4]& password, const std::string& mail) {
+	std::string sqlStatement;
+	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
+
+	executeAndValidate(sqlStatement);
+}
+
 //private functions
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
 	if (sqlite3_exec(_db, sqlStatement.c_str(), nullptr, nullptr, &_errMessage) != SQLITE_OK)
