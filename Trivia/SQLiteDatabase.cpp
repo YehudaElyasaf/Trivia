@@ -15,8 +15,9 @@ SQLiteDatabase::SQLiteDatabase() {
 	}
 
 	if (isNewDB) {
-		char sqlStatement[] = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
-		executeAndValidate(sqlStatement);
+		std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
+		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT, ANS_2 TEXT, ANS_3 TEXT);";
+		executeAndValidate(sqlStatement.c_str());
 
 		testDatabase();
 	}
