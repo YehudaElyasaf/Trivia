@@ -4,6 +4,8 @@
 #include<iostream>
 #include"SQLiteCallbacks.h"
 
+#define ANS_LIMIT 4
+
 SQLiteDatabase::SQLiteDatabase() {
 	_errMessage = nullptr;
 	bool isNewDB = _access(DATABASE_FILENAME, DOES_EXIST) == NOT_EXIST;
@@ -58,9 +60,19 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 	executeAndValidate(sqlStatement);
 }
 
-void SQLiteDatabase::addNewQuestion(const std::string& question, const std::string[4]& password, const std::string& mail) {
+void SQLiteDatabase::addNewQuestion(const Question& q) {
 	std::string sqlStatement;
-	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
+	sqlStatement = "INSERT INTO QUESTIONS (QUESTION, RIGHT_ANS";
+	// starts at 1 because in the sql it is from 1 to 3, and the maximum of possible wrong answers is 3
+	for (int i = 1; i < q.getPossibleAnswers().size() && i < ANS_LIMIT; i++)
+		sqlStatement += ", ANS_" + std::to_string(i);
+	
+	sqlStatement += ") VALUES('" + q.getQuestion() + "', '" + q.getCorrectAnswer();
+	
+	for (std::string ans : q.getPossibleAnswers())
+		if (ans != q.getCorrectAnswer())
+			sqlStatement += "', '" + ans;
+	sqlStatement += "');";
 
 	executeAndValidate(sqlStatement);
 }
@@ -74,6 +86,17 @@ void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
 void SQLiteDatabase::testDatabase() {
 	this->addNewUser("user1", "123", "user1@shovinism.com");
 	this->addNewUser("user2", "456", "user2@homofobism.com");
+
+	this->addNewQuestion(Question("What is the answer to the question of the universe?", { "42", "12", "6*9", "666" }));
+	this->addNewQuestion(Question("Why?", { "Llama", "Ok", "Becuase", "Something" }));
+	this->addNewQuestion(Question("Who is the best?", { "Yerucham", "Yuda", "Froylich", "Ori" }));
+	this->addNewQuestion(Question("How?", { "Like so and so", "Like that", "Not like so", "Banana" }));
+	this->addNewQuestion(Question("4*5", { "20", "1", "-7.3", "12334" }));
+	this->addNewQuestion(Question("5-1", { "4", "90", "203", "54" }));
+	this->addNewQuestion(Question("9+0", { "9", "10", "90", "0" }));
+	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
+	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
+	this->addNewQuestion(Question("Conventziot?", { "No!!!!", "Maybe?", "Yes... Clion's the best!", "I like Linux and Injeras!" }));
 
 	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
 	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";

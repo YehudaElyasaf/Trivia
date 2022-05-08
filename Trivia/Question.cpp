@@ -1,7 +1,10 @@
 #include "Question.h"
 #include <algorithm>
 
-#define CORRECT_ANS 0
+Question::Question(const std::string& question, const std::vector<std::string>& possibleAnswers) {
+    m_question = question;
+    m_possibleAnswers = possibleAnswers;
+}
 
 std::string Question::getQuestion() const {
     return m_question;
