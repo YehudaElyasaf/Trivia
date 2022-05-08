@@ -9,9 +9,8 @@ Room::Room(const LoggedUser& firstUser, const RoomData& roomData) : m_roomdata(r
 }
 
 bool Room::addUser(const LoggedUser& userToAdd) {
-	for (LoggedUser user : m_users)
-		if (user == userToAdd)
-			return false;
+	if (std::find(m_users.begin(), m_users.end(), userToAdd) != m_users.end())
+		return false;
 
 	m_users.push_back(userToAdd);
 	return true;
