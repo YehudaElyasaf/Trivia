@@ -11,7 +11,7 @@ public:
 
 	std::string getQuestion() const;
 	// returns shuffled possible answers
-	std::vector<std::string>& getPossibleAnswers() const;
+	std::vector<std::string> getPossibleAnswers() const;
 	std::string getCorrectAnswer() const;
 
 private:

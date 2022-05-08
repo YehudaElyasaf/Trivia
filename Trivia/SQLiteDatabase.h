@@ -24,6 +24,8 @@ public:
 	// add a question to table
 	void addNewQuestion(const Question& q);
 
+	std::vector<Question> getQuestions(const int limit=-1);
+
 private:
 	sqlite3* _db;
 	char* _errMessage;
@@ -31,6 +33,8 @@ private:
 	//execute sql statement
 	//and throw an exception in case of failture
 	void executeAndValidate(const std::string& sqlStatement);
+	// execute and verify with callbacks
+	void executeAndValidate(const std::string& sqlStatement, void* data, int(*callback)(void*, int, char**, char**));
 
 	//auto create a database 
 	void testDatabase();

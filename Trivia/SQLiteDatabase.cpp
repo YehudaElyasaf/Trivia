@@ -62,12 +62,8 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 
 void SQLiteDatabase::addNewQuestion(const Question& q) {
 	std::string sqlStatement;
-	sqlStatement = "INSERT INTO QUESTIONS (QUESTION, RIGHT_ANS";
-	// starts at 1 because in the sql it is from 1 to 3, and the maximum of possible wrong answers is 3
-	for (int i = 1; i < q.getPossibleAnswers().size() && i < ANS_LIMIT; i++)
-		sqlStatement += ", ANS_" + std::to_string(i);
-	
-	sqlStatement += ") VALUES('" + q.getQuestion() + "', '" + q.getCorrectAnswer();
+	sqlStatement = "INSERT INTO QUESTIONS (QUESTION, RIGHT_ANS, ANS_1, ANS_2, ANS_3) VALUES('"
+		+ q.getQuestion() + "', '" + q.getCorrectAnswer();
 	
 	for (std::string ans : q.getPossibleAnswers())
 		if (ans != q.getCorrectAnswer())
@@ -77,9 +73,24 @@ void SQLiteDatabase::addNewQuestion(const Question& q) {
 	executeAndValidate(sqlStatement);
 }
 
+std::vector<Question> SQLiteDatabase::getQuestions(const int limit) {
+	std::vector<Question> out;
+	std::string sqlStatement = "SELECT * FROM QUESTIONS";
+	if (limit > 0)
+		sqlStatement += " LIMIT " + std::to_string(limit);
+	sqlStatement += ";";
+	executeAndValidate(sqlStatement, &out, questionCallback);
+	return out;
+}
+
 //private functions
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
 	if (sqlite3_exec(_db, sqlStatement.c_str(), nullptr, nullptr, &_errMessage) != SQLITE_OK)
+		throw std::exception(_errMessage);
+}
+
+void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement, void* data, int(*callback)(void*, int, char**, char**)) {
+	if (sqlite3_exec(_db, sqlStatement.c_str(), callback, data, &_errMessage) != SQLITE_OK)
 		throw std::exception(_errMessage);
 }
 
@@ -96,11 +107,26 @@ void SQLiteDatabase::testDatabase() {
 	this->addNewQuestion(Question("9+0", { "9", "10", "90", "0" }));
 	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
 	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
-	this->addNewQuestion(Question("Conventziot?", { "No!!!!", "Maybe?", "Yes... Clion's the best!", "I like Linux and Injeras!" }));
+	this->addNewQuestion(Question("Conventziot?", { "No!!!!", "Maybe?", "Yes... Clion is the best!", "I like Linux and Injeras!" }));
 
 	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
 	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
 
 	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
 	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
+
+	std::vector<Question> questions = getQuestions();
+	
+	int i = 0;
+	for (Question q : questions) {
+		i = 0;
+		std::cout << q.getQuestion() << "\n" << std::endl;
+		
+		for (std::string ans : q.getPossibleAnswers()) {
+			if (ans == q.getCorrectAnswer())
+				std::cout << "V ";
+			std::cout << i++ << ". " << ans << std::endl;
+		}
+		std::cout << "\n\n" << std::endl;
+	}
 }
