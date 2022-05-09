@@ -85,16 +85,21 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 }
 
 float SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
-	int averageANswerTime = 0;
+	int averageAnswerTime = 0;
 	std::string sqlStatement;
-	sqlStatement = "SELECT ANSWER_TIME_SECONDS / TOTAL_ANSWERS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &averageANswerTime, getPlayerAverageAnswerTimeCallback);
+	sqlStatement = "SELECT ANSWER_TIME_SECONDS / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	executeAndValidate(sqlStatement, &averageAnswerTime, getPlayerAverageAnswerTimeCallback);
 	
-	return averageANswerTime;
+	return averageAnswerTime;
 }
 
 int SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
+	int correctAnswers = 0;
+	std::string sqlStatement;
+	sqlStatement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	executeAndValidate(sqlStatement, &correctAnswers, getNumOfCorrectAnswersCallback);
 
+	return correctAnswers;
 }
 
 int SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
