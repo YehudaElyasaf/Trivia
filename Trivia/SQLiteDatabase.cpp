@@ -107,7 +107,7 @@ void SQLiteDatabase::testDatabase() {
 	this->addNewQuestion(Question("9+0", { "9", "10", "90", "0" }));
 	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
 	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
-	this->addNewQuestion(Question("Conventziot?", { "No!!!!", "Maybe?", "Yes... Clion is the best!", "I like Linux and Injeras!" }));
+	this->addNewQuestion(Question("Conventziot?", { "I like Linux and Injeras!", "Maybe?", "Yes... Clion is the best!", "No!!!!" }));
 
 	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
 	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
