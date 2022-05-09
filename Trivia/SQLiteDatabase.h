@@ -21,11 +21,11 @@ public:
 	bool doesPasswordMatch(const std::string& name, const std::string& password) override;
 	//add a user to table
 	void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
-	
+
 	// add a question to table
 	void addNewQuestion(const Question& q) override;
 	// get (optional: a limited number of) all questions from the database
-	std::list<Question> getQuestions(const int limit=UNLIMITED) override;
+	std::list<Question> getQuestions(const int limit = UNLIMITED) override;
 	float getPlayerAverageAnswerTime(const std::string& name) override;
 	int getNumOfCorrectAnswers(const std::string& name) override;
 	int getNumOfTotalAnswers(const std::string& name) override;

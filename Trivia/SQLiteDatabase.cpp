@@ -19,6 +19,7 @@ SQLiteDatabase::SQLiteDatabase() {
 	if (isNewDB) {
 		std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
 		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT NOT NULL, ANS_2 TEXT NOT_NULL, ANS_3 TEXT NOT_NULL);";
+		sqlStatement += "CREATE TABLE STATISTICS (NAME TEXT PRIMARY KEY NOT NULL, TOTAL_ANSWERS INTEGER NOT NULL, CORRECT_ANSWERS INTEGER NOT NULL, ANSWER_TIME_SECONDS INTEGER NOT NULL, NUM_OF_GAMES INTEGER NOT NULL);";
 		executeAndValidate(sqlStatement.c_str());
 
 		testDatabase();
@@ -82,6 +83,28 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 	executeAndValidate(sqlStatement, &out, questionCallback);
 	return out;
 }
+
+float SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
+	int averageANswerTime = 0;
+	std::string sqlStatement;
+	sqlStatement = "SELECT ANSWER_TIME_SECONDS / TOTAL_ANSWERS WHERE USERNAME = '" + name + "';";
+	executeAndValidate(sqlStatement, &averageANswerTime, getPlayerAverageAnswerTimeCallback);
+	
+	return averageANswerTime;
+}
+
+int SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
+
+}
+
+int SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
+
+}
+
+int SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
+
+}
+
 
 //private functions
 void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement) {
