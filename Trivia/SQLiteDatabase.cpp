@@ -97,17 +97,27 @@ int SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
 	int correctAnswers = 0;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &correctAnswers, getNumOfCorrectAnswersCallback);
+	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberFromDatabaseCallback);
 
 	return correctAnswers;
 }
 
 int SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
+	int correctAnswers = 0;
+	std::string sqlStatement;
+	sqlStatement = "SELECT TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberFromDatabaseCallback);
 
+	return correctAnswers;
 }
 
 int SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
+	int games = 0;
+	std::string sqlStatement;
+	sqlStatement = "SELECT NUM_OF_GAMES FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	executeAndValidate(sqlStatement, &games, getOneNumberFromDatabaseCallback);
 
+	return games;
 }
 
 
