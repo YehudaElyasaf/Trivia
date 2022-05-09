@@ -6,3 +6,6 @@ int doesExistCallback(void* data, int argc, char** argv, char** azColumnName);
 
 // return as a question
 int questionCallback(void* data, int argc, char** argv, char** azColumnName);
+
+// return a number 
+int getOneNumberFromDatabaseCallback(void* data, int argc, char** argv, char** azColumnName);

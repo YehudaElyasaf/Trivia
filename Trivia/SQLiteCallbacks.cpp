@@ -29,3 +29,10 @@ int questionCallback(void* data, int argc, char** argv, char** azColumnName) {
 
 	return 0;
 }
+
+int getOneNumberFromDatabaseCallback(void* data, int argc, char** argv, char** azColumnName) {
+	int* pNumber = (int*)data;
+	*pNumber = std::stoi(argv[0]);
+
+	return 0;
+}

@@ -88,7 +88,7 @@ float SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
 	int averageAnswerTime = 0;
 	std::string sqlStatement;
 	sqlStatement = "SELECT ANSWER_TIME_SECONDS / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &averageAnswerTime, getPlayerAverageAnswerTimeCallback);
+	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberFromDatabaseCallback);
 	
 	return averageAnswerTime;
 }
