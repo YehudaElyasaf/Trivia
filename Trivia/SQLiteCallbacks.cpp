@@ -1,6 +1,6 @@
 #include "SQLiteCallbacks.h"
 #include "Question.h"
-#include <vector>
+#include <list>
 
 int doesExistCallback(void* data, int argc, char** argv, char** azColumnName) {
 	bool* pDoesExist = (bool*)data;
@@ -10,7 +10,7 @@ int doesExistCallback(void* data, int argc, char** argv, char** azColumnName) {
 }
 
 int questionCallback(void* data, int argc, char** argv, char** azColumnName) {
-	std::vector<Question>* questions = (std::vector<Question>*)data;
+	std::list<Question>* questions = (std::list<Question>*)data;
 	std::string question;
 	std::vector<std::string> answers;
 

@@ -1,10 +1,8 @@
 #include "Question.h"
 #include <algorithm>
 
-Question::Question(const std::string& question, const std::vector<std::string>& possibleAnswers) {
-    m_question = question;
-    m_possibleAnswers = possibleAnswers;
-}
+Question::Question(const std::string& question, const std::vector<std::string>& possibleAnswers) :
+    m_question(question), m_possibleAnswers(possibleAnswers) { }
 
 std::string Question::getQuestion() const {
     return m_question;

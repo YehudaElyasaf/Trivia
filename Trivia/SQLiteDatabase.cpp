@@ -18,7 +18,7 @@ SQLiteDatabase::SQLiteDatabase() {
 
 	if (isNewDB) {
 		std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
-		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT, ANS_2 TEXT, ANS_3 TEXT);";
+		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT NOT NULL, ANS_2 TEXT NOT_NULL, ANS_3 TEXT NOT_NULL);";
 		executeAndValidate(sqlStatement.c_str());
 
 		testDatabase();
@@ -73,8 +73,8 @@ void SQLiteDatabase::addNewQuestion(const Question& q) {
 	executeAndValidate(sqlStatement);
 }
 
-std::vector<Question> SQLiteDatabase::getQuestions(const int limit) {
-	std::vector<Question> out;
+std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
+	std::list<Question> out;
 	std::string sqlStatement = "SELECT * FROM QUESTIONS";
 	if (limit > 0)
 		sqlStatement += " LIMIT " + std::to_string(limit);
@@ -115,7 +115,7 @@ void SQLiteDatabase::testDatabase() {
 	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
 	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
 
-	std::vector<Question> questions = getQuestions();
+	std::list<Question> questions = getQuestions();
 	
 	int i = 0;
 	for (Question q : questions) {

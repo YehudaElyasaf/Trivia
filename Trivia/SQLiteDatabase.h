@@ -2,6 +2,7 @@
 #include"sqlite3.h"
 #include"IDatabase.h"
 #include "Question.h"
+#include <list>
 
 #define DATABASE_FILENAME "DB.sqlite"
 #define DOES_EXIST 0
@@ -22,9 +23,9 @@ public:
 	void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
 	
 	// add a question to table
-	void addNewQuestion(const Question& q);
-
-	std::vector<Question> getQuestions(const int limit=-1);
+	void addNewQuestion(const Question& q) override;
+	// get (optional: a limited number of) all questions from the database
+	std::list<Question> getQuestions(const int limit=UNLIMITED) override;
 
 private:
 	sqlite3* _db;
