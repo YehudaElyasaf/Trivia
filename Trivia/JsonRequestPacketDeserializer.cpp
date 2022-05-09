@@ -1,7 +1,7 @@
 #include "JsonRequestPacketDeserializer.h"
 
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const std::string& buffer) {
-    LoginRequest out = { "", "" };
+    LoginRequest out{"", ""};
     //ignore code field
     json data = json::parse(buffer.substr(1));
 
@@ -12,7 +12,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const std::s
 }
 
 SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(const std::string& buffer) {
-    SignupRequest out = { "", "", "" };
+    SignupRequest out{"", "", ""};
     //ignore code field
     json data = json::parse(buffer.substr(1));
 
@@ -20,5 +20,29 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(const std:
     out.password = data["password"];
     out.email = data["email"];
 
+    return out;
+}
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(const std::string& buffer) {
+    GetPlayersInRoomRequest out{0};
+    json data = json::parse(buffer.substr(1));
+    out.roomId = data["RoomId"];
+    return out;
+}
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const std::string& buffer) {
+    JoinRoomRequest out{0};
+    json data = json::parse(buffer.substr(1));
+    out.roomId = data["RoomId"];
+    return out;
+}
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const std::string& buffer) {
+    CreateRoomRequest out{"", 0, 0, 0};
+    json data = json::parse(buffer.substr(1));
+    out.answerTimeout = data["AnswerTimeout"];
+    out.maxUsers = data["MaxUsers"];
+    out.questionCount = data["QuestionCount"];
+    out.roomName = data["RoomName"];
     return out;
 }
