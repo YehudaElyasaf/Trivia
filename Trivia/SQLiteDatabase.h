@@ -1,6 +1,8 @@
 #pragma once
 #include"sqlite3.h"
 #include"IDatabase.h"
+#include "Question.h"
+#include <list>
 
 #define DATABASE_FILENAME "DB.sqlite"
 #define DOES_EXIST 0
@@ -19,6 +21,11 @@ public:
 	bool doesPasswordMatch(const std::string& name, const std::string& password) override;
 	//add a user to table
 	void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
+	
+	// add a question to table
+	void addNewQuestion(const Question& q) override;
+	// get (optional: a limited number of) all questions from the database
+	std::list<Question> getQuestions(const int limit=UNLIMITED) override;
 
 private:
 	sqlite3* _db;
@@ -27,6 +34,8 @@ private:
 	//execute sql statement
 	//and throw an exception in case of failture
 	void executeAndValidate(const std::string& sqlStatement);
+	// execute and verify with callbacks
+	void executeAndValidate(const std::string& sqlStatement, void* data, int(*callback)(void*, int, char**, char**));
 
 	//auto create a database 
 	void testDatabase();

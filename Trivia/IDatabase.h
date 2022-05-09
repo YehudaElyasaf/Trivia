@@ -1,6 +1,10 @@
 #pragma once
 
 #include <string>
+#include <list>
+#include "Question.h"
+
+#define UNLIMITED -1
 
 class IDatabase {
 public:
@@ -10,5 +14,11 @@ public:
 	virtual bool doesPasswordMatch(const std::string& name, const std::string& password) = 0;
 	//add a user to table
 	virtual void addNewUser(const std::string& name, const std::string& password, const std::string& mail) = 0;
+
+	// add a question to database
+	virtual void addNewQuestion(const Question& q) = 0;
+	// get (optional: a limited number of) all questions from the database
+	virtual std::list<Question> getQuestions(const int limit=UNLIMITED) = 0;
+
 };
 
