@@ -11,7 +11,7 @@ public:
 	RequestHandlerFactory(IDatabase* database);
 	
 	LoginRequestHandler* createLoginRequestHandler();
-	MenuRequestHandler* createMenuRequestHandler();
+	MenuRequestHandler* createMenuRequestHandler(std::string& username);
 	
 	LoginManager& getLoginManager();
 	StatisticsManager& getStatisticsManager();

@@ -8,8 +8,8 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() {
     return new LoginRequestHandler(m_loginManager, *this);
 }
 
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler() {
-    return new MenuRequestHandler();
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(std::string& username) {
+    return new MenuRequestHandler(username);
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager() {
