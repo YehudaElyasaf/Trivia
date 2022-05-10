@@ -19,7 +19,7 @@ SQLiteDatabase::SQLiteDatabase() {
 	if (isNewDB) {
 		std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
 		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT NOT NULL, ANS_2 TEXT NOT_NULL, ANS_3 TEXT NOT_NULL);";
-		sqlStatement += "CREATE TABLE STATISTICS (NAME TEXT PRIMARY KEY NOT NULL, TOTAL_ANSWERS INTEGER NOT NULL, CORRECT_ANSWERS INTEGER NOT NULL, ANSWER_TIME_SECONDS INTEGER NOT NULL, NUM_OF_GAMES INTEGER NOT NULL);";
+		sqlStatement += "CREATE TABLE STATISTICS (USERNAME TEXT PRIMARY KEY NOT NULL, TOTAL_ANSWERS INTEGER NOT NULL, CORRECT_ANSWERS INTEGER NOT NULL, ANSWER_TIME_SECONDS INTEGER NOT NULL, NUM_OF_GAMES INTEGER NOT NULL);";
 		executeAndValidate(sqlStatement.c_str());
 
 		testDatabase();
@@ -88,7 +88,7 @@ std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) 
 	std::string averageAnswerTime;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS int) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberFromDatabaseCallback);
+	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberAsStringCallback);
 	
 	return averageAnswerTime;
 }
@@ -97,7 +97,7 @@ std::string SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
 	std::string correctAnswers;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberFromDatabaseCallback);
+	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberAsStringCallback);
 
 	return correctAnswers;
 }
@@ -106,7 +106,7 @@ std::string SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
 	std::string totalAnswers;
 	std::string sqlStatement;
 	sqlStatement = "SELECT TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &totalAnswers, getOneNumberFromDatabaseCallback);
+	executeAndValidate(sqlStatement, &totalAnswers, getOneNumberAsStringCallback);
 
 	return totalAnswers;
 }
@@ -115,9 +115,19 @@ std::string SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
 	std::string games;
 	std::string sqlStatement;
 	sqlStatement = "SELECT NUM_OF_GAMES FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &games, getOneNumberFromDatabaseCallback);
+	executeAndValidate(sqlStatement, &games, getOneNumberAsStringCallback);
 
 	return games;
+}
+
+std::vector<std::string> SQLiteDatabase::getTopRatedUsers(const int numberOfUsers)
+{
+	std::vector<std::string> topUsers;
+	std::string sqlStatement;
+	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers);
+	executeAndValidate(sqlStatement, &topUsers, getTopRatedUserCallback);
+
+	return topUsers;
 }
 
 
@@ -168,3 +178,4 @@ void SQLiteDatabase::testDatabase() {
 		std::cout << "\n\n" << std::endl;
 	}
 }
+

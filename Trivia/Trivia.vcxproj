@@ -161,6 +161,7 @@
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SQLiteCallbacks.h" />
     <ClInclude Include="SQLiteDatabase.h" />
+    <ClInclude Include="StatisticsManager.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +181,7 @@
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SQLiteCallbacks.cpp" />
     <ClCompile Include="SQLiteDatabase.cpp" />
+    <ClCompile Include="StatisticsManager.cpp" />
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

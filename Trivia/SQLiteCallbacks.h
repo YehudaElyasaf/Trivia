@@ -8,4 +8,7 @@ int doesExistCallback(void* data, int argc, char** argv, char** azColumnName);
 int questionCallback(void* data, int argc, char** argv, char** azColumnName);
 
 // return a number 
-int getOneNumberFromDatabaseCallback(void* data, int argc, char** argv, char** azColumnName);
+int getOneNumberAsStringCallback(void* data, int argc, char** argv, char** azColumnName);
+
+//returns the top rated users
+int getTopRatedUserCallback(void* data, int argc, char** argv, char** azColumnName);

@@ -23,5 +23,6 @@ public:
 	virtual std::string getNumOfCorrectAnswers(const std::string& name) = 0;
 	virtual std::string getNumOfTotalAnswers(const std::string& name) = 0;
 	virtual std::string getNumOfPlayerGames(const std::string& name) = 0;
+	virtual std::vector<std::string> getTopRatedUsers(const int numberOfUsers) = 0;
 };
 

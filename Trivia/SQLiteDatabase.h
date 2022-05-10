@@ -30,6 +30,9 @@ public:
 	std::string getNumOfCorrectAnswers(const std::string& name) override;
 	std::string getNumOfTotalAnswers(const std::string& name) override;
 	std::string getNumOfPlayerGames(const std::string& name) override;
+	//returns the top rated users.
+	//the rate is (numberOfCorrectAnswers /numberOfTotalAnswers)
+	std::vector<std::string> getTopRatedUsers(const int numberOfUsers) override;
 
 private:
 	sqlite3* _db;

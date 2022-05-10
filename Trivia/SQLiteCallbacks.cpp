@@ -36,3 +36,11 @@ int getOneNumberAsStringCallback(void* data, int argc, char** argv, char** azCol
 
 	return 0;
 }
+
+int getTopRatedUserCallback(void* data, int argc, char** argv, char** azColumnName)
+{
+	std::vector<std::string>* pTopUsers = (std::vector<std::string>*)data;
+	(*pTopUsers).push_back(argv[0]);
+
+	return 0;
+}
