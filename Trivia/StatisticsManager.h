@@ -6,7 +6,7 @@
 class StatisticsManager
 {
 public:
-    StatisticsManager(const IDatabase* db);
+    StatisticsManager(IDatabase* db);
     std::vector<std::string> getHighScore();
     std::vector<std::string> getUserStatistics(const std::string& username);
 private:

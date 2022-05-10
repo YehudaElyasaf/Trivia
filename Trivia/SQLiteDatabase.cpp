@@ -84,17 +84,17 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 	return out;
 }
 
-float SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
-	int averageAnswerTime = 0;
+std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
+	std::string averageAnswerTime;
 	std::string sqlStatement;
-	sqlStatement = "SELECT ANSWER_TIME_SECONDS / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS int) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberFromDatabaseCallback);
 	
 	return averageAnswerTime;
 }
 
-int SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
-	int correctAnswers = 0;
+std::string SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
+	std::string correctAnswers;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberFromDatabaseCallback);
@@ -102,17 +102,17 @@ int SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
 	return correctAnswers;
 }
 
-int SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
-	int correctAnswers = 0;
+std::string SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
+	std::string totalAnswers;
 	std::string sqlStatement;
 	sqlStatement = "SELECT TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
-	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberFromDatabaseCallback);
+	executeAndValidate(sqlStatement, &totalAnswers, getOneNumberFromDatabaseCallback);
 
-	return correctAnswers;
+	return totalAnswers;
 }
 
-int SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
-	int games = 0;
+std::string SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
+	std::string games;
 	std::string sqlStatement;
 	sqlStatement = "SELECT NUM_OF_GAMES FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &games, getOneNumberFromDatabaseCallback);

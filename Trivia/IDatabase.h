@@ -19,9 +19,9 @@ public:
 	virtual void addNewQuestion(const Question& q) = 0;
 	// get (optional: a limited number of) all questions from the database
 	virtual std::list<Question> getQuestions(const int limit = UNLIMITED) = 0;
-	virtual float getPlayerAverageAnswerTime(const std::string& name) = 0;
-	virtual int getNumOfCorrectAnswers(const std::string& name) = 0;
-	virtual int getNumOfTotalAnswers(const std::string& name) = 0;
-	virtual int getNumOfPlayerGames(const std::string& name) = 0;
+	virtual std::string getPlayerAverageAnswerTime(const std::string& name) = 0;
+	virtual std::string getNumOfCorrectAnswers(const std::string& name) = 0;
+	virtual std::string getNumOfTotalAnswers(const std::string& name) = 0;
+	virtual std::string getNumOfPlayerGames(const std::string& name) = 0;
 };
 

@@ -26,10 +26,10 @@ public:
 	void addNewQuestion(const Question& q) override;
 	// get (optional: a limited number of) all questions from the database
 	std::list<Question> getQuestions(const int limit = UNLIMITED) override;
-	float getPlayerAverageAnswerTime(const std::string& name) override;
-	int getNumOfCorrectAnswers(const std::string& name) override;
-	int getNumOfTotalAnswers(const std::string& name) override;
-	int getNumOfPlayerGames(const std::string& name) override;
+	std::string getPlayerAverageAnswerTime(const std::string& name) override;
+	std::string getNumOfCorrectAnswers(const std::string& name) override;
+	std::string getNumOfTotalAnswers(const std::string& name) override;
+	std::string getNumOfPlayerGames(const std::string& name) override;
 
 private:
 	sqlite3* _db;
