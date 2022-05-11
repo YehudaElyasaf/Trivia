@@ -12,7 +12,7 @@ public:
 
 private:
 	StatisticsManager& m_statisticsManager;
-	RoomManager& m_RoomManager;
+	RoomManager& m_roomManager;
 	std::string m_username;
 
 	// handle request based on type and return result

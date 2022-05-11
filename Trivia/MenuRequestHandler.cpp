@@ -5,7 +5,7 @@
 #define NULL_ID 0
 
 MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr) :
-    m_username(username), m_RoomManager(roomMngr), m_statisticsManager(statsMngr) {}
+    m_username(username), m_roomManager(roomMngr), m_statisticsManager(statsMngr) {}
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo req) {
     int code = (unsigned char) req.buffer[0];
@@ -45,7 +45,18 @@ RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
 RequestResult MenuRequestHandler::getPlayersInRoom(const std::string& buffer) {
     GetPlayersInRoomRequest request = JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(buffer);
     GetPlayersInRoomResponse resp;
-    resp.players = m_roomManager.getRoomById(request.roomId).getAllUsers();
+    
+
+    try {
+        std::vector<LoggedUser> users;
+        users = m_roomManager.getRoomById(request.roomId).getAllUsers();
+        for (LoggedUser user : users)
+            resp.players.push_back(user.m_username);
+    }
+    catch (const std::exception& e) {
+        ErrorResponse errorResp{ e.what() };
+        return { JsonResponsePacketSerializer::serializeResponse(errorResp), this };
+    }
     return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
@@ -58,7 +69,8 @@ RequestResult MenuRequestHandler::joinRoom(const std::string& buffer) {
 
 RequestResult MenuRequestHandler::createRoom(const std::string& buffer) {
     CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
-    m_roomManager.createRoom({ m_username }, { NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false });
+    RoomData roomData{ NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
+    m_roomManager.createRoom({ m_username }, roomData);
     CreateRoomResponse resp{ true };
     return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }

@@ -36,3 +36,10 @@ std::vector<RoomData> RoomManager::getRooms() const
 
 	return roomDatas;
 }
+
+Room& RoomManager::getRoomById(const int id) {
+	if (m_rooms.find(id) == m_rooms.end())
+		throw std::exception("room not found");
+	
+	return m_rooms.at(id);
+}
