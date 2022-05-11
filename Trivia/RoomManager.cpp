@@ -1,9 +1,12 @@
 #include"RoomManager.h"
+#define NULL_ID 0
 
-int RoomManager::createRoom(const LoggedUser& roomCreator, const RoomData& roomData)
+int RoomManager::createRoom(const LoggedUser& roomCreator, RoomData& roomData)
 {
 	int roomIndex = m_nextIndex;
 	m_nextIndex++;
+
+	roomData.id = roomIndex;
 	m_rooms[roomIndex] = Room(roomCreator, roomData);
 	
 	return roomIndex;
