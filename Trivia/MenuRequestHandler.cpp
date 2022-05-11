@@ -37,8 +37,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
 
 RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
     CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
-    RoomData data{ NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
-    m_roomManager.createRoom({m_username}, data);
+
+    GetRoomsResponse resp{ true, m_roomManager.getRooms() };
+    return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
 RequestResult MenuRequestHandler::getPlayersInRoom(const std::string& buffer) {
@@ -69,5 +70,5 @@ RequestResult MenuRequestHandler::getHighScore(const std::string& buffer) {
 
 RequestResult MenuRequestHandler::getStats(const std::string& buffer) {
     GetPersonalStatsResponse resp{true, m_statisticsManager.getUserStatistics(m_username) };
-    return { JsonResponsePacketSerializer::serializeResponse(resp), this }
+    return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
