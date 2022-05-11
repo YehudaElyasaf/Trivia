@@ -29,3 +29,18 @@ int questionCallback(void* data, int argc, char** argv, char** azColumnName) {
 
 	return 0;
 }
+
+int getOneNumberAsStringCallback(void* data, int argc, char** argv, char** azColumnName) {
+	std::string* pNumber = (std::string*)data;
+	*pNumber = argv[0];
+
+	return 0;
+}
+
+int getTopRatedUserCallback(void* data, int argc, char** argv, char** azColumnName)
+{
+	std::vector<std::string>* pTopUsers = (std::vector<std::string>*)data;
+	(*pTopUsers).push_back(argv[0]);
+
+	return 0;
+}

@@ -21,11 +21,18 @@ public:
 	bool doesPasswordMatch(const std::string& name, const std::string& password) override;
 	//add a user to table
 	void addNewUser(const std::string& name, const std::string& password, const std::string& mail) override;
-	
+
 	// add a question to table
 	void addNewQuestion(const Question& q) override;
 	// get (optional: a limited number of) all questions from the database
-	std::list<Question> getQuestions(const int limit=UNLIMITED) override;
+	std::list<Question> getQuestions(const int limit = UNLIMITED) override;
+	std::string getPlayerAverageAnswerTime(const std::string& name) override;
+	std::string getNumOfCorrectAnswers(const std::string& name) override;
+	std::string getNumOfTotalAnswers(const std::string& name) override;
+	std::string getNumOfPlayerGames(const std::string& name) override;
+	//returns the top rated users.
+	//the rate is (numberOfCorrectAnswers /numberOfTotalAnswers)
+	std::vector<std::string> getTopRatedUsers(const int numberOfUsers) override;
 
 private:
 	sqlite3* _db;
