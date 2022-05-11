@@ -2,7 +2,7 @@
 #include "JsonResponsePacketSerializer.h"
 #include "JsonRequestPacketDeserializer.h"
 
-#define NULL_ID -1
+#define NULL_ID 0
 
 MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr) :
     m_username(username), m_RoomManager(roomMngr), m_statisticsManager(statsMngr) {}
