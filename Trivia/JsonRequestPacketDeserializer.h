@@ -9,4 +9,7 @@ class JsonRequestPacketDeserializer {
 public:
 	static LoginRequest deserializeLoginRequest(const std::string& buffer);
 	static SignupRequest deserializeSignupRequest(const std::string& buffer);
+	static GetPlayersInRoomRequest deserializeGetPlayersInRoomRequest(const std::string& buffer);
+	static JoinRoomRequest deserializeJoinRoomRequest(const std::string& buffer);
+	static CreateRoomRequest deserializeCreateRoomRequest(const std::string& buffer);
 };
