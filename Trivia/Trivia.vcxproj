@@ -18,6 +18,55 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Communication\Communicator.cpp" />
+    <ClCompile Include="Communication\Helper.cpp" />
+    <ClCompile Include="Communication\Server.cpp" />
+    <ClCompile Include="Databases\Question.cpp" />
+    <ClCompile Include="Databases\SQLiteCallbacks.cpp" />
+    <ClCompile Include="Databases\SQLiteDatabase.cpp" />
+    <ClCompile Include="Databases\StatisticsManager.cpp" />
+    <ClCompile Include="Handlers\LoginRequestHandler.cpp" />
+    <ClCompile Include="Handlers\MenuRequestHandler.cpp" />
+    <ClCompile Include="Handlers\RequestHandlerFactory.cpp" />
+    <ClCompile Include="lib\sqlite3.c" />
+    <ClCompile Include="lib\WSAInitializer.cpp" />
+    <ClCompile Include="Login\LoggedUser.cpp" />
+    <ClCompile Include="Login\LoginManager.cpp" />
+    <ClCompile Include="Room\Room.cpp" />
+    <ClCompile Include="Room\RoomManager.cpp" />
+    <ClCompile Include="Serializing\JsonRequestPacketDeserializer.cpp" />
+    <ClCompile Include="Serializing\JsonResponsePacketSerializer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Communication\Communicator.h" />
+    <ClInclude Include="Communication\Helper.h" />
+    <ClInclude Include="Communication\Server.h" />
+    <ClInclude Include="Databases\IDatabase.h" />
+    <ClInclude Include="Databases\Question.h" />
+    <ClInclude Include="Databases\SQLiteCallbacks.h" />
+    <ClInclude Include="Databases\SQLiteDatabase.h" />
+    <ClInclude Include="Databases\StatisticsManager.h" />
+    <ClInclude Include="Defines\msgCodes.h" />
+    <ClInclude Include="Defines\requests.h" />
+    <ClInclude Include="Defines\responses.h" />
+    <ClInclude Include="Handlers\IRequestHandler.h" />
+    <ClInclude Include="Handlers\LoginRequestHandler.h" />
+    <ClInclude Include="Handlers\MenuRequestHandler.h" />
+    <ClInclude Include="Handlers\RequestHandlerFactory.h" />
+    <ClInclude Include="lib\json.h" />
+    <ClInclude Include="lib\sqlite3.h" />
+    <ClInclude Include="lib\WSAInitializer.h" />
+    <ClInclude Include="Login\LoggedUser.h" />
+    <ClInclude Include="Login\LoginManager.h" />
+    <ClInclude Include="Room\Room.h" />
+    <ClInclude Include="Room\RoomManager.h" />
+    <ClInclude Include="Serializing\JsonRequestPacketDeserializer.h" />
+    <ClInclude Include="Serializing\JsonResponsePacketSerializer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="x64\Debug\Helper.obj" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,52 +187,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Communicator.h" />
-    <ClInclude Include="LoggedUser.h" />
-    <ClInclude Include="LoginManager.h" />
-    <ClInclude Include="MenuRequestHandler.h" />
-    <ClInclude Include="msgCodes.h" />
-    <ClInclude Include="Helper.h" />
-    <ClInclude Include="IDatabase.h" />
-    <ClInclude Include="IRequestHandler.h" />
-    <ClInclude Include="json.h" />
-    <ClInclude Include="JsonRequestPacketDeserializer.h" />
-    <ClInclude Include="JsonResponsePacketSerializer.h" />
-    <ClInclude Include="LoginRequestHandler.h" />
-    <ClInclude Include="Question.h" />
-    <ClInclude Include="RequestHandlerFactory.h" />
-    <ClInclude Include="requests.h" />
-    <ClInclude Include="responses.h" />
-    <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomManager.h" />
-    <ClInclude Include="Server.h" />
-    <ClInclude Include="sqlite3.h" />
-    <ClInclude Include="SQLiteCallbacks.h" />
-    <ClInclude Include="SQLiteDatabase.h" />
-    <ClInclude Include="StatisticsManager.h" />
-    <ClInclude Include="WSAInitializer.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Communicator.cpp" />
-    <ClCompile Include="Helper.cpp" />
-    <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
-    <ClCompile Include="JsonResponsePacketSerializer.cpp" />
-    <ClCompile Include="LoggedUser.cpp" />
-    <ClCompile Include="LoginManager.cpp" />
-    <ClCompile Include="LoginRequestHandler.cpp" />
-    <ClCompile Include="MenuRequestHandler.cpp" />
-    <ClCompile Include="Question.cpp" />
-    <ClCompile Include="RequestHandlerFactory.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomManager.cpp" />
-    <ClCompile Include="Server.cpp" />
-    <ClCompile Include="sqlite3.c" />
-    <ClCompile Include="SQLiteCallbacks.cpp" />
-    <ClCompile Include="SQLiteDatabase.cpp" />
-    <ClCompile Include="StatisticsManager.cpp" />
-    <ClCompile Include="WSAInitializer.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
