@@ -17,11 +17,7 @@ SQLiteDatabase::SQLiteDatabase() {
 	}
 
 	if (isNewDB) {
-		std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
-		sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT NOT NULL, ANS_2 TEXT NOT_NULL, ANS_3 TEXT NOT_NULL);";
-		sqlStatement += "CREATE TABLE STATISTICS (USERNAME TEXT PRIMARY KEY NOT NULL, TOTAL_ANSWERS INTEGER NOT NULL, CORRECT_ANSWERS INTEGER NOT NULL, ANSWER_TIME_SECONDS INTEGER NOT NULL, NUM_OF_GAMES INTEGER NOT NULL);";
-		executeAndValidate(sqlStatement.c_str());
-
+		initDatabase();
 		testDatabase();
 	}
 }
@@ -65,7 +61,7 @@ void SQLiteDatabase::addNewQuestion(const Question& q) {
 	std::string sqlStatement;
 	sqlStatement = "INSERT INTO QUESTIONS (QUESTION, RIGHT_ANS, ANS_1, ANS_2, ANS_3) VALUES('"
 		+ q.getQuestion() + "', '" + q.getCorrectAnswer();
-	
+
 	for (std::string ans : q.getPossibleAnswers())
 		if (ans != q.getCorrectAnswer())
 			sqlStatement += "', '" + ans;
@@ -87,9 +83,9 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
 	std::string averageAnswerTime;
 	std::string sqlStatement;
-	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS int) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberAsStringCallback);
-	
+
 	return averageAnswerTime;
 }
 
@@ -142,9 +138,11 @@ void SQLiteDatabase::executeAndValidate(const std::string& sqlStatement, void* d
 		throw std::exception(_errMessage);
 }
 
-void SQLiteDatabase::testDatabase() {
-	this->addNewUser("user1", "123", "user1@shovinism.com");
-	this->addNewUser("user2", "456", "user2@homofobism.com");
+void SQLiteDatabase::initDatabase() {
+	std::string sqlStatement = "CREATE TABLE USERS (NAME TEXT PRIMARY KEY NOT NULL, PASSWORD TEXT NOT NULL, MAIL TEXT NOT NULL);";
+	sqlStatement += "CREATE TABLE QUESTIONS (ID INTEGER PRIMARY KEY NOT NULL, QUESTION TEXT NOT NULL, RIGHT_ANS TEXT NOT NULL, ANS_1 TEXT NOT NULL, ANS_2 TEXT NOT_NULL, ANS_3 TEXT NOT_NULL);";
+	sqlStatement += "CREATE TABLE STATISTICS (USERNAME TEXT PRIMARY KEY NOT NULL, TOTAL_ANSWERS INTEGER NOT NULL, CORRECT_ANSWERS INTEGER NOT NULL, ANSWER_TIME_SECONDS INTEGER NOT NULL, NUM_OF_GAMES INTEGER NOT NULL);";
+	executeAndValidate(sqlStatement.c_str());
 
 	this->addNewQuestion(Question("What is the answer to the question of the universe?", { "42", "12", "6*9", "666" }));
 	this->addNewQuestion(Question("Why?", { "Llama", "Ok", "Becuase", "Something" }));
@@ -156,26 +154,15 @@ void SQLiteDatabase::testDatabase() {
 	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
 	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
 	this->addNewQuestion(Question("Conventziot?", { "I like Linux and Injeras!", "Maybe?", "Yes... Clion is the best!", "No!!!!" }));
+}
+
+void SQLiteDatabase::testDatabase() {
+	this->addNewUser("user1", "123", "user1@shovinism.com");
+	this->addNewUser("user2", "456", "user2@homofobism.com");
 
 	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
 	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
 
 	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
 	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
-
-	std::list<Question> questions = getQuestions();
-	
-	int i = 0;
-	for (Question q : questions) {
-		i = 0;
-		std::cout << q.getQuestion() << "\n" << std::endl;
-		
-		for (std::string ans : q.getPossibleAnswers()) {
-			if (ans == q.getCorrectAnswer())
-				std::cout << "V ";
-			std::cout << i++ << ". " << ans << std::endl;
-		}
-		std::cout << "\n\n" << std::endl;
-	}
 }
-

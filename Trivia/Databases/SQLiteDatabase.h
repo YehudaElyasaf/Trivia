@@ -45,5 +45,6 @@ private:
 	void executeAndValidate(const std::string& sqlStatement, void* data, int(*callback)(void*, int, char**, char**));
 
 	//auto create a database 
+	void initDatabase();
 	void testDatabase();
 };
