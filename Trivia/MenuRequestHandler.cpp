@@ -2,6 +2,8 @@
 #include "JsonResponsePacketSerializer.h"
 #include "JsonRequestPacketDeserializer.h"
 
+#define NULL_ID -1
+
 MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr) :
     m_username(username), m_RoomManager(roomMngr), m_statisticsManager(statsMngr) {}
 
@@ -35,7 +37,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
 
 RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
     CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
-    RoomData data{ -1, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
+    RoomData data{ NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
     m_roomManager.createRoom({m_username}, data);
 }
 
@@ -55,7 +57,7 @@ RequestResult MenuRequestHandler::joinRoom(const std::string& buffer) {
 
 RequestResult MenuRequestHandler::createRoom(const std::string& buffer) {
     CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
-    m_roomManager.createRoom({ m_username }, { -1, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false });
+    m_roomManager.createRoom({ m_username }, { NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false });
     CreateRoomResponse resp{ true };
     return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }

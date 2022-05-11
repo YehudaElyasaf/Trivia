@@ -2,7 +2,7 @@
 #include "responses.h"
 #include "json.h"
 
-#define DIVIDER ", "
+#define DIVIDER ","
 
 using json = nlohmann::json;
 
