@@ -19,7 +19,7 @@ namespace GuiClient
         {
             // first byte is the message code, then there are four length bytes for sockets stuff and then the json
             code = (int)(byte)buffer[0];
-            data = JsonConvert.DeserializeObject<Dictionary<string, string>>(buffer.Substring(5));
+            data = JsonConvert.DeserializeObject<Dictionary<string, string>>(buffer.Substring(Const.HEADERS_LENGTH));
         }
 
         // serialization
