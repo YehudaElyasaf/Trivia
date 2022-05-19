@@ -45,8 +45,9 @@ namespace GuiClient
 
             _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            if (!Convert.ToBase64String(_buffer).Equals("Hello"))
-                throw new Exception("Invalid opening message from server:\n" + Convert.ToBase64String(_buffer));
+            
+            if (!Encoding.Default.GetString(_buffer).Equals("Hello"))
+                throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer));
         }
 
         public bool Login(string username, string password)
