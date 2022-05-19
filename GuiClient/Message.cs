@@ -48,6 +48,6 @@ namespace GuiClient
 
         //getters
         public int getCode() { return code; }
-        public Dictionary<string, string>
+        public Dictionary<string, string> getData() { return data; }
     }
 }
