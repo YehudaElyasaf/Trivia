@@ -32,7 +32,7 @@ static class Const
 }
 namespace GuiClient
 {
-    internal class Communicator
+    public class Communicator
     {
         private TcpClient _client;
         private IPEndPoint _serverEndPoint;

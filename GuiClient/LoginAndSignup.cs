@@ -12,14 +12,16 @@ namespace GuiClient
 {
     public partial class LoginAndSignup : Form
     {
-        public LoginAndSignup()
+        Communicator _communicator;
+        public LoginAndSignup(Communicator communicator)
         {
+            _communicator = communicator;
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            _communicator.Login(loginUsername.Text, loginPassword.Text);
         }
 
         private void label1_Click(object sender, EventArgs e)
