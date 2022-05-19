@@ -12,8 +12,10 @@ namespace GuiClient
 {
     public partial class LoginAndSignup : Form
     {
-        public LoginAndSignup()
+        Communicator _communicator;
+        public LoginAndSignup(Communicator communicator)
         {
+            _communicator = communicator;
             InitializeComponent();
         }
 

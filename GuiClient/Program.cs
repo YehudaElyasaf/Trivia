@@ -18,7 +18,7 @@ namespace GuiClient
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginAndSignup());
+            Application.Run(new LoginAndSignup(communicator));
         }
     }
 }
