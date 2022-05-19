@@ -24,6 +24,8 @@ static class Const
     public const int HIGH_SCORE_CODE = 9;
     public const int PERSONAL_STATS_CODE = 10;
 
+    public const int HEADERS_LENGTH = 5;
+
     public const int FAILTURE_STATUS = 0;
     public const int SUCCESS_STATUS = 1;
 }
