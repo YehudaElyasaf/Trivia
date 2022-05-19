@@ -17,16 +17,18 @@ namespace GuiClient
         // deserialization
         public Message(String buffer)
         {
-            // Add deserialization here
+            // first byte is the message code, then there are four length bytes for sockets stuff and then the json
+            code = (int)(byte)buffer[0];
+            data = JsonConvert.DeserializeObject<Dictionary<String, String>>(buffer.Substring(5));
         }
 
         // serialization
         override public String ToString()
         {
             String buffer = "";
-            buffer += (char)((byte)this.code);
-            String jsonData = JsonConvert.SerializeObject(this.data);
-            buffer += intToBytes(jsonData.Length);
+            buffer += (char)((byte)code);
+            String jsonData = JsonConvert.SerializeObject(data);
+            buffer += IntToBytes(jsonData.Length);
             buffer += jsonData;
             return buffer;
         }
@@ -35,7 +37,7 @@ namespace GuiClient
         private Dictionary<String, String> data { get; }
 
         // return number as a string of bytes.
-        private String intToBytes(int num) {
+        private String IntToBytes(int num) {
             String output = "";
             byte[] lenBytes = BitConverter.GetBytes(num);
             for (int i = 0; i < lenBytes.Length; i++) {
