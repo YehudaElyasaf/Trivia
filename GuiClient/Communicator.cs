@@ -40,6 +40,7 @@ namespace GuiClient
         {
             _client = new TcpClient();
             _serverEndPoint = new IPEndPoint(IPAddress.Parse(Const.SERVER_IP), Const.SERVER_PORT);
+            _client.Connect(_serverEndPoint);
             _clientStream = _client.GetStream();
 
             _buffer = new byte[Const.MAX_BUFFER_SIZE];
