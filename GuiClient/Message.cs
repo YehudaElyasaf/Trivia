@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 namespace GuiClient
 {
     internal class Message
-    {
-        public int _code;
-        public Dictionary<String, String> _data;
-        
-        public Message(int code, Dictionary<String, String> data) {
-            _code = code;
-            _data = data;
+    {   
+        public Message(int _code, Dictionary<String, String> _data) {
+            code = _code;
+            data = _data;
         }
 
         public Message(String buffer)
@@ -26,5 +23,9 @@ namespace GuiClient
             // Add serialization here
             return "";
         }
+
+        private int code { get; }
+        private Dictionary<String, String> data { get; }
+
     }
 }
