@@ -9,41 +9,45 @@ namespace GuiClient
 {
     internal class Message
     {   
-        public Message(int _code, Dictionary<String, String> _data) {
+        public Message(int _code, Dictionary<string, string> _data) {
             code = _code;
             data = _data;
         }
 
         // deserialization
-        public Message(String buffer)
+        public Message(string buffer)
         {
             // first byte is the message code, then there are four length bytes for sockets stuff and then the json
             code = (int)(byte)buffer[0];
-            data = JsonConvert.DeserializeObject<Dictionary<String, String>>(buffer.Substring(5));
+            data = JsonConvert.DeserializeObject<Dictionary<string, string>>(buffer.Substring(5));
         }
 
         // serialization
-        override public String ToString()
+        override public string ToString()
         {
-            String buffer = "";
+            string buffer = "";
             buffer += (char)((byte)code);
-            String jsonData = JsonConvert.SerializeObject(data);
+            string jsonData = JsonConvert.SerializeObject(data);
             buffer += IntToBytes(jsonData.Length);
             buffer += jsonData;
             return buffer;
         }
 
-        private int code { get; }
-        private Dictionary<String, String> data { get; }
+        private int code;
+        private Dictionary<string, string> data;
 
         // return number as a string of bytes.
-        private String IntToBytes(int num) {
-            String output = "";
+        private string IntToBytes(int num) {
+            string output = "";
             byte[] lenBytes = BitConverter.GetBytes(num);
             for (int i = 0; i < lenBytes.Length; i++) {
                 output += ((char)lenBytes[i]);
             }
             return output;
         }
+
+        //getters
+        public int getCode() { return code; }
+        public Dictionary<string, string>
     }
 }
