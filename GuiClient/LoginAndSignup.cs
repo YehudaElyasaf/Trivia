@@ -46,5 +46,9 @@ namespace GuiClient
         {
 
         }
+        private void loginLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

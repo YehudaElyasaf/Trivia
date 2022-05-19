@@ -36,36 +36,40 @@
             // 
             // createRoomButton
             // 
-            this.createRoomButton.Location = new System.Drawing.Point(335, 32);
+            this.createRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createRoomButton.Location = new System.Drawing.Point(327, 31);
             this.createRoomButton.Name = "createRoomButton";
-            this.createRoomButton.Size = new System.Drawing.Size(108, 23);
+            this.createRoomButton.Size = new System.Drawing.Size(152, 34);
             this.createRoomButton.TabIndex = 0;
             this.createRoomButton.Text = "Create a Room";
             this.createRoomButton.UseVisualStyleBackColor = true;
             // 
             // joinRoomButton
             // 
-            this.joinRoomButton.Location = new System.Drawing.Point(335, 142);
+            this.joinRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.joinRoomButton.Location = new System.Drawing.Point(327, 141);
             this.joinRoomButton.Name = "joinRoomButton";
-            this.joinRoomButton.Size = new System.Drawing.Size(108, 23);
+            this.joinRoomButton.Size = new System.Drawing.Size(152, 34);
             this.joinRoomButton.TabIndex = 1;
             this.joinRoomButton.Text = "Join a Room";
             this.joinRoomButton.UseVisualStyleBackColor = true;
             // 
             // statsButton
             // 
-            this.statsButton.Location = new System.Drawing.Point(335, 247);
+            this.statsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statsButton.Location = new System.Drawing.Point(327, 256);
             this.statsButton.Name = "statsButton";
-            this.statsButton.Size = new System.Drawing.Size(108, 23);
+            this.statsButton.Size = new System.Drawing.Size(152, 34);
             this.statsButton.TabIndex = 2;
             this.statsButton.Text = "Statistics";
             this.statsButton.UseVisualStyleBackColor = true;
             // 
             // exitButton
             // 
-            this.exitButton.Location = new System.Drawing.Point(335, 367);
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.Location = new System.Drawing.Point(327, 366);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(108, 23);
+            this.exitButton.Size = new System.Drawing.Size(152, 34);
             this.exitButton.TabIndex = 3;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;

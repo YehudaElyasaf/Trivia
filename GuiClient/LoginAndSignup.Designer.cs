@@ -41,9 +41,10 @@
             // 
             // loginButton
             // 
-            this.loginButton.Location = new System.Drawing.Point(260, 223);
+            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.loginButton.Location = new System.Drawing.Point(260, 232);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(75, 23);
+            this.loginButton.Size = new System.Drawing.Size(75, 35);
             this.loginButton.TabIndex = 0;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
@@ -51,46 +52,52 @@
             // 
             // loginUsername
             // 
-            this.loginUsername.Location = new System.Drawing.Point(235, 171);
+            this.loginUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.loginUsername.Location = new System.Drawing.Point(235, 162);
             this.loginUsername.Name = "loginUsername";
-            this.loginUsername.Size = new System.Drawing.Size(100, 20);
+            this.loginUsername.Size = new System.Drawing.Size(100, 29);
             this.loginUsername.TabIndex = 1;
             this.loginUsername.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // loginPassword
             // 
+            this.loginPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.loginPassword.Location = new System.Drawing.Point(235, 197);
             this.loginPassword.Name = "loginPassword";
-            this.loginPassword.Size = new System.Drawing.Size(100, 20);
+            this.loginPassword.Size = new System.Drawing.Size(100, 29);
             this.loginPassword.TabIndex = 2;
             // 
             // signupUsername
             // 
+            this.signupUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.signupUsername.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.signupUsername.Location = new System.Drawing.Point(550, 171);
+            this.signupUsername.Location = new System.Drawing.Point(550, 162);
             this.signupUsername.Name = "signupUsername";
-            this.signupUsername.Size = new System.Drawing.Size(100, 20);
+            this.signupUsername.Size = new System.Drawing.Size(100, 29);
             this.signupUsername.TabIndex = 3;
             // 
             // signupPassword
             // 
+            this.signupPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
             this.signupPassword.Location = new System.Drawing.Point(550, 197);
             this.signupPassword.Name = "signupPassword";
-            this.signupPassword.Size = new System.Drawing.Size(100, 20);
+            this.signupPassword.Size = new System.Drawing.Size(100, 29);
             this.signupPassword.TabIndex = 4;
             // 
             // signupMail
             // 
-            this.signupMail.Location = new System.Drawing.Point(550, 223);
+            this.signupMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.signupMail.Location = new System.Drawing.Point(550, 232);
             this.signupMail.Name = "signupMail";
-            this.signupMail.Size = new System.Drawing.Size(100, 20);
+            this.signupMail.Size = new System.Drawing.Size(100, 29);
             this.signupMail.TabIndex = 5;
             // 
             // signupButton
             // 
-            this.signupButton.Location = new System.Drawing.Point(575, 249);
+            this.signupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.signupButton.Location = new System.Drawing.Point(575, 267);
             this.signupButton.Name = "signupButton";
-            this.signupButton.Size = new System.Drawing.Size(75, 23);
+            this.signupButton.Size = new System.Drawing.Size(75, 35);
             this.signupButton.TabIndex = 6;
             this.signupButton.Text = "signup";
             this.signupButton.UseVisualStyleBackColor = true;
@@ -98,8 +105,8 @@
             // signupLabel
             // 
             this.signupLabel.AutoSize = true;
-            this.signupLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.signupLabel.Location = new System.Drawing.Point(448, 170);
+            this.signupLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.signupLabel.Location = new System.Drawing.Point(444, 176);
             this.signupLabel.Name = "signupLabel";
             this.signupLabel.Size = new System.Drawing.Size(100, 72);
             this.signupLabel.TabIndex = 7;
@@ -111,12 +118,13 @@
             // 
             this.loginLabel.AutoSize = true;
             this.loginLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginLabel.Location = new System.Drawing.Point(133, 168);
+            this.loginLabel.Location = new System.Drawing.Point(129, 169);
             this.loginLabel.Name = "loginLabel";
             this.loginLabel.Size = new System.Drawing.Size(100, 48);
             this.loginLabel.TabIndex = 8;
             this.loginLabel.Text = "username:\r\npassword:";
             this.loginLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.loginLabel.Click += new System.EventHandler(this.loginLabel_Click);
             // 
             // LoginAndSignup
             // 
