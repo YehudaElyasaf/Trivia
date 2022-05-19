@@ -11,6 +11,7 @@ static class Const
     public const int SERVER_PORT = 4242;
     public const string SERVER_IP = "127.0.0.1";
     public const int MAX_BUFFER_SIZE = 4096;
+    public const string OPENING_MESSAGE = "Hello";
 
     //message codes
     public const int ERROR_CODE = 1;
@@ -48,8 +49,8 @@ namespace GuiClient
             _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
             
-            if (!Encoding.Default.GetString(_buffer).Equals("Hello"))
-                throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer));
+            if (!Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length) .Equals(Const.OPENING_MESSAGE))
+                throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length));
         }
 
         public bool Login(string username, string password)
