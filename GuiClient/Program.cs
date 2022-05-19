@@ -14,6 +14,8 @@ namespace GuiClient
         [STAThread]
         static void Main()
         {
+            Console.WriteLine(new Message(1, new Dictionary<string, string> { { "status", "1" }, { "banana", "turhuhxckuo@gmail.com" } }).ToString());
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginAndSignup());
