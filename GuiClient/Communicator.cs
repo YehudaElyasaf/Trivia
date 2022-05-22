@@ -67,5 +67,10 @@ namespace GuiClient
 
             return loginResponse.getCode() == Const.SUCCESS_STATUS;
         }
+
+        internal void CreateRoom(string name, int maxUsers, int questionsCount, int answerTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
