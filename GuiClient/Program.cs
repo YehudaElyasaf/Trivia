@@ -14,8 +14,6 @@ namespace GuiClient
         [STAThread]
         static void Main()
         {
-            Communicator communicator = null;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginAndSignup());
