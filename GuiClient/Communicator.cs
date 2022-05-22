@@ -12,6 +12,7 @@ static class Const
     public const string SERVER_IP = "127.0.0.1";
     public const int MAX_BUFFER_SIZE = 4096;
     public const string OPENING_MESSAGE = "Hello";
+    public const char LIST_SEPERATOR = ',';
 
     //message codes
     public const int ERROR_CODE = 1;
@@ -68,9 +69,34 @@ namespace GuiClient
             return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
-        internal void CreateRoom(string name, int maxUsers, int questionsCount, int answerTime)
+        internal bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
         {
-            throw new NotImplementedException();
+            Message createRoomMessage = new Message(Const.CREATE_ROOM_CODE, new Dictionary<string, string> { { "roomName", name },
+                { "maxUsers", maxUsers }, { "questionCount", questionsCount }, { "answerTimeout", answerTime } });
+            _buffer = new ASCIIEncoding().GetBytes(createRoomMessage.ToString());
+            _clientStream.Write(_buffer, 0, _buffer.Length);
+            _clientStream.Flush();
+
+            _buffer = new byte[Const.MAX_BUFFER_SIZE];
+            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+            Message createRoomResponse = new Message(Encoding.Default.GetString(_buffer));
+
+            return createRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+
+        internal string[] GetPlayersInRoom(string roomId)
+        {
+            Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
+                new Dictionary<string, string> { { "RoomId", roomId }});
+            _buffer = new ASCIIEncoding().GetBytes(GetPlayersMessage.ToString());
+            _clientStream.Write(_buffer, 0, _buffer.Length);
+            _clientStream.Flush();
+
+            _buffer = new byte[Const.MAX_BUFFER_SIZE];
+            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+            Message getPlayersResponse = new Message(Encoding.Default.GetString(_buffer));
+
+            return getPlayersResponse.getData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
         }
     }
 }

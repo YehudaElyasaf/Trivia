@@ -28,23 +28,23 @@ SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(const std:
 GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersInRoomRequest(const std::string& buffer) {
     GetPlayersInRoomRequest out{0};
     json data = json::parse(buffer.substr(DATA_START));
-    out.roomId = data["RoomId"];
+    out.roomId = data["roomId"];
     return out;
 }
 
 JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const std::string& buffer) {
     JoinRoomRequest out{0};
     json data = json::parse(buffer.substr(DATA_START));
-    out.roomId = data["RoomId"];
+    out.roomId = data["roomId"];
     return out;
 }
 
 CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const std::string& buffer) {
     CreateRoomRequest out{"", 0, 0, 0};
     json data = json::parse(buffer.substr(DATA_START));
-    out.answerTimeout = data["AnswerTimeout"];
-    out.maxUsers = data["MaxUsers"];
-    out.questionCount = data["QuestionCount"];
-    out.roomName = data["RoomName"];
+    out.answerTimeout = data["answerTimeout"];
+    out.maxUsers = data["maxUsers"];
+    out.questionCount = data["questionCount"];
+    out.roomName = data["roomName"];
     return out;
 }

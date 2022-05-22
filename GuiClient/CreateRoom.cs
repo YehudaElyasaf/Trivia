@@ -21,12 +21,7 @@ namespace GuiClient
 
         private void createButton_Click(object sender, EventArgs e)
         {
-            _communicator.CreateRoom(roomName.Text, int.Parse(playersNum.Text), int.Parse(questionsNum.Text), int.Parse(answerTime.Text));
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
         }
     }
 }

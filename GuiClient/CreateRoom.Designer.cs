@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.CheckedListBox playersList;
+            this.playersList = new System.Windows.Forms.CheckedListBox();
             this.roomName = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.TTAnswerLabel = new System.Windows.Forms.Label();
@@ -38,17 +38,16 @@
             this.createButton = new System.Windows.Forms.Button();
             this.questionNumLabel = new System.Windows.Forms.Label();
             this.questionsNum = new System.Windows.Forms.TextBox();
-            playersList = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // playersList
             // 
-            playersList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            playersList.FormattingEnabled = true;
-            playersList.Location = new System.Drawing.Point(428, 40);
-            playersList.Name = "playersList";
-            playersList.Size = new System.Drawing.Size(324, 316);
-            playersList.TabIndex = 7;
+            this.playersList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.playersList.FormattingEnabled = true;
+            this.playersList.Location = new System.Drawing.Point(428, 40);
+            this.playersList.Name = "playersList";
+            this.playersList.Size = new System.Drawing.Size(324, 316);
+            this.playersList.TabIndex = 7;
             // 
             // roomName
             // 
@@ -124,7 +123,6 @@
             this.questionNumLabel.Size = new System.Drawing.Size(190, 24);
             this.questionNumLabel.TabIndex = 9;
             this.questionNumLabel.Text = "Number of questions:";
-            this.questionNumLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // questionsNum
             // 
@@ -141,7 +139,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.questionNumLabel);
             this.Controls.Add(this.questionsNum);
-            this.Controls.Add(playersList);
+            this.Controls.Add(this.playersList);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.playersNumLabel);
             this.Controls.Add(this.playersNum);
@@ -167,5 +165,6 @@
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Label questionNumLabel;
         private System.Windows.Forms.TextBox questionsNum;
+        private System.Windows.Forms.CheckedListBox playersList;
     }
 }
