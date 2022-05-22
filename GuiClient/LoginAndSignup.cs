@@ -19,9 +19,11 @@ namespace GuiClient
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void LoginButtonClick(object sender, EventArgs e)
         {
-            _communicator.Login(loginUsername.Text, loginPassword.Text);
+            //login button
+            bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
