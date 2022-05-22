@@ -38,16 +38,16 @@ namespace GuiClient
         private TcpClient _client;
         private IPEndPoint _serverEndPoint;
         private NetworkStream _clientStream;
-        byte[] _buffer;
 
         public Communicator()
         {
+            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+
             _client = new TcpClient();
             _serverEndPoint = new IPEndPoint(IPAddress.Parse(Const.SERVER_IP), Const.SERVER_PORT);
             _client.Connect(_serverEndPoint);
             _clientStream = _client.GetStream();
 
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
             
             if (!Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length) .Equals(Const.OPENING_MESSAGE))
@@ -56,6 +56,8 @@ namespace GuiClient
 
         public bool Login(string username, string password)
         {
+            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+
             Message loginMessage = new Message(Const.LOGIN_CODE,
                 new Dictionary<string, string> {{ "username", username }, {"password", password}});
             _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
@@ -68,9 +70,31 @@ namespace GuiClient
 
             return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
+        public bool Signup(string username, string password, string email)
+        {
+            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+
+            Message loginMessage = new Message(Const.SIGNUP_CODE,
+                new Dictionary<string, string> {{ "username", username }, {"password", password}, {"email", email}});
+            _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
+            _clientStream.Write(_buffer, 0, _buffer.Length);
+            _clientStream.Flush();
+
+            _buffer = new byte[Const.MAX_BUFFER_SIZE];
+            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+
+
+            Message signupResponse = new Message(Encoding.Default.GetString(_buffer));
+            if (signupResponse.getData()["status"] == Const.FAILTURE_STATUS.ToString())
+                return false;
+
+            return Login(username, password);
+        }
 
         internal bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
         {
+            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+
             Message createRoomMessage = new Message(Const.CREATE_ROOM_CODE, new Dictionary<string, string> { { "roomName", name },
                 { "maxUsers", maxUsers }, { "questionCount", questionsCount }, { "answerTimeout", answerTime } });
             _buffer = new ASCIIEncoding().GetBytes(createRoomMessage.ToString());
@@ -86,6 +110,8 @@ namespace GuiClient
 
         internal string[] GetPlayersInRoom(string roomId)
         {
+            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+
             Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
                 new Dictionary<string, string> { { "RoomId", roomId }});
             _buffer = new ASCIIEncoding().GetBytes(GetPlayersMessage.ToString());

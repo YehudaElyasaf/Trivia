@@ -19,18 +19,18 @@ namespace GuiClient
             _communicator = new Communicator();
         }
 
-        private void LoginButtonClick(object sender, EventArgs e)
+        private void showMainMenu()
         {
-            //login button
+            Controls.Clear();
+            MainMenu mainMenu = new MainMenu();
+            Controls.Add(mainMenu);
+            mainMenu.BringToFront();
+        }
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
             if (didLoginSucceed)
-            {
-                //show menu
-                Controls.Clear();
-                MainMenu mainMenu = new MainMenu();
-                Controls.Add(mainMenu);
-                mainMenu.BringToFront();
-            }
+                showMainMenu();
             else
                 MessageBox.Show("Login failed");
         }
@@ -62,6 +62,15 @@ namespace GuiClient
         private void loginLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void signupButton_Click(object sender, EventArgs e)
+        {
+            bool didSignupSucceed = _communicator.Signup(signupUsername.Text, signupPassword.Text, signupMail.Text);
+            if (didSignupSucceed)
+                showMainMenu();
+            else
+                MessageBox.Show("Signup failed");
         }
     }
 }
