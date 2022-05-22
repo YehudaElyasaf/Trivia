@@ -13,23 +13,23 @@ namespace GuiClient
     public partial class LoginAndSignup : Form
     {
         Communicator _communicator;
-        public LoginAndSignup(Communicator communicator)
+        public LoginAndSignup()
         {
-            _communicator = communicator;
             InitializeComponent();
-            //MainMenu menu
+            _communicator = new Communicator();
         }
 
         private void LoginButtonClick(object sender, EventArgs e)
         {
             //login button
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
-            if (didLoginSucceed) {
-                MainMenu menu = new MainMenu();
-                menu.Dock = DockStyle.Fill;
+            if (didLoginSucceed)
+            {
+                //show menu
                 Controls.Clear();
-                Controls.Add(menu);
-                menu.BringToFront();
+                MainMenu mainMenu = new MainMenu();
+                Controls.Add(mainMenu);
+                mainMenu.BringToFront();
             }
             else
                 MessageBox.Show("Login failed");

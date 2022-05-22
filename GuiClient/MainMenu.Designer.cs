@@ -34,10 +34,10 @@
             this.createRoomButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // exitButton
+            // createRoomButton
             // 
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(366, 409);
+            this.exitButton.Location = new System.Drawing.Point(321, 199);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(152, 34);
             this.exitButton.TabIndex = 7;
@@ -64,7 +64,15 @@
             this.joinRoomButton.Text = "Join a Room";
             this.joinRoomButton.UseVisualStyleBackColor = true;
             // 
-            // createRoomButton
+            // statsButton
+            // 
+            this.statsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statsButton.Location = new System.Drawing.Point(327, 256);
+            this.statsButton.Name = "statsButton";
+            this.statsButton.Size = new System.Drawing.Size(152, 34);
+            this.statsButton.TabIndex = 2;
+            this.statsButton.Text = "Statistics";
+            this.statsButton.UseVisualStyleBackColor = true;
             // 
             this.createRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.createRoomButton.Location = new System.Drawing.Point(366, 74);
@@ -74,7 +82,7 @@
             this.createRoomButton.Text = "Create a Room";
             this.createRoomButton.UseVisualStyleBackColor = true;
             // 
-            // MainMenu
+            // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
