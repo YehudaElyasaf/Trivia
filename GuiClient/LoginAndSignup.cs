@@ -23,7 +23,12 @@ namespace GuiClient
         {
             //login button
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
-            
+            if (didLoginSucceed) { 
+                (new Menu()).Show();
+                this.Hide();
+            }
+            else
+                MessageBox.Show("Login failed");
         }
 
         private void label1_Click(object sender, EventArgs e)
