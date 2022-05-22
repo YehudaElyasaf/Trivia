@@ -67,5 +67,10 @@ namespace GuiClient
 
             return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
+
+        internal void CreateRoom(string name, int maxUsers, int questionsCount, int answerTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
