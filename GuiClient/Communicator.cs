@@ -63,9 +63,9 @@ namespace GuiClient
 
             _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            Message loginResponse = new Message(_buffer.ToString());
+            Message loginResponse = new Message(Encoding.Default.GetString(_buffer));
 
-            return loginResponse.getCode() == Const.SUCCESS_STATUS;
+            return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
     }
 }
