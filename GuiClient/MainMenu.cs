@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace GuiClient
 {
-    public partial class Menu : Form
+    public partial class MainMenu : UserControl
     {
-        public Menu()
+        public MainMenu()
         {
             InitializeComponent();
-        }
-
-        private void Menu_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

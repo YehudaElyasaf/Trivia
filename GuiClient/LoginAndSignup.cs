@@ -17,15 +17,19 @@ namespace GuiClient
         {
             _communicator = communicator;
             InitializeComponent();
+            //MainMenu menu
         }
 
         private void LoginButtonClick(object sender, EventArgs e)
         {
             //login button
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
-            if (didLoginSucceed) { 
-                (new Menu()).Show();
-                this.Hide();
+            if (didLoginSucceed) {
+                MainMenu menu = new MainMenu();
+                menu.Dock = DockStyle.Fill;
+                Controls.Clear();
+                Controls.Add(menu);
+                menu.BringToFront();
             }
             else
                 MessageBox.Show("Login failed");
@@ -43,7 +47,7 @@ namespace GuiClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
