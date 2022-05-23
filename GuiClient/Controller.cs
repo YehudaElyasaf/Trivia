@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace GuiClient
 {
@@ -17,7 +18,15 @@ namespace GuiClient
         public Controller()
         {
             InitializeComponent();
-            _communicator = new Communicator();
+
+        }
+
+        public void ShowConnectionError(string errorMessage)
+        {
+            Controls.Clear();
+            ConnectionError connectionError = new ConnectionError(errorMessage, this);
+            Controls.Add(connectionError);
+            connectionError.BringToFront();
         }
 
         public void ShowMainMenu()
@@ -46,13 +55,32 @@ namespace GuiClient
 
         public void ResetCommunicator()
         {
-            _communicator.Close();
-            _communicator = new Communicator();
+            try
+            {
+                if (_communicator!=null)
+                    _communicator.Close();
+                _communicator = new Communicator();
+                ShowLoginScreen();
+            }
+            catch (Exception ex)
+            {
+                //connection error
+                ShowConnectionError(ex.Message);
+            }
         }
 
         private void Controller_Load(object sender, EventArgs e)
         {
-            ShowLoginScreen();
+            try
+            {
+                _communicator = new Communicator();
+                ShowLoginScreen();
+            }
+            catch (Exception ex)
+            {
+                //connection error
+                ShowConnectionError(ex.Message);
+            }
         }
     }
 }

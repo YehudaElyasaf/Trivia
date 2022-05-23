@@ -12,9 +12,22 @@ namespace GuiClient
 {
     public partial class ConnectionError : UserControl
     {
-        public ConnectionError()
+        Controller _controller;
+        public ConnectionError(string errorMessage, Controller controller)
         {
             InitializeComponent();
+            errorDetailsLabel.Text = errorMessage;
+            _controller = controller;
+        }
+
+        private void ConnectionError_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reconnectButton_Click(object sender, EventArgs e)
+        {
+            _controller.ResetCommunicator();
         }
     }
 }

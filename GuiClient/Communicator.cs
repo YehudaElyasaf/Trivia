@@ -49,8 +49,8 @@ namespace GuiClient
             _clientStream = _client.GetStream();
 
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            
-            if (!Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length) .Equals(Const.OPENING_MESSAGE))
+
+            if (!Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length).Equals(Const.OPENING_MESSAGE))
                 throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length));
         }
 
@@ -59,7 +59,7 @@ namespace GuiClient
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
             Message loginMessage = new Message(Const.LOGIN_CODE,
-                new Dictionary<string, string> {{ "username", username }, {"password", password}});
+                new Dictionary<string, string> { { "username", username }, { "password", password } });
             _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
             _clientStream.Write(_buffer, 0, _buffer.Length);
             _clientStream.Flush();
@@ -75,7 +75,7 @@ namespace GuiClient
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
             Message loginMessage = new Message(Const.SIGNUP_CODE,
-                new Dictionary<string, string> {{ "username", username }, {"password", password}, {"email", email}});
+                new Dictionary<string, string> { { "username", username }, { "password", password }, { "email", email } });
             _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
             _clientStream.Write(_buffer, 0, _buffer.Length);
             _clientStream.Flush();
@@ -94,6 +94,7 @@ namespace GuiClient
         public void Close()
         {
             _client.Close();
+
         }
 
         public bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
@@ -118,7 +119,7 @@ namespace GuiClient
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
             Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
-                new Dictionary<string, string> { { "RoomId", roomId }});
+                new Dictionary<string, string> { { "RoomId", roomId } });
             _buffer = new ASCIIEncoding().GetBytes(GetPlayersMessage.ToString());
             _clientStream.Write(_buffer, 0, _buffer.Length);
             _clientStream.Flush();

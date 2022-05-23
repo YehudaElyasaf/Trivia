@@ -35,7 +35,6 @@ namespace GuiClient
         private void exitButton_Click(object sender, EventArgs e)
         {
             _controller.ResetCommunicator();
-            _controller.ShowLoginScreen();
         }
     }
 }
