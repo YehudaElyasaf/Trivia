@@ -43,6 +43,7 @@
             this.createRoomButton.TabIndex = 0;
             this.createRoomButton.Text = "Create a Room";
             this.createRoomButton.UseVisualStyleBackColor = true;
+            this.createRoomButton.Click += new System.EventHandler(this.createRoomButton_Click);
             // 
             // joinRoomButton
             // 
@@ -73,6 +74,7 @@
             this.exitButton.TabIndex = 3;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // Menu
             // 

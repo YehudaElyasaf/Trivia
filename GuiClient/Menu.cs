@@ -12,14 +12,27 @@ namespace GuiClient
 {
     public partial class Menu : Form
     {
-        public Menu()
+        Communicator _communicator;
+        public Menu(Communicator communicator)
         {
             InitializeComponent();
+            _communicator = communicator;
         }
 
         private void Menu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void createRoomButton_Click(object sender, EventArgs e)
+        {
+            (new CreateRoom(_communicator)).Show();
+            this.Hide();
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
         }
     }
 }

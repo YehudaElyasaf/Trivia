@@ -24,7 +24,7 @@ namespace GuiClient
             //login button
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
             if (didLoginSucceed) { 
-                (new Menu()).Show();
+                (new Menu(_communicator)).Show();
                 this.Hide();
             }
             else

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.playersList = new System.Windows.Forms.CheckedListBox();
             this.roomName = new System.Windows.Forms.TextBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.TTAnswerLabel = new System.Windows.Forms.Label();
@@ -40,19 +39,10 @@
             this.questionsNum = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // playersList
-            // 
-            this.playersList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playersList.FormattingEnabled = true;
-            this.playersList.Location = new System.Drawing.Point(428, 40);
-            this.playersList.Name = "playersList";
-            this.playersList.Size = new System.Drawing.Size(324, 316);
-            this.playersList.TabIndex = 7;
-            // 
             // roomName
             // 
             this.roomName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.roomName.Location = new System.Drawing.Point(251, 137);
+            this.roomName.Location = new System.Drawing.Point(354, 116);
             this.roomName.Name = "roomName";
             this.roomName.Size = new System.Drawing.Size(124, 29);
             this.roomName.TabIndex = 0;
@@ -61,7 +51,7 @@
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.nameLabel.Location = new System.Drawing.Point(179, 140);
+            this.nameLabel.Location = new System.Drawing.Point(282, 119);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(66, 24);
             this.nameLabel.TabIndex = 1;
@@ -71,7 +61,7 @@
             // 
             this.TTAnswerLabel.AutoSize = true;
             this.TTAnswerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.TTAnswerLabel.Location = new System.Drawing.Point(12, 175);
+            this.TTAnswerLabel.Location = new System.Drawing.Point(115, 154);
             this.TTAnswerLabel.Name = "TTAnswerLabel";
             this.TTAnswerLabel.Size = new System.Drawing.Size(233, 24);
             this.TTAnswerLabel.TabIndex = 3;
@@ -80,7 +70,7 @@
             // answerTime
             // 
             this.answerTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.answerTime.Location = new System.Drawing.Point(251, 172);
+            this.answerTime.Location = new System.Drawing.Point(354, 151);
             this.answerTime.Name = "answerTime";
             this.answerTime.Size = new System.Drawing.Size(124, 29);
             this.answerTime.TabIndex = 2;
@@ -89,7 +79,7 @@
             // 
             this.playersNumLabel.AutoSize = true;
             this.playersNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.playersNumLabel.Location = new System.Drawing.Point(76, 245);
+            this.playersNumLabel.Location = new System.Drawing.Point(179, 224);
             this.playersNumLabel.Name = "playersNumLabel";
             this.playersNumLabel.Size = new System.Drawing.Size(169, 24);
             this.playersNumLabel.TabIndex = 5;
@@ -98,7 +88,7 @@
             // playersNum
             // 
             this.playersNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.playersNum.Location = new System.Drawing.Point(251, 242);
+            this.playersNum.Location = new System.Drawing.Point(354, 221);
             this.playersNum.Name = "playersNum";
             this.playersNum.Size = new System.Drawing.Size(124, 29);
             this.playersNum.TabIndex = 4;
@@ -106,7 +96,7 @@
             // createButton
             // 
             this.createButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createButton.Location = new System.Drawing.Point(300, 277);
+            this.createButton.Location = new System.Drawing.Point(403, 256);
             this.createButton.Name = "createButton";
             this.createButton.Size = new System.Drawing.Size(75, 37);
             this.createButton.TabIndex = 6;
@@ -118,7 +108,7 @@
             // 
             this.questionNumLabel.AutoSize = true;
             this.questionNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.questionNumLabel.Location = new System.Drawing.Point(55, 212);
+            this.questionNumLabel.Location = new System.Drawing.Point(158, 191);
             this.questionNumLabel.Name = "questionNumLabel";
             this.questionNumLabel.Size = new System.Drawing.Size(190, 24);
             this.questionNumLabel.TabIndex = 9;
@@ -127,7 +117,7 @@
             // questionsNum
             // 
             this.questionsNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.questionsNum.Location = new System.Drawing.Point(251, 207);
+            this.questionsNum.Location = new System.Drawing.Point(354, 186);
             this.questionsNum.Name = "questionsNum";
             this.questionsNum.Size = new System.Drawing.Size(124, 29);
             this.questionsNum.TabIndex = 8;
@@ -139,7 +129,6 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.questionNumLabel);
             this.Controls.Add(this.questionsNum);
-            this.Controls.Add(this.playersList);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.playersNumLabel);
             this.Controls.Add(this.playersNum);
@@ -165,6 +154,5 @@
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Label questionNumLabel;
         private System.Windows.Forms.TextBox questionsNum;
-        private System.Windows.Forms.CheckedListBox playersList;
     }
 }
