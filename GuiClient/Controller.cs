@@ -35,6 +35,14 @@ namespace GuiClient
             loginAndSignup.BringToFront();
         }
 
+        public void ShowCreateRoom()
+        {
+            Controls.Clear();
+            CreateRoom createRoom = new CreateRoom(_communicator);
+            Controls.Add(createRoom);
+            createRoom.BringToFront();
+        }
+
         private void Controller_Load(object sender, EventArgs e)
         {
             ShowLoginAndSignup();
