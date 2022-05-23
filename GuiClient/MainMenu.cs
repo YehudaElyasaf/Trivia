@@ -13,12 +13,12 @@ namespace GuiClient
     public partial class MainMenu : UserControl
     {
         Communicator _communicator;
-        LoginAndSignup _previousLoginAndSignup;
-        public MainMenu(Communicator communicator, LoginAndSignup previousLoginAndSignup)
+        Controller _controller;
+        public MainMenu(Communicator communicator, Controller controller)
         {
             InitializeComponent();
             _communicator = communicator;
-            _previousLoginAndSignup = previousLoginAndSignup;
+            _controller = controller;
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -34,9 +34,8 @@ namespace GuiClient
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            _communicator.Close();
-            _previousLoginAndSignup.Hide();
-            (new LoginAndSignup()).Show();
+            _controller.ResetCommunicator();
+            _controller.ShowLoginScreen();
         }
     }
 }

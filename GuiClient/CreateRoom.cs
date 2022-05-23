@@ -133,8 +133,14 @@ namespace GuiClient
             this.Controls.Add(this.playersNum);
             this.Controls.Add(this.roomName);
             this.Name = "CreateRoom";
+            this.Load += new System.EventHandler(this.CreateRoom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
+
+        }
+
+        private void CreateRoom_Load(object sender, EventArgs e)
+        {
 
         }
     }

@@ -14,7 +14,7 @@ namespace GuiClient
     {
         private Communicator _communicator;
         private Controller _controller;
-        public LoginScreen(Controller controller, Communicator communicator)
+        public LoginScreen(Communicator communicator, Controller controller)
         {
             InitializeComponent();
             _communicator = communicator;
@@ -26,19 +26,21 @@ namespace GuiClient
 
         }
 
-        private void LoginButton_Click(object sender, EventArgs e)
+        private void loginButton_Click_1(object sender, EventArgs e)
         {
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
             if (didLoginSucceed)
-                _controller.showMainMenu();
+                _controller.ShowMainMenu();
             else
                 MessageBox.Show("Login failed");
         }
-        private void signupButton_Click(object sender, EventArgs e)
+
+        private void signupButton_Click_1(object sender, EventArgs e)
         {
+
             bool didSignupSucceed = _communicator.Signup(signupUsername.Text, signupPassword.Text, signupMail.Text);
             if (didSignupSucceed)
-                _controller.showMainMenu();
+                _controller.ShowMainMenu();
             else
                 MessageBox.Show("Signup failed");
         }

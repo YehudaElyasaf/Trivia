@@ -17,20 +17,21 @@ namespace GuiClient
         public Controller()
         {
             InitializeComponent();
+            _communicator = new Communicator();
         }
 
         public void ShowMainMenu()
         {
             Controls.Clear();
-            MainMenu mainMenu = new MainMenu(_communicator);
+            MainMenu mainMenu = new MainMenu(_communicator, this);
             Controls.Add(mainMenu);
             mainMenu.BringToFront();
         }
 
-        public void ShowLoginAndSignup()
+        public void ShowLoginScreen()
         {
             Controls.Clear();
-            LoginAndSignup loginAndSignup = new LoginAndSignup(_communicator);
+            LoginScreen loginAndSignup = new LoginScreen(_communicator, this);
             Controls.Add(loginAndSignup);
             loginAndSignup.BringToFront();
         }
@@ -43,9 +44,15 @@ namespace GuiClient
             createRoom.BringToFront();
         }
 
+        public void ResetCommunicator()
+        {
+            _communicator.Close();
+            _communicator = new Communicator();
+        }
+
         private void Controller_Load(object sender, EventArgs e)
         {
-            ShowLoginAndSignup();
+            ShowLoginScreen();
         }
     }
 }

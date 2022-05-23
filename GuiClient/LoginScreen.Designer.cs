@@ -70,6 +70,7 @@
             this.signupButton.TabIndex = 15;
             this.signupButton.Text = "signup";
             this.signupButton.UseVisualStyleBackColor = true;
+            this.signupButton.Click += new System.EventHandler(this.signupButton_Click_1);
             // 
             // signupMail
             // 
@@ -121,6 +122,7 @@
             this.loginButton.TabIndex = 9;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click_1);
             // 
             // LoginScreen
             // 
