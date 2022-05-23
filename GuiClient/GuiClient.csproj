@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communicator.cs" />
+    <Compile Include="ConnectionError.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectionError.Designer.cs">
+      <DependentUpon>ConnectionError.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controller.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,12 @@
     <Compile Include="LoginAndSignup.Designer.cs">
       <DependentUpon>LoginAndSignup.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoginScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LoginScreen.Designer.cs">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -77,6 +89,9 @@
     <Compile Include="Message.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConnectionError.resx">
+      <DependentUpon>ConnectionError.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controller.resx">
       <DependentUpon>Controller.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LoginAndSignup.resx">
       <DependentUpon>LoginAndSignup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginScreen.resx">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>

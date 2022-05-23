@@ -10,59 +10,35 @@ using System.Windows.Forms;
 
 namespace GuiClient
 {
-    public partial class LoginAndSignup : Form
+    public partial class LoginScreen : UserControl
     {
-        Communicator _communicator;
-        public LoginAndSignup(Communicator communicator)
+        private Communicator _communicator;
+        private Controller _controller;
+        public LoginScreen(Controller controller, Communicator communicator)
         {
             InitializeComponent();
             _communicator = communicator;
+            _controller = controller;
         }
 
-        
+        private void LoginScreen_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void LoginButton_Click(object sender, EventArgs e)
         {
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
             if (didLoginSucceed)
-                showMainMenu();
+                _controller.showMainMenu();
             else
                 MessageBox.Show("Login failed");
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_2(object sender, EventArgs e)
-        {
-
-        }
-        private void loginLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void signupButton_Click(object sender, EventArgs e)
         {
             bool didSignupSucceed = _communicator.Signup(signupUsername.Text, signupPassword.Text, signupMail.Text);
             if (didSignupSucceed)
-                showMainMenu();
+                _controller.showMainMenu();
             else
                 MessageBox.Show("Signup failed");
         }
