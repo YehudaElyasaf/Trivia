@@ -54,37 +54,39 @@ namespace GuiClient
                 throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length));
         }
 
-        public bool Login(string username, string password)
-        {
+        private Message SendToServer(Message msg) {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-
-            Message loginMessage = new Message(Const.LOGIN_CODE,
-                new Dictionary<string, string> {{ "username", username }, {"password", password}});
-            _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
+            _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
             _clientStream.Write(_buffer, 0, _buffer.Length);
             _clientStream.Flush();
 
             _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            Message loginResponse = new Message(Encoding.Default.GetString(_buffer));
+
+            Message resp = new Message(Encoding.Default.GetString(_buffer));
+
+            if (resp.getCode() == Const.ERROR_CODE) {
+                throw new Exception("Error! " + resp.getData()["message"]);
+            }
+
+            return resp;
+        }
+
+        public bool Login(string username, string password)
+        {
+            Message loginMessage = new Message(Const.LOGIN_CODE,
+                new Dictionary<string, string> {{ "username", username }, {"password", password}});
+            Message loginResponse = SendToServer(loginMessage);
 
             return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
+
         public bool Signup(string username, string password, string email)
-        {
-            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-
-            Message loginMessage = new Message(Const.SIGNUP_CODE,
+        {         
+            Message signupMessage = new Message(Const.SIGNUP_CODE,
                 new Dictionary<string, string> {{ "username", username }, {"password", password}, {"email", email}});
-            _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
 
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-
-
-            Message signupResponse = new Message(Encoding.Default.GetString(_buffer));
+            Message signupResponse = SendToServer(signupMessage);
             if (signupResponse.getData()["status"] == Const.FAILTURE_STATUS.ToString())
                 return false;
 
@@ -98,34 +100,20 @@ namespace GuiClient
 
         public bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
         {
-            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-
             Message createRoomMessage = new Message(Const.CREATE_ROOM_CODE, new Dictionary<string, string> { { "roomName", name },
                 { "maxUsers", maxUsers }, { "questionCount", questionsCount }, { "answerTimeout", answerTime } });
-            _buffer = new ASCIIEncoding().GetBytes(createRoomMessage.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
 
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            Message createRoomResponse = new Message(Encoding.Default.GetString(_buffer));
+            Message createRoomResponse = SendToServer(createRoomMessage);
 
             return createRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
         public string[] GetPlayersInRoom(string roomId)
         {
-            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-
             Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
                 new Dictionary<string, string> { { "RoomId", roomId }});
-            _buffer = new ASCIIEncoding().GetBytes(GetPlayersMessage.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
-
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            Message getPlayersResponse = new Message(Encoding.Default.GetString(_buffer));
+            
+            Message getPlayersResponse = SendToServer(GetPlayersMessage);
 
             return getPlayersResponse.getData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
         }
