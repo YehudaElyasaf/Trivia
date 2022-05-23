@@ -30,8 +30,8 @@ namespace GuiClient
                     _controller.ShowMainMenu();
                 else
                     MessageBox.Show("Error");
-            } catch (Exception e) {
-                MessageBox.Show(e.Message);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
             }
         }
     }
