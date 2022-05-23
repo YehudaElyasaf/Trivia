@@ -22,7 +22,7 @@ namespace GuiClient
         private void showMainMenu()
         {
             Controls.Clear();
-            MainMenu mainMenu = new MainMenu(_communicator);
+            MainMenu mainMenu = new MainMenu(_communicator, this);
             Controls.Add(mainMenu);
             mainMenu.BringToFront();
         }

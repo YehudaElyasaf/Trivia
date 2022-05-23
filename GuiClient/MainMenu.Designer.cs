@@ -36,29 +36,19 @@
             // 
             // exitButton
             // 
-            this.createRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createRoomButton.Location = new System.Drawing.Point(327, 31);
-            this.createRoomButton.Name = "createRoomButton";
-            this.createRoomButton.Size = new System.Drawing.Size(152, 34);
-            this.createRoomButton.TabIndex = 0;
-            this.createRoomButton.Text = "Create a Room";
-            this.createRoomButton.UseVisualStyleBackColor = true;
-            this.createRoomButton.Click += new System.EventHandler(this.createRoomButton_Click);
-            // 
-            // joinRoomButton
-            // 
-            this.joinRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.joinRoomButton.Location = new System.Drawing.Point(327, 141);
-            this.joinRoomButton.Name = "joinRoomButton";
-            this.joinRoomButton.Size = new System.Drawing.Size(152, 34);
-            this.joinRoomButton.TabIndex = 1;
-            this.joinRoomButton.Text = "Join a Room";
-            this.joinRoomButton.UseVisualStyleBackColor = true;
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.Location = new System.Drawing.Point(297, 375);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(152, 34);
+            this.exitButton.TabIndex = 3;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // statsButton
             // 
             this.statsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statsButton.Location = new System.Drawing.Point(288, 249);
+            this.statsButton.Location = new System.Drawing.Point(297, 262);
             this.statsButton.Name = "statsButton";
             this.statsButton.Size = new System.Drawing.Size(152, 34);
             this.statsButton.TabIndex = 2;
@@ -68,20 +58,23 @@
             // joinRoomButton
             // 
             this.joinRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.joinRoomButton.Location = new System.Drawing.Point(288, 134);
+            this.joinRoomButton.Location = new System.Drawing.Point(297, 138);
             this.joinRoomButton.Name = "joinRoomButton";
             this.joinRoomButton.Size = new System.Drawing.Size(152, 34);
             this.joinRoomButton.TabIndex = 5;
             this.joinRoomButton.Text = "Join a Room";
             this.joinRoomButton.UseVisualStyleBackColor = true;
             // 
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(327, 366);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(152, 34);
-            this.exitButton.TabIndex = 3;
-            this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = true;
+            // createRoomButton
+            // 
+            this.createRoomButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createRoomButton.Location = new System.Drawing.Point(297, 40);
+            this.createRoomButton.Name = "createRoomButton";
+            this.createRoomButton.Size = new System.Drawing.Size(152, 34);
+            this.createRoomButton.TabIndex = 0;
+            this.createRoomButton.Text = "Create a Room";
+            this.createRoomButton.UseVisualStyleBackColor = true;
+            this.createRoomButton.Click += new System.EventHandler(this.createRoomButton_Click);
             // 
             // MainMenu
             // 

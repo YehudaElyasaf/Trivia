@@ -91,6 +91,11 @@ namespace GuiClient
             return Login(username, password);
         }
 
+        internal void Close()
+        {
+            _client.Close();
+        }
+
         internal bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
         {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];

@@ -13,10 +13,12 @@ namespace GuiClient
     public partial class MainMenu : UserControl
     {
         Communicator _communicator;
-        public MainMenu(Communicator communicator)
+        LoginAndSignup _previousLoginAndSignup;
+        public MainMenu(Communicator communicator, LoginAndSignup previousLoginAndSignup)
         {
             InitializeComponent();
             _communicator = communicator;
+            _previousLoginAndSignup = previousLoginAndSignup;
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -27,17 +29,14 @@ namespace GuiClient
         private void createRoomButton_Click(object sender, EventArgs e)
         {
             (new CreateRoom(_communicator)).Show();
-            this.Hide();
+            Hide();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
-        }
-
-        private void joinRoomButton_Click(object sender, EventArgs e)
-        {
-
+            _communicator.Close();
+            _previousLoginAndSignup.Hide();
+            (new LoginAndSignup()).Show();
         }
     }
 }
