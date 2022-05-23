@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communicator.cs" />
+    <Compile Include="Controller.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller.Designer.cs">
+      <DependentUpon>Controller.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateRoom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="Message.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controller.resx">
+      <DependentUpon>Controller.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateRoom.resx">
       <DependentUpon>CreateRoom.cs</DependentUpon>
     </EmbeddedResource>

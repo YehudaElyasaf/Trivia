@@ -19,13 +19,7 @@ namespace GuiClient
             _communicator = new Communicator();
         }
 
-        private void showMainMenu()
-        {
-            Controls.Clear();
-            MainMenu mainMenu = new MainMenu(_communicator, this);
-            Controls.Add(mainMenu);
-            mainMenu.BringToFront();
-        }
+        
         private void LoginButton_Click(object sender, EventArgs e)
         {
             bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
