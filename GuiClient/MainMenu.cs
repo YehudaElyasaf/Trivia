@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GuiClient
 {
-    public partial class Menu : Form
+    public partial class MainMenu : UserControl
     {
         Communicator _communicator;
         public Menu(Communicator communicator)
@@ -19,7 +19,7 @@ namespace GuiClient
             _communicator = communicator;
         }
 
-        private void Menu_Load(object sender, EventArgs e)
+        private void MainMenu_Load(object sender, EventArgs e)
         {
 
         }
