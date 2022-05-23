@@ -28,7 +28,7 @@ static class Const
 
     public const int HEADERS_LENGTH = 5;
 
-    public const int FAILTURE_STATUS = 0;
+    public const int FAILURE_STATUS = 0;
     public const int SUCCESS_STATUS = 1;
 }
 namespace GuiClient
@@ -85,18 +85,11 @@ namespace GuiClient
         {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
-            Message loginMessage = new Message(Const.SIGNUP_CODE,
+            Message signupMessage = new Message(Const.SIGNUP_CODE,
                 new Dictionary<string, string> {{ "username", username }, {"password", password}, {"email", email}});
-            _buffer = new ASCIIEncoding().GetBytes(loginMessage.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
-
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-
 
             Message signupResponse = SendToServer(signupMessage);
-            if (signupResponse.getData()["status"] == Const.FAILTURE_STATUS.ToString())
+            if (signupResponse.getData()["status"] == Const.FAILURE_STATUS.ToString())
                 return false;
 
             return Login(username, password);
@@ -122,13 +115,8 @@ namespace GuiClient
         {
             Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
                 new Dictionary<string, string> { { "RoomId", roomId }});
-            _buffer = new ASCIIEncoding().GetBytes(GetPlayersMessage.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
-
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-            Message getPlayersResponse = new Message(Encoding.Default.GetString(_buffer));
+           
+            Message getPlayersResponse = SendToServer(GetPlayersMessage);
 
             return getPlayersResponse.getData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
         }
