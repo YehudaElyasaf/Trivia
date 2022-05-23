@@ -13,7 +13,7 @@ namespace GuiClient
     public partial class MainMenu : UserControl
     {
         Communicator _communicator;
-        public Menu(Communicator communicator)
+        public MainMenu(Communicator communicator)
         {
             InitializeComponent();
             _communicator = communicator;
@@ -33,6 +33,11 @@ namespace GuiClient
         private void exitButton_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
+        }
+
+        private void joinRoomButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
