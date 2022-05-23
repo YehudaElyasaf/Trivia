@@ -76,7 +76,7 @@ void Communicator::bindAndListen() {
 
 void Communicator::handleNewClient(SOCKET sock) {
 	std::string lastMsg, username;
-	LoginRequestHandler* loginHandler = m_handlerFactory.createLoginRequestHandler();
+	IRequestHandler* handler = m_handlerFactory.createLoginRequestHandler();
 	Helper::sendData(sock, HELLO_MSG);
 
 	try {
@@ -91,25 +91,28 @@ void Communicator::handleNewClient(SOCKET sock) {
 			std::string responseBytes;
 			RequestResult res;
 
-			if (loginHandler->isRequestRelevant(req)) {
-				res = loginHandler->handleRequest(req);
+			if (handler->isRequestRelevant(req)) {
+				res = handler->handleRequest(req);
 				json responseJson = json::parse(res.response.substr(MESSAGE_CODE_LENGTH + MESSAGE_LENGTH_FIELD_LENGTH));
-				if (responseJson["status"] == 1) {
-					username = json::parse(req.buffer.substr(MESSAGE_CODE_LENGTH))["username"];
-				}
 			}
 			else {
-				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), nullptr };
+				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), handler };
 			}
 
 			Helper::sendData(sock, res.response);
+			if (handler != res.newHandler) {
+				delete handler;
+				handler = res.newHandler;
+			}
 		}
 	}
 	catch (const std::exception& e) {
-		std::cout << e.what() << ". socket " << sock << " disconnected\n";
-		closesocket(sock);
-		delete m_clients[sock];
-		m_handlerFactory.getLoginManager().logout(username);
-		delete loginHandler;
+		std::cout << e.what() << std::endl;
 	}
+
+	std::cout << "socket " << sock << " disconnected" << std::endl;
+	closesocket(sock);
+	delete m_clients[sock];
+	m_handlerFactory.getLoginManager().logout(username);
+	delete handler;
 }

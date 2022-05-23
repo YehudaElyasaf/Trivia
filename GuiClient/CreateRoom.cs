@@ -25,6 +25,10 @@ namespace GuiClient
         private void createButton_Click(object sender, EventArgs e)
         {
             bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
+            if (worked)
+                _controller.ShowMainMenu();
+            else
+                MessageBox.Show("Error");
         }
     }
 }
