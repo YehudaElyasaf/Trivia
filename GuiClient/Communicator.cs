@@ -91,12 +91,12 @@ namespace GuiClient
             return Login(username, password);
         }
 
-        internal void Close()
+        public void Close()
         {
             _client.Close();
         }
 
-        internal bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
+        public bool CreateRoom(string name, string maxUsers, string questionsCount, string answerTime)
         {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
@@ -113,7 +113,7 @@ namespace GuiClient
             return createRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
-        internal string[] GetPlayersInRoom(string roomId)
+        public string[] GetPlayersInRoom(string roomId)
         {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
