@@ -48,7 +48,7 @@ namespace GuiClient
         public void ShowCreateRoom()
         {
             Controls.Clear();
-            CreateRoom createRoom = new CreateRoom(_communicator);
+            CreateRoom createRoom = new CreateRoom(_communicator, this);
             Controls.Add(createRoom);
             createRoom.BringToFront();
         }

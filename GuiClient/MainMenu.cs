@@ -28,8 +28,7 @@ namespace GuiClient
 
         private void createRoomButton_Click(object sender, EventArgs e)
         {
-            (new CreateRoom(_communicator)).Show();
-            Hide();
+            _controller.ShowCreateRoom();
         }
 
         private void exitButton_Click(object sender, EventArgs e)

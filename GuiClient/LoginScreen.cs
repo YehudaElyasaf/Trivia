@@ -28,21 +28,32 @@ namespace GuiClient
 
         private void loginButton_Click_1(object sender, EventArgs e)
         {
-            bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
-            if (didLoginSucceed)
-                _controller.ShowMainMenu();
-            else
-                MessageBox.Show("Login failed");
-        }
+            try {
+                bool didLoginSucceed = _communicator.Login(loginUsername.Text, loginPassword.Text);
+                if (didLoginSucceed)
+                    _controller.ShowMainMenu();
+                else
+                    MessageBox.Show("Login failed");
+            }
+            catch (Exception exc) {
+                MessageBox.Show(exc.Message);
+            }
+}
 
         private void signupButton_Click_1(object sender, EventArgs e)
         {
-
-            bool didSignupSucceed = _communicator.Signup(signupUsername.Text, signupPassword.Text, signupMail.Text);
-            if (didSignupSucceed)
-                _controller.ShowMainMenu();
-            else
-                MessageBox.Show("Signup failed");
+            try {
+                bool didSignupSucceed = _communicator.Signup(signupUsername.Text, signupPassword.Text, signupMail.Text);
+                if (didSignupSucceed)
+                    _controller.ShowMainMenu();
+                else
+                    MessageBox.Show("Signup failed");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            
         }
     }
 }
