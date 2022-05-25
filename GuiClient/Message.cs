@@ -47,7 +47,7 @@ namespace GuiClient
         }
 
         //getters
-        public int getCode() { return code; }
-        public Dictionary<string, string> getData() { return data; }
+        public int GetCode() { return code; }
+        public Dictionary<string, string> GetData() { return data; }
     }
 }

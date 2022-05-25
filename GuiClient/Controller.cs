@@ -52,6 +52,13 @@ namespace GuiClient
             Controls.Add(createRoom);
             createRoom.BringToFront();
         }
+        public void ShowStatistics()
+        {
+            Controls.Clear();
+            Statistics statistics= new Statistics(_communicator, this);
+            Controls.Add(statistics);
+            statistics.BringToFront();
+        }
 
         public void ShowJoinRoom() {
             Controls.Clear();

@@ -55,7 +55,8 @@ namespace GuiClient
                 throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length));
         }
 
-        private Message SendToServer(Message msg) {
+        private Message SendToServer(Message msg)
+        {
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
             _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
             _clientStream.Write(_buffer, 0, _buffer.Length);
@@ -66,8 +67,9 @@ namespace GuiClient
 
             Message resp = new Message(Encoding.Default.GetString(_buffer));
 
-            if (resp.getCode() == Const.ERROR_CODE) {
-                throw new Exception("Error! " + resp.getData()["message"]);
+            if (resp.GetCode() == Const.ERROR_CODE)
+            {
+                throw new Exception("Error! " + resp.GetData()["message"]);
             }
 
             return resp;
@@ -76,10 +78,10 @@ namespace GuiClient
         public bool Login(string username, string password)
         {
             Message loginMessage = new Message(Const.LOGIN_CODE,
-                new Dictionary<string, string> {{ "username", username }, {"password", password}});
+                new Dictionary<string, string> { { "username", username }, { "password", password } });
             Message loginResponse = SendToServer(loginMessage);
 
-            return loginResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
+            return loginResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
         public bool Signup(string username, string password, string email)
@@ -87,10 +89,10 @@ namespace GuiClient
             byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
 
             Message signupMessage = new Message(Const.SIGNUP_CODE,
-                new Dictionary<string, string> {{ "username", username }, {"password", password}, {"email", email}});
+                new Dictionary<string, string> { { "username", username }, { "password", password }, { "email", email } });
 
             Message signupResponse = SendToServer(signupMessage);
-            if (signupResponse.getData()["status"] == Const.FAILURE_STATUS.ToString())
+            if (signupResponse.GetData()["status"] == Const.FAILURE_STATUS.ToString())
                 return false;
 
             return Login(username, password);
@@ -109,17 +111,35 @@ namespace GuiClient
 
             Message createRoomResponse = SendToServer(createRoomMessage);
 
-            return createRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
+            return createRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
         public string[] GetPlayersInRoom(string roomId)
         {
             Message getPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
-                new Dictionary<string, string> { { "RoomId", roomId }});
-           
+                new Dictionary<string, string> { { "RoomId", roomId } });
+
             Message getPlayersResponse = SendToServer(getPlayersMessage);
 
-            return getPlayersResponse.getData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
+            return getPlayersResponse.GetData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
+        }
+        public string[] GetUserStatistics()
+        {
+            Message getStatisticsMessage = new Message(Const.PERSONAL_STATS_CODE,
+                new Dictionary<string, string> { });
+
+            Message getStatisticsResponse = SendToServer(getStatisticsMessage);
+
+            return getStatisticsResponse.GetData()["UserStatistics"].Split(Const.LIST_SEPERATOR);
+        }
+        public string[] GetTopRatedUsers()
+        {
+            Message getTopRatedUsersMessage = new Message(Const.HIGH_SCORE_CODE,
+                new Dictionary<string, string> { });
+
+            Message getTopRatedUsersResponse = SendToServer(getTopRatedUsersMessage);
+
+            return getTopRatedUsersResponse.GetData()["HighScores"].Split(Const.LIST_SEPERATOR);
         }
 
         public Dictionary<string, string> GetRooms() {
