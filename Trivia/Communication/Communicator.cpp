@@ -75,7 +75,7 @@ void Communicator::bindAndListen() {
 }
 
 void Communicator::handleNewClient(SOCKET sock) {
-	std::string lastMsg, username;
+	std::string lastMsg;
 	IRequestHandler* handler = m_handlerFactory.createLoginRequestHandler();
 	Helper::sendData(sock, HELLO_MSG);
 
@@ -113,6 +113,13 @@ void Communicator::handleNewClient(SOCKET sock) {
 	std::cout << "socket " << sock << " disconnected" << std::endl;
 	closesocket(sock);
 	delete m_clients[sock];
-	m_handlerFactory.getLoginManager().logout(username);
+
+	// if it's not a menu request handler, it wouldnt be able to get its username, and throw an exception.
+	// it doesnt matter to us, because at this point, if it's not a menu request handler it means it couldn't connect,
+	// so it has nothing to log out from.
+	try {
+		m_handlerFactory.getLoginManager().logout(((MenuRequestHandler*)handler)->getUsername());
+	}
+	catch (...) {}
 	delete handler;
 }

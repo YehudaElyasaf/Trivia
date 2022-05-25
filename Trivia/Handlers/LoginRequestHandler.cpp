@@ -22,11 +22,19 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo req) {
 RequestResult LoginRequestHandler::login(RequestInfo req) {
 	LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
 	LoginResponse resp = { m_loginManager.login(logReq.username, logReq.password) };
-	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(logReq.username)};
+	
+	// if login worked, have a menu handler. if not, you should still have this handler
+	if (resp.status)
+		return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(logReq.username)};
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
 RequestResult LoginRequestHandler::signup(RequestInfo req) {
 	SignupRequest signupReq = JsonRequestPacketDeserializer::deserializeSignupRequest(req.buffer);
 	SignupResponse resp = { m_loginManager.signup(signupReq.username, signupReq.password, signupReq.email) };
-	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(signupReq.username) };
+	
+	// if login worked, have a menu handler. if not, you should still have this handler
+	if (resp.status)
+		return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(signupReq.username) };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }

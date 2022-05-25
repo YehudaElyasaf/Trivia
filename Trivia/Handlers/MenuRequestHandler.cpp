@@ -35,6 +35,11 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
     }
 }
 
+std::string MenuRequestHandler::getUsername() const
+{
+    return m_username;
+}
+
 RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
     CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
 

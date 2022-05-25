@@ -9,6 +9,7 @@ public:
 	MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr);
 	bool isRequestRelevant(struct RequestInfo req) override;
 	RequestResult handleRequest(struct RequestInfo req) override;
+	std::string getUsername() const;
 
 private:
 	StatisticsManager& m_statisticsManager;
