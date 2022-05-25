@@ -23,7 +23,8 @@ namespace GuiClient
 
         private void Statistics_Load(object sender, EventArgs e)
         {
-
+            string[] statistics = _communicator.GetUserStatistics();
+            personalStatisticsValues.Text = string.Join("\n\n", statistics);
         }
     }
 }

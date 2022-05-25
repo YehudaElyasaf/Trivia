@@ -39,7 +39,7 @@
             // 
             this.personalStatisticsLabel.AutoSize = true;
             this.personalStatisticsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.personalStatisticsLabel.Location = new System.Drawing.Point(97, 99);
+            this.personalStatisticsLabel.Location = new System.Drawing.Point(45, 67);
             this.personalStatisticsLabel.Name = "personalStatisticsLabel";
             this.personalStatisticsLabel.Size = new System.Drawing.Size(280, 37);
             this.personalStatisticsLabel.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.highScoresLabel.AutoSize = true;
             this.highScoresLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.highScoresLabel.Location = new System.Drawing.Point(468, 99);
+            this.highScoresLabel.Location = new System.Drawing.Point(530, 67);
             this.highScoresLabel.Name = "highScoresLabel";
             this.highScoresLabel.Size = new System.Drawing.Size(191, 37);
             this.highScoresLabel.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             this.highScoresUserList.AutoSize = true;
             this.highScoresUserList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.highScoresUserList.Location = new System.Drawing.Point(471, 146);
+            this.highScoresUserList.Location = new System.Drawing.Point(533, 114);
             this.highScoresUserList.Name = "highScoresUserList";
             this.highScoresUserList.Size = new System.Drawing.Size(93, 120);
             this.highScoresUserList.TabIndex = 3;
@@ -69,7 +69,7 @@
             // 
             this.personalStatisticsKeys.AutoSize = true;
             this.personalStatisticsKeys.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.personalStatisticsKeys.Location = new System.Drawing.Point(100, 146);
+            this.personalStatisticsKeys.Location = new System.Drawing.Point(48, 114);
             this.personalStatisticsKeys.Name = "personalStatisticsKeys";
             this.personalStatisticsKeys.Size = new System.Drawing.Size(203, 168);
             this.personalStatisticsKeys.TabIndex = 4;
@@ -79,11 +79,11 @@
             // 
             this.personalStatisticsValues.AutoSize = true;
             this.personalStatisticsValues.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.personalStatisticsValues.Location = new System.Drawing.Point(309, 146);
+            this.personalStatisticsValues.Location = new System.Drawing.Point(257, 114);
             this.personalStatisticsValues.Name = "personalStatisticsValues";
-            this.personalStatisticsValues.Size = new System.Drawing.Size(61, 168);
+            this.personalStatisticsValues.Size = new System.Drawing.Size(28, 168);
             this.personalStatisticsValues.TabIndex = 5;
-            this.personalStatisticsValues.Text = "--- : ---\r\n\r\n---\r\n\r\n---\r\n\r\n---";
+            this.personalStatisticsValues.Text = "---\r\n\r\n---\r\n\r\n---\r\n\r\n---";
             this.personalStatisticsValues.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Statistics
