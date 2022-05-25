@@ -55,15 +55,13 @@ namespace GuiClient
 
         public void ResetCommunicator()
         {
-            try
-            {
+            try {
                 if (_communicator!=null)
                     _communicator.Close();
                 _communicator = new Communicator();
                 ShowLoginScreen();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 //connection error
                 ShowConnectionError(ex.Message);
             }
