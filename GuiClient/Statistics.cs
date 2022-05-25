@@ -25,6 +25,12 @@ namespace GuiClient
         {
             string[] statistics = _communicator.GetUserStatistics();
             personalStatisticsValues.Text = string.Join("\n\n", statistics);
+
+            string[] topRatedUsers = _communicator.GetTopRatedUsers();
+            string topRatedUsersList = "";
+            for (int i = 1; i<=topRatedUsers.Length; i++)
+                topRatedUsersList += i + ". " + topRatedUsers[i-1] + "\n\n";
+            highScoresUserList.Text = topRatedUsersList;
         }
     }
 }

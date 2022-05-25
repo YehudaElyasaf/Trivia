@@ -129,10 +129,16 @@ namespace GuiClient
 
             Message getStatisticsResponse = SendToServer(getStatisticsMessage);
 
-            if (getStatisticsResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
-                return getStatisticsResponse.GetData()["UserStatistics"].Split(Const.LIST_SEPERATOR);
-            else
-                throw new Exception("Failed to get statistics");
+            return getStatisticsResponse.GetData()["UserStatistics"].Split(Const.LIST_SEPERATOR);
+        }
+        public string[] GetTopRatedUsers()
+        {
+            Message getTopRatedUsersMessage = new Message(Const.HIGH_SCORE_CODE,
+                new Dictionary<string, string> { });
+
+            Message getTopRatedUsersResponse = SendToServer(getTopRatedUsersMessage);
+
+            return getTopRatedUsersResponse.GetData()["HighScores"].Split(Const.LIST_SEPERATOR);
         }
     }
 }
