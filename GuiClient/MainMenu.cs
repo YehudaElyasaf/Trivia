@@ -33,7 +33,13 @@ namespace GuiClient
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            //return to ligin screen
             _controller.ResetCommunicator();
+        }
+
+        private void statsButton_Click(object sender, EventArgs e)
+        {
+            _controller.ShowStatistics();
         }
     }
 }

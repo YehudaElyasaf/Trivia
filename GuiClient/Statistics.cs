@@ -12,9 +12,13 @@ namespace GuiClient
 {
     public partial class Statistics : UserControl
     {
-        public Statistics()
+        private Communicator _communicator;
+        private Controller _controller;
+        public Statistics(Communicator communicator, Controller controller)
         {
             InitializeComponent();
+            _communicator = communicator;
+            _controller = controller;
         }
 
         private void Statistics_Load(object sender, EventArgs e)
