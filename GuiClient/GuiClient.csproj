@@ -68,6 +68,12 @@
     <Compile Include="CreateRoom.Designer.cs">
       <DependentUpon>CreateRoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="JoinRoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JoinRoom.Designer.cs">
+      <DependentUpon>JoinRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -91,6 +97,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CreateRoom.resx">
       <DependentUpon>CreateRoom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JoinRoom.resx">
+      <DependentUpon>JoinRoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>

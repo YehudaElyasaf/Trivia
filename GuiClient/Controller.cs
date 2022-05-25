@@ -53,6 +53,13 @@ namespace GuiClient
             createRoom.BringToFront();
         }
 
+        public void ShowJoinRoom() {
+            Controls.Clear();
+            JoinRoom joinRoom = new JoinRoom(_communicator, this);
+            Controls.Add(joinRoom);
+            joinRoom.BringToFront();
+        }
+
         public void ResetCommunicator()
         {
             try {

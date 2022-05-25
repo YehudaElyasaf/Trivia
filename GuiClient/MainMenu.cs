@@ -35,5 +35,9 @@ namespace GuiClient
         {
             _controller.ResetCommunicator();
         }
-    }
+
+		private void joinRoomButton_Click(object sender, EventArgs e) {
+            _controller.ShowJoinRoom();
+		}
+	}
 }

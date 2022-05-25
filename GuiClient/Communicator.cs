@@ -31,6 +31,7 @@ static class Const
     public const int FAILURE_STATUS = 0;
     public const int SUCCESS_STATUS = 1;
 }
+
 namespace GuiClient
 {
     public class Communicator
@@ -113,12 +114,25 @@ namespace GuiClient
 
         public string[] GetPlayersInRoom(string roomId)
         {
-            Message GetPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
+            Message getPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
                 new Dictionary<string, string> { { "RoomId", roomId }});
            
-            Message getPlayersResponse = SendToServer(GetPlayersMessage);
+            Message getPlayersResponse = SendToServer(getPlayersMessage);
 
             return getPlayersResponse.getData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
+        }
+
+        public Dictionary<string, string> GetRooms() {
+            Message getRoomsMessage = new Message(Const.GET_ROOMS_CODE, new Dictionary<string, string> { });
+            Message getRoomsResponse = SendToServer(getRoomsMessage);
+            return getRoomsResponse.getData();
+		}
+
+        public bool JoinRoom(string roomId) {
+            Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
+                { "roomId", roomId }});
+            Message joinRoomResponse = SendToServer(joinRoomMessage);
+            return joinRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
     }
 }
