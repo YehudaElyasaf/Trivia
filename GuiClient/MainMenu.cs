@@ -41,10 +41,9 @@ namespace GuiClient
         {
             _controller.ShowStatistics();
         }
-    }
 
-		private void joinRoomButton_Click(object sender, EventArgs e) {
+        private void joinRoomButton_Click(object sender, EventArgs e) {
             _controller.ShowJoinRoom();
-		}
-	}
+        }
+    }
 }
