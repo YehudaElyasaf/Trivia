@@ -22,5 +22,5 @@ public:
 
 	// get the length (in bytes) of a json's string
 	static std::string bitwiseLen(const json& data);
-	static std::string join(const std::vector<std::string>& list, const std::string& divider=DIVIDER);
+	static std::string join(const std::vector<std::string>& list, const std::string& divider = DIVIDER);
 };

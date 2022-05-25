@@ -14,30 +14,33 @@ bool MenuRequestHandler::isRequestRelevant(RequestInfo req) {
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
     switch ((unsigned char)req.buffer[0]) {
-        case GET_ROOMS_CODE:
-            return getRooms(req.buffer);
-            break;
-        case GET_PLAYERS_CODE:
-            return getPlayersInRoom(req.buffer);
-            break;
-        case JOIN_ROOM_CODE:
-            return joinRoom(req.buffer);
-            break;
-        case CREATE_ROOM_CODE:
-            return createRoom(req.buffer);
-            break;
-        case HIGH_SCORE_CODE:
-            return getHighScore(req.buffer);
-            break;
-        case PERSONAL_STATS_CODE:
-            return getStats(req.buffer);
-            break;
+    case GET_ROOMS_CODE:
+        return getRooms(req.buffer);
+        break;
+    case GET_PLAYERS_CODE:
+        return getPlayersInRoom(req.buffer);
+        break;
+    case JOIN_ROOM_CODE:
+        return joinRoom(req.buffer);
+        break;
+    case CREATE_ROOM_CODE:
+        return createRoom(req.buffer);
+        break;
+    case HIGH_SCORE_CODE:
+        return getHighScore(req.buffer);
+        break;
+    case PERSONAL_STATS_CODE:
+        return getStats(req.buffer);
+        break;
     }
 }
 
-RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
-    CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
+std::string MenuRequestHandler::getUsername() const
+{
+    return m_username;
+}
 
+RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
     GetRoomsResponse resp{ true, m_roomManager.getRooms() };
     return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }

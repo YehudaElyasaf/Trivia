@@ -1,6 +1,6 @@
 #include"../Databases/StatisticsManager.h"
 
-#define NUMBER_OF_TOP_USERS 5
+#define NUMBER_OF_TOP_USERS 3
 
 StatisticsManager::StatisticsManager(IDatabase* db)
  : m_database(db) {}

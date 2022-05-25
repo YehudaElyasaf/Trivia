@@ -58,11 +58,20 @@ std::string JsonResponsePacketSerializer::serializeResponse(const LogoutResponse
 
 std::string JsonResponsePacketSerializer::serializeResponse(const GetRoomsResponse& resp) {
     std::string out = {(unsigned char) GET_ROOMS_CODE };
+    std::string rooms = "", ids = "";
     json data{ {"status", resp.status} };
-    // cant use join method because it's not vector of strings
-    data["Rooms"] = resp.rooms[0].name;
-    for (int i = 1; i < resp.rooms.size(); i++)
-        data["Rooms"] += DIVIDER + resp.rooms[i].name;
+    
+    if (resp.rooms.size() > 0) {
+        // cant use join method because it's not vector of strings
+        rooms = resp.rooms[0].name;
+        ids = std::to_string(resp.rooms[0].id);
+        for (int i = 1; i < resp.rooms.size(); i++) {
+           rooms += DIVIDER + resp.rooms[i].name;
+           ids += DIVIDER + std::to_string(resp.rooms[i].id);
+        }
+    }  
+    data["Rooms"] = rooms;
+    data["Ids"] = ids;
 
     out += bitwiseLen(data);
     out += data.dump();

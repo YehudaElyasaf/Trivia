@@ -42,5 +42,14 @@ struct GetHighScoreResponse {
 
 struct GetPersonalStatsResponse {
 	unsigned int status;
+	//a vector with the statistics of an user
+	/*
+	* indexes:
+	* 1 - AverageAnswerTime
+	* 2 - NumOfCorrectAnswers
+	* 3 - NumOfTotalAnswers
+	* 4 - NumOfPlayerGames
+	*/
+	
 	std::vector<std::string> statistics;
 };
