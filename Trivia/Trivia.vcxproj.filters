@@ -1,120 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Communicator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Helper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonRequestPacketDeserializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonResponsePacketSerializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoggedUser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoginRequestHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuRequestHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RequestHandlerFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sqlite3.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SQLiteCallbacks.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SQLiteDatabase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WSAInitializer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Databases\StatisticsManager.cpp" />
+    <ClCompile Include="Room\Room.cpp" />
+    <ClCompile Include="Handlers\RequestHandlerFactory.cpp" />
+    <ClCompile Include="Handlers\MenuRequestHandler.cpp" />
+    <ClCompile Include="Room\RoomManager.cpp" />
+    <ClCompile Include="Databases\SQLiteDatabase.cpp" />
+    <ClCompile Include="Databases\SQLiteCallbacks.cpp" />
+    <ClCompile Include="Databases\Question.cpp" />
+    <ClCompile Include="Serializing\JsonRequestPacketDeserializer.cpp" />
+    <ClCompile Include="Serializing\JsonResponsePacketSerializer.cpp" />
+    <ClCompile Include="Login\LoggedUser.cpp" />
+    <ClCompile Include="Handlers\LoginRequestHandler.cpp" />
+    <ClCompile Include="Communication\Communicator.cpp" />
+    <ClCompile Include="Login\LoginManager.cpp" />
+    <ClCompile Include="Communication\Helper.cpp" />
+    <ClCompile Include="Communication\Server.cpp" />
+    <ClCompile Include="lib\WSAInitializer.cpp" />
+    <ClCompile Include="lib\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Communicator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IDatabase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="json.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IRequestHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonRequestPacketDeserializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="JsonResponsePacketSerializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoggedUser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoginRequestHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MenuRequestHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="msgCodes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RequestHandlerFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="requests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="responses.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sqlite3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SQLiteCallbacks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SQLiteDatabase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WSAInitializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Room\RoomManager.h" />
+    <ClInclude Include="Handlers\MenuRequestHandler.h" />
+    <ClInclude Include="Databases\SQLiteDatabase.h" />
+    <ClInclude Include="Databases\StatisticsManager.h" />
+    <ClInclude Include="Databases\IDatabase.h" />
+    <ClInclude Include="Databases\SQLiteCallbacks.h" />
+    <ClInclude Include="Defines\msgCodes.h" />
+    <ClInclude Include="Databases\Question.h" />
+    <ClInclude Include="Handlers\RequestHandlerFactory.h" />
+    <ClInclude Include="Defines\requests.h" />
+    <ClInclude Include="Defines\responses.h" />
+    <ClInclude Include="Room\Room.h" />
+    <ClInclude Include="Serializing\JsonRequestPacketDeserializer.h" />
+    <ClInclude Include="Serializing\JsonResponsePacketSerializer.h" />
+    <ClInclude Include="Login\LoggedUser.h" />
+    <ClInclude Include="Handlers\IRequestHandler.h" />
+    <ClInclude Include="Communication\Communicator.h" />
+    <ClInclude Include="Communication\Helper.h" />
+    <ClInclude Include="Handlers\LoginRequestHandler.h" />
+    <ClInclude Include="Login\LoginManager.h" />
+    <ClInclude Include="Communication\Server.h" />
+    <ClInclude Include="lib\sqlite3.h" />
+    <ClInclude Include="lib\json.h" />
+    <ClInclude Include="lib\WSAInitializer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4560aa75-3133-418d-aac0-d671277b1289}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{c4fee022-8944-4394-9e26-833c00a591e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{8f99d550-b657-4bc4-ba70-e469b04e5594}</UniqueIdentifier>
-    </Filter>
+    <Object Include="x64\Debug\Helper.obj" />
   </ItemGroup>
 </Project>
