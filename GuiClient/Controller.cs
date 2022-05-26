@@ -51,6 +51,7 @@ namespace GuiClient
             CreateRoom createRoom = new CreateRoom(_communicator, this);
             Controls.Add(createRoom);
             createRoom.BringToFront();
+            ShowHomeBtn();
         }
         public void ShowStatistics()
         {
@@ -58,6 +59,7 @@ namespace GuiClient
             Statistics statistics = new Statistics(_communicator, this);
             Controls.Add(statistics);
             statistics.BringToFront();
+            ShowHomeBtn();
         }
 
         public void ShowJoinRoom() {
@@ -65,6 +67,7 @@ namespace GuiClient
             JoinRoom joinRoom = new JoinRoom(_communicator, this);
             Controls.Add(joinRoom);
             joinRoom.BringToFront();
+            ShowHomeBtn();
         }
 
         public void ResetCommunicator()
@@ -81,6 +84,11 @@ namespace GuiClient
             }
         }
 
+        public void ShowHomeBtn() {
+            Controls.Add(homeButton);
+            homeButton.BringToFront();
+        }
+
         private void Controller_Load(object sender, EventArgs e)
         {
             try
@@ -94,5 +102,9 @@ namespace GuiClient
                 ShowConnectionError(ex.Message);
             }
         }
-    }
+
+		private void homeButton_Click(object sender, EventArgs e) {
+            ShowMainMenu();
+		}
+	}
 }
