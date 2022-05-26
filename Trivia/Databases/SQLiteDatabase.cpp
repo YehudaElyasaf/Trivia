@@ -5,6 +5,7 @@
 #include"../Databases/SQLiteCallbacks.h"
 
 #define ANS_LIMIT 4
+#define EMPTY_VALUE "---"
 
 SQLiteDatabase::SQLiteDatabase() {
 	_errMessage = nullptr;
@@ -81,7 +82,7 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 }
 
 std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
-	std::string averageAnswerTime;
+	std::string averageAnswerTime = EMPTY_VALUE;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberAsStringCallback);
@@ -90,7 +91,7 @@ std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) 
 }
 
 std::string SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
-	std::string correctAnswers;
+	std::string correctAnswers = EMPTY_VALUE;
 	std::string sqlStatement;
 	sqlStatement = "SELECT CORRECT_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &correctAnswers, getOneNumberAsStringCallback);
@@ -99,7 +100,7 @@ std::string SQLiteDatabase::getNumOfCorrectAnswers(const std::string& name) {
 }
 
 std::string SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
-	std::string totalAnswers;
+	std::string totalAnswers = EMPTY_VALUE;
 	std::string sqlStatement;
 	sqlStatement = "SELECT TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &totalAnswers, getOneNumberAsStringCallback);
@@ -108,7 +109,7 @@ std::string SQLiteDatabase::getNumOfTotalAnswers(const std::string& name) {
 }
 
 std::string SQLiteDatabase::getNumOfPlayerGames(const std::string& name) {
-	std::string games;
+	std::string games = EMPTY_VALUE;
 	std::string sqlStatement;
 	sqlStatement = "SELECT NUM_OF_GAMES FROM STATISTICS WHERE USERNAME = '" + name + "';";
 	executeAndValidate(sqlStatement, &games, getOneNumberAsStringCallback);
