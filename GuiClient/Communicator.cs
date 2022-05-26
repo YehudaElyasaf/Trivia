@@ -145,14 +145,14 @@ namespace GuiClient
         public Dictionary<string, string> GetRooms() {
             Message getRoomsMessage = new Message(Const.GET_ROOMS_CODE, new Dictionary<string, string> { });
             Message getRoomsResponse = SendToServer(getRoomsMessage);
-            return getRoomsResponse.getData();
+            return getRoomsResponse.GetData();
 		}
 
         public bool JoinRoom(string roomId) {
             Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
             Message joinRoomResponse = SendToServer(joinRoomMessage);
-            return joinRoomResponse.getData()["status"] == Const.SUCCESS_STATUS.ToString();
+            return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
     }
 }

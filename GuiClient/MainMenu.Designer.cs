@@ -54,7 +54,7 @@
 			this.statsButton.TabIndex = 2;
 			this.statsButton.Text = "Statistics";
 			this.statsButton.UseVisualStyleBackColor = true;
-			this.statsButton.Click += new System.EventHandler(this.createRoomButton_Click);
+			this.statsButton.Click += new System.EventHandler(this.statsButton_Click);
 			// 
 			// joinRoomButton
 			// 

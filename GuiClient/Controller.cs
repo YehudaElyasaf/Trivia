@@ -55,7 +55,7 @@ namespace GuiClient
         public void ShowStatistics()
         {
             Controls.Clear();
-            Statistics statistics= new Statistics(_communicator, this);
+            Statistics statistics = new Statistics(_communicator, this);
             Controls.Add(statistics);
             statistics.BringToFront();
         }
