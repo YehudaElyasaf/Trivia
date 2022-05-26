@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.createButton = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.answerTimeLabel = new System.Windows.Forms.Label();
+            this.questionsNumLabel = new System.Windows.Forms.Label();
+            this.playersNumLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.answerTime = new System.Windows.Forms.TextBox();
             this.questionsNum = new System.Windows.Forms.TextBox();
@@ -50,35 +50,36 @@
             this.createButton.UseVisualStyleBackColor = true;
             this.createButton.Click += new System.EventHandler(this.createButton_Click);
             // 
-            // label4
+            // answerTimeLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label4.Location = new System.Drawing.Point(248, 246);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 24);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Time to answer:";
+            this.answerTimeLabel.AutoSize = true;
+            this.answerTimeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.answerTimeLabel.Location = new System.Drawing.Point(248, 246);
+            this.answerTimeLabel.Name = "answerTimeLabel";
+            this.answerTimeLabel.Size = new System.Drawing.Size(144, 24);
+            this.answerTimeLabel.TabIndex = 16;
+            this.answerTimeLabel.Text = "Time to answer:";
             // 
-            // label3
+            // questionsNumLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label3.Location = new System.Drawing.Point(198, 211);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(194, 24);
-            this.label3.TabIndex = 15;
-            this.label3.Text = "Number of Questions:";
+            this.questionsNumLabel.AutoSize = true;
+            this.questionsNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.questionsNumLabel.Location = new System.Drawing.Point(198, 211);
+            this.questionsNumLabel.Name = "questionsNumLabel";
+            this.questionsNumLabel.Size = new System.Drawing.Size(194, 24);
+            this.questionsNumLabel.TabIndex = 15;
+            this.questionsNumLabel.Text = "Number of Questions:";
+            this.questionsNumLabel.Click += new System.EventHandler(this.label3_Click);
             // 
-            // label2
+            // playersNumLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
-            this.label2.Location = new System.Drawing.Point(222, 176);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(170, 24);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Number of Players:";
+            this.playersNumLabel.AutoSize = true;
+            this.playersNumLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F);
+            this.playersNumLabel.Location = new System.Drawing.Point(222, 176);
+            this.playersNumLabel.Name = "playersNumLabel";
+            this.playersNumLabel.Size = new System.Drawing.Size(170, 24);
+            this.playersNumLabel.TabIndex = 14;
+            this.playersNumLabel.Text = "Number of Players:";
             // 
             // label1
             // 
@@ -127,9 +128,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.createButton);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.answerTimeLabel);
+            this.Controls.Add(this.questionsNumLabel);
+            this.Controls.Add(this.playersNumLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.answerTime);
             this.Controls.Add(this.questionsNum);
@@ -145,9 +146,9 @@
         #endregion
 
         private System.Windows.Forms.Button createButton;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label answerTimeLabel;
+        private System.Windows.Forms.Label questionsNumLabel;
+        private System.Windows.Forms.Label playersNumLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox answerTime;
         private System.Windows.Forms.TextBox questionsNum;
