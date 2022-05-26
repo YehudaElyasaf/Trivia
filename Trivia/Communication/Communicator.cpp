@@ -93,7 +93,6 @@ void Communicator::handleNewClient(SOCKET sock) {
 
 			if (handler->isRequestRelevant(req)) {
 				res = handler->handleRequest(req);
-				json responseJson = json::parse(res.response.substr(MESSAGE_CODE_LENGTH + MESSAGE_LENGTH_FIELD_LENGTH));
 			}
 			else {
 				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), handler };
