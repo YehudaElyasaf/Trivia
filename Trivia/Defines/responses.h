@@ -63,6 +63,7 @@ struct StartGameResponse {
 	unsigned int status;
 };
 
+
 struct GetRoomStateResponse {
 	unsigned int status;
 	bool hasGameBegun;
