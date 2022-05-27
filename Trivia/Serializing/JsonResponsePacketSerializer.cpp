@@ -23,6 +23,14 @@ std::string JsonResponsePacketSerializer::join(const std::vector<std::string>& l
 		out += divider + list[i];
 	return out;
 }
+std::string JsonResponsePacketSerializer::join(const std::vector<LoggedUser>& list, const std::string& divider) {
+	std::vector<std::string> stringList;
+	for (LoggedUser loggedUser : list)
+		stringList.push_back(loggedUser.m_username);
+
+	return join(stringList, divider);
+}
+
 
 std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& resp) {
 	std::string out = { (unsigned char)ERROR_CODE };
