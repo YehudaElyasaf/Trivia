@@ -70,6 +70,6 @@ struct GetRoomStateResponse {
 	unsigned int answerTimeout;
 };
 
-struct GetHighScoreResponse {
+struct LeaveRoomResponse {
 	unsigned int status;
 };
