@@ -25,6 +25,10 @@ static class Const
     public const int CREATE_ROOM_CODE = 8;
     public const int HIGH_SCORE_CODE = 9;
     public const int PERSONAL_STATS_CODE = 10;
+    public const int CLOSE_ROOM_CODE = 11;
+    public const int START_GAME_CODE = 12;
+    public const int GET_ROOM_STATE_CODE = 13;
+    public const int LEAVE_ROOM = 14;
 
     public const int HEADERS_LENGTH = 5;
 
@@ -142,13 +146,15 @@ namespace GuiClient
             return getTopRatedUsersResponse.GetData()["HighScores"].Split(Const.LIST_SEPERATOR);
         }
 
-        public Dictionary<string, string> GetRooms() {
+        public Dictionary<string, string> GetRooms()
+        {
             Message getRoomsMessage = new Message(Const.GET_ROOMS_CODE, new Dictionary<string, string> { });
             Message getRoomsResponse = SendToServer(getRoomsMessage);
             return getRoomsResponse.GetData();
-		}
+        }
 
-        public bool JoinRoom(string roomId) {
+        public bool JoinRoom(string roomId)
+        {
             Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
             Message joinRoomResponse = SendToServer(joinRoomMessage);

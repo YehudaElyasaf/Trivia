@@ -126,3 +126,13 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetPersonalSta
 	out += data.dump();
 	return out;
 }
+
+std::string JsonResponsePacketSerializer::serializeResponse(const CloseRoomResponse& resp)
+{
+	std::string out = { (unsigned char)CLOSE_ROOM_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
