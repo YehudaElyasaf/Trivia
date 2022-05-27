@@ -28,7 +28,7 @@ static class Const
     public const int CLOSE_ROOM_CODE = 11;
     public const int START_GAME_CODE = 12;
     public const int GET_ROOM_STATE_CODE = 13;
-    public const int LEAVE_ROOM = 14;
+    public const int LEAVE_ROOM_CODE = 14;
 
     public const int HEADERS_LENGTH = 5;
 

@@ -155,3 +155,13 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetRoomStateRe
 	out += data.dump();
 	return out;
 }
+
+std::string JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& resp)
+{
+	std::string out = { (unsigned char)LEAVE_ROOM_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
