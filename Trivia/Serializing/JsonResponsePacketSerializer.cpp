@@ -136,3 +136,22 @@ std::string JsonResponsePacketSerializer::serializeResponse(const CloseRoomRespo
 	out += data.dump();
 	return out;
 }
+
+std::string JsonResponsePacketSerializer::serializeResponse(const StartGameResponse& resp)
+{
+	std::string out = { (unsigned char)START_GAME_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const GetRoomStateResponse& resp) {
+	std::string out = { (unsigned char)GET_ROOM_STATE_CODE };
+	json data{ {"status", resp.status}, {"HasGameBegun", resp.hasGameBegun}, {"Players", join(resp.players)}, {"QuestionCount", resp.questionCount}, {"AnswerTimeout",resp.answerTimeout} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
