@@ -12,9 +12,23 @@ namespace GuiClient
 {
     public partial class WaitingRoom : UserControl
     {
-        public WaitingRoom()
+        Communicator _communicator;
+        Controller _controller;
+        public WaitingRoom(Communicator communicator, Controller controller)
         {
             InitializeComponent();
+            _communicator = communicator;
+            _controller = controller;
+        }
+
+        private void WaitingRoom_Load(object sender, EventArgs e)
+        {
+            RefreshScreen();
+        }
+
+        public void RefreshScreen()
+        {
+            throw new NotImplementedException();
         }
     }
 }

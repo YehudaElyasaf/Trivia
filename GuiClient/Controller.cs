@@ -75,7 +75,7 @@ namespace GuiClient
         public void ShowWaitingRoom()
         {
             Controls.Clear();
-            _currentScreen = new JoinRoom(_communicator, this);
+            _currentScreen = new WaitingRoom(_communicator, this);
             Controls.Add(_currentScreen);
             _currentScreen.BringToFront();
             ShowHomeBtn();
@@ -132,6 +132,8 @@ namespace GuiClient
 
                 if (_currentScreen.GetType() == typeof(JoinRoom))
                     ((JoinRoom)_currentScreen).RefreshScreen();
+                if (_currentScreen.GetType() == typeof(WaitingRoom))
+                    ((WaitingRoom)_currentScreen).RefreshScreen();
             }
         }
     }

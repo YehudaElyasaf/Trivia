@@ -72,6 +72,7 @@
             this.Controls.Add(this.waitingRoomLabel);
             this.Name = "WaitingRoom";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.WaitingRoom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
