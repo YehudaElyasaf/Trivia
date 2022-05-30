@@ -19,6 +19,7 @@
     <ClCompile Include="Communication\Server.cpp" />
     <ClCompile Include="lib\WSAInitializer.cpp" />
     <ClCompile Include="lib\sqlite3.c" />
+    <ClCompile Include="RoomMemberRequestHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Room\RoomManager.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="lib\sqlite3.h" />
     <ClInclude Include="lib\json.h" />
     <ClInclude Include="lib\WSAInitializer.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="x64\Debug\Helper.obj" />
