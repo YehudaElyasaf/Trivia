@@ -28,7 +28,8 @@ namespace GuiClient
 
         public void RefreshScreen()
         {
-            throw new NotImplementedException();
+            string[] usersInRoom = _communicator.GetUsersInRoom();
+            connectedUsersLabel.Text = string.Join("\n", usersInRoom);
         }
     }
 }
