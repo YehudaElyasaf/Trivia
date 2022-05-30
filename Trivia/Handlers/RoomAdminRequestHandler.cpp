@@ -30,12 +30,3 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo req) {
 	StartGameResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
-
-RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo req) {
-	Room room = m_roomManager.getRoomById(request.roomId);
-	RoomData roomData = room.getRoomData();
-
-	std::string buffer = JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse{
-		roomData.isActive, room.getAllUsers(), roomData.numOfQuestionsInGame, room.timePerQuestion });
-	return { buffer, this };
-}
