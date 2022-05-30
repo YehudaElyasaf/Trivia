@@ -32,7 +32,7 @@ namespace GuiClient
                 {
                     bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
                     if (worked)
-                        _controller.ShowMainMenu();
+                        _controller.ShowWaitingRoom();
                     else
                         MessageBox.Show("Error");
                 }

@@ -33,7 +33,7 @@ namespace GuiClient
             {
                 if (_communicator.JoinRoom(_roomIds[roomsList.SelectedIndex]))
                 {
-                    _controller.ShowMainMenu();
+                    _controller.ShowWaitingRoom();
                 }
                 else
                 {

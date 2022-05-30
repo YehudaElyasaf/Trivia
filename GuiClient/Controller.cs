@@ -71,6 +71,15 @@ namespace GuiClient
             _currentScreen.BringToFront();
             ShowHomeBtn();
         }
+        
+        public void ShowWaitingRoom()
+        {
+            Controls.Clear();
+            _currentScreen = new JoinRoom(_communicator, this);
+            Controls.Add(_currentScreen);
+            _currentScreen.BringToFront();
+            ShowHomeBtn();
+        }
 
         public void ResetCommunicator()
         {
