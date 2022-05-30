@@ -34,6 +34,8 @@ static class Const
 
     public const int FAILURE_STATUS = 0;
     public const int SUCCESS_STATUS = 1;
+
+    public const int REFRESH_INTERVAL_MS = 3000;
 }
 
 namespace GuiClient
@@ -159,6 +161,15 @@ namespace GuiClient
                 { "roomId", roomId }});
             Message joinRoomResponse = SendToServer(joinRoomMessage);
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+        public string[] GetUsersInRoom()
+        {
+            Message getUsersInRoomMessage = new Message(Const.HIGH_SCORE_CODE,
+                new Dictionary<string, string> { });
+
+            Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
+
+            return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
         }
     }
 }
