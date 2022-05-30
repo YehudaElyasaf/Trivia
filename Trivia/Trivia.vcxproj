@@ -33,6 +33,7 @@
     <ClCompile Include="lib\WSAInitializer.cpp" />
     <ClCompile Include="Login\LoggedUser.cpp" />
     <ClCompile Include="Login\LoginManager.cpp" />
+    <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Room\Room.cpp" />
     <ClCompile Include="Room\RoomManager.cpp" />
     <ClCompile Include="Serializing\JsonRequestPacketDeserializer.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="lib\WSAInitializer.h" />
     <ClInclude Include="Login\LoggedUser.h" />
     <ClInclude Include="Login\LoginManager.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="Room\Room.h" />
     <ClInclude Include="Room\RoomManager.h" />
     <ClInclude Include="Serializing\JsonRequestPacketDeserializer.h" />
