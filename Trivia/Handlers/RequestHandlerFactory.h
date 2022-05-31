@@ -3,6 +3,7 @@
 #include "../Handlers/LoginRequestHandler.h"
 #include "../Handlers/MenuRequestHandler.h"
 #include "../Login/LoginManager.h"
+#include "../Communication/Communicator.h"
 
 class LoginRequestHandler;
 
@@ -17,10 +18,14 @@ public:
 	StatisticsManager& getStatisticsManager();
 	RoomManager& getRoomManager();
 
+	void setCommunicator(Communicator* communicator);
+	Communicator* getCommunicator();
+
 private:
 	LoginManager m_loginManager;
 	RoomManager m_roomManager;
 	StatisticsManager m_statisticsManager;
 	IDatabase* m_database;
+	Communicator* m_communicator;
 };
 

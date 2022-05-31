@@ -32,6 +32,10 @@ void Communicator::stop() {
 	m_running = false;
 }
 
+std::map<SOCKET, IRequestHandler*> Communicator::getClients() {
+	return m_clients;
+}
+
 void Communicator::bindAndListen() {
 	if (!m_running)
 		return;
@@ -76,7 +80,7 @@ void Communicator::bindAndListen() {
 
 void Communicator::handleNewClient(SOCKET sock) {
 	std::string lastMsg;
-	IRequestHandler* handler = m_handlerFactory.createLoginRequestHandler();
+	m_clients[sock] = m_handlerFactory.createLoginRequestHandler();
 	Helper::sendData(sock, HELLO_MSG);
 
 	try {
@@ -91,17 +95,17 @@ void Communicator::handleNewClient(SOCKET sock) {
 			std::string responseBytes;
 			RequestResult res;
 
-			if (handler->isRequestRelevant(req)) {
-				res = handler->handleRequest(req);
+			if (m_clients[sock]->isRequestRelevant(req)) {
+				res = m_clients[sock]->handleRequest(req);
 			}
 			else {
-				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), handler };
+				res = RequestResult{ JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid code" }), m_clients[sock] };
 			}
 
 			Helper::sendData(sock, res.response);
-			if (handler != res.newHandler) {
-				delete handler;
-				handler = res.newHandler;
+			if (m_clients[sock] != res.newHandler) {
+				delete m_clients[sock];
+				m_clients[sock] = res.newHandler;
 			}
 		}
 	}
@@ -111,14 +115,14 @@ void Communicator::handleNewClient(SOCKET sock) {
 
 	std::cout << "socket " << sock << " disconnected" << std::endl;
 	closesocket(sock);
-	delete m_clients[sock];
 
 	// if it's not a menu request handler, it wouldnt be able to get its username, and throw an exception.
 	// it doesnt matter to us, because at this point, if it's not a menu request handler it means it couldn't connect,
 	// so it has nothing to log out from.
 	try {
-		m_handlerFactory.getLoginManager().logout(((MenuRequestHandler*)handler)->getUsername());
+		m_handlerFactory.getLoginManager().logout(((MenuRequestHandler*)m_clients[sock])->getUsername());
 	}
 	catch (...) {}
-	delete handler;
+
+	delete m_clients[sock];
 }

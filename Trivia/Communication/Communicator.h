@@ -13,6 +13,7 @@ public:
 
 	// added to stop all of the threads
 	void stop();
+	std::map<SOCKET, IRequestHandler*> getClients();
 
 private:
 	WSAInitializer m_initServer;
