@@ -4,17 +4,15 @@
 #include <iomanip>
 #include <sstream>
 
-using std::string;
-
 // recieve data from socket according byteSize
 // returns the data as string
-string Helper::getStringPartFromSocket(const SOCKET sc, const int bytesNum)
+std::string Helper::getStringPartFromSocket(const SOCKET sc, const int bytesNum)
 {
 	return getPartFromSocket(sc, bytesNum, 0);
 }
 
 // return string after padding zeros if necessary
-string Helper::getPaddedNumber(const int num, const int digits)
+std::string Helper::getPaddedNumber(const int num, const int digits)
 {
 	std::ostringstream ostr;
 	ostr << std::setw(digits) << std::setfill('0') << num;

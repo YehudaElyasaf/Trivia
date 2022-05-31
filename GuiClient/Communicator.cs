@@ -164,7 +164,7 @@ namespace GuiClient
         }
         public string[] GetUsersInRoom()
         {
-            Message getUsersInRoomMessage = new Message(Const.HIGH_SCORE_CODE,
+            Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                 new Dictionary<string, string> { });
 
             Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
