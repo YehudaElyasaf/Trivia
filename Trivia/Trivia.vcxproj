@@ -26,6 +26,7 @@
     <ClCompile Include="Databases\SQLiteCallbacks.cpp" />
     <ClCompile Include="Databases\SQLiteDatabase.cpp" />
     <ClCompile Include="Databases\StatisticsManager.cpp" />
+    <ClCompile Include="Handlers\IRequestHandler.cpp" />
     <ClCompile Include="Handlers\LoginRequestHandler.cpp" />
     <ClCompile Include="Handlers\MenuRequestHandler.cpp" />
     <ClCompile Include="Handlers\RequestHandlerFactory.cpp" />
