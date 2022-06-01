@@ -10,5 +10,5 @@ public:
 private:
 	RequestResult closeRoom();
 	RequestResult startGame();
-	void sendToUsersInRoom(RequestResult res);
+	void sendToUsersInRoom(RequestResult req);
 };

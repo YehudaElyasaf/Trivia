@@ -10,31 +10,31 @@ bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo req) const {
 }
 
 RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo req) {
-	if (req.buffer(0) == CLOSE_ROOM_CODE)
-		return closeRoom(req);
+	if (req.buffer[0] == CLOSE_ROOM_CODE)
+		return closeRoom();
 	if (req.buffer[0] == START_GAME_CODE)
-		return startGame(req);
+		return startGame();
 	if (req.buffer[0] == GET_ROOM_STATE_CODE)
-		return getRoomState(req);
+		return getRoomState();
 	
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
 RequestResult RoomAdminRequestHandler::closeRoom() {
-	sendToUsers({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), nullptr});
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), nullptr});
 
 	CloseRoomResponse resp{ m_roomManager.deleteRoom(m_roomId) };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
 RequestResult RoomAdminRequestHandler::startGame() {
-	sendToUsers({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), nullptr });
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), nullptr });
 
 	StartGameResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
-void sendToUsers(RequestResult res) {
+void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req) {
 	for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 		m_handlerFactory.getCommunicator()->getClients();
 	}

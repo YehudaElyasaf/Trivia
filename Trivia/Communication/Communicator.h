@@ -6,6 +6,8 @@
 
 #define SERVER_PORT 4242
 
+class RequestHandlerFactory;
+
 class Communicator {
 public:
 	Communicator(RequestHandlerFactory& factory);

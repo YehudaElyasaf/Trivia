@@ -6,6 +6,7 @@
 #include "../Communication/Communicator.h"
 
 class LoginRequestHandler;
+class Communicator;
 
 class RequestHandlerFactory {
 public:
