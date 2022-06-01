@@ -9,6 +9,8 @@ public:
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
 
+	std::string getUsername() const override;
+
 private:
 	RequestResult closeRoom();
 	RequestResult startGame();

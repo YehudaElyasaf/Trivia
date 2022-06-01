@@ -6,7 +6,7 @@ RoomMemberRequestHandler::RoomMemberRequestHandler(const unsigned int roomId, co
 	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact) {}
 
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo req) {
-	return req.buffer[0] >= GET_ROOMS_CODE && req.buffer[0] <= LEAVE_ROOM_CODE;
+	return req.buffer[0] >= GET_ROOM_STATE_CODE && req.buffer[0] <= LEAVE_ROOM_CODE;
 }
 
 RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {

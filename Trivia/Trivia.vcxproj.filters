@@ -22,6 +22,7 @@
     <ClCompile Include="Handlers\RoomAdminRequestHandler.cpp" />
     <ClCompile Include="Handlers\RoomHandler.cpp" />
     <ClCompile Include="Handlers\RoomMemberRequestHandler.cpp" />
+    <ClCompile Include="Handlers\IRequestHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Room\RoomManager.h" />

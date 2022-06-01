@@ -20,4 +20,5 @@ class IRequestHandler {
 public:
 	virtual bool isRequestRelevant(struct RequestInfo req)=0;
 	virtual RequestResult handleRequest(struct RequestInfo req)=0;
+	virtual std::string getUsername() const;
 };
