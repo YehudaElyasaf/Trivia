@@ -10,11 +10,11 @@ bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo req) {
 }
 
 RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
-	if (req.buffer[0] == GET_ROOMS_CODE)
+	if (req.buffer[0] == GET_ROOM_STATE_CODE)
 		return getRoomState(m_roomManager, m_roomId, this);
-	else if (req.buffer[0] == LEAVE_ROOM_CODE)
+	if (req.buffer[0] == LEAVE_ROOM_CODE)
 		return leaveRoom();
-	
+
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
