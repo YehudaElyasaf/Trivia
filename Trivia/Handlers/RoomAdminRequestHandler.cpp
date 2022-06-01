@@ -26,7 +26,7 @@ RequestResult RoomAdminRequestHandler::closeRoom() {
 	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), nullptr});
 
 	CloseRoomResponse resp{ m_roomManager.deleteRoom(m_roomId) };
-	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username)};
 }
 
 RequestResult RoomAdminRequestHandler::startGame() {
