@@ -71,7 +71,7 @@ namespace GuiClient
             _currentScreen.BringToFront();
             ShowHomeBtn();
         }
-        
+
         public void ShowWaitingRoom()
         {
             Controls.Clear();
@@ -111,7 +111,7 @@ namespace GuiClient
                 _currentScreen = null;
                 ShowLoginScreen();
                 _autoRefresher = new Thread(new ThreadStart(AutoRefresh));
-                _autoRefresher.IsBackground= true;
+                _autoRefresher.IsBackground = true;
                 _autoRefresher.Start();
             }
             catch (Exception ex)
@@ -132,7 +132,7 @@ namespace GuiClient
 
                 if (_currentScreen.GetType() == typeof(JoinRoom))
                     ((JoinRoom)_currentScreen).RefreshScreen();
-                if (_currentScreen.GetType() == typeof(WaitingRoom))
+                else if (_currentScreen.GetType() == typeof(WaitingRoom))
                     ((WaitingRoom)_currentScreen).RefreshScreen();
             }
         }

@@ -36,6 +36,7 @@ static class Const
     public const int SUCCESS_STATUS = 1;
 
     public const int REFRESH_INTERVAL_MS = 3000;
+    public const int NOT_FOUND = -1;
 }
 
 namespace GuiClient

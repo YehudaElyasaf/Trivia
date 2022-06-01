@@ -25,6 +25,10 @@ namespace GuiClient
 
         private void joinButton_Click(object sender, EventArgs e)
         {
+            if (roomsList.SelectedIndex == Const.NOT_FOUND)
+                //no room was chosen
+                return;
+
             if (_roomIds == null || _roomIds.Length == 0)
             {
                 MessageBox.Show("Error! could not find this list's index!");
