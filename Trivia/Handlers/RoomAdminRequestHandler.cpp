@@ -1,6 +1,8 @@
 #include "RoomAdminRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 #include "../Serializing/JsonResponsePacketSerializer.h"
 #include "../Serializing/JsonRequestPacketDeserializer.h"
+#include "../Communication/Helper.h"
 
 RoomAdminRequestHandler::RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact) :
 	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact) {}
@@ -35,7 +37,15 @@ RequestResult RoomAdminRequestHandler::startGame() {
 }
 
 void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req) {
-	for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
-		m_handlerFactory.getCommunicator()->getClients();
+	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
+		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
+			try {
+				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername())
+					Helper::sendData(client.first, req.response);
+			}
+			catch (...) {
+				// it means the client is not in a room, because it doesnt have m_user.m_username
+			}
+		}
 	}
 }

@@ -8,7 +8,15 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() {
 }
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(std::string& username) {
-    return new MenuRequestHandler(username, m_roomManager, m_statisticsManager);
+    return new MenuRequestHandler(username, m_roomManager, m_statisticsManager, *this);
+}
+
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const std::string& username, const unsigned int roomId) {
+    return new RoomAdminRequestHandler(roomId, {username}, m_roomManager, *this);
+}
+
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(const std::string& username, const unsigned int roomId) {
+    return new RoomMemberRequestHandler(roomId, {username}, m_roomManager, *this);
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager() {

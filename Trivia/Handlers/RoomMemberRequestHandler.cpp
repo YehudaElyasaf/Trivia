@@ -18,6 +18,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
+std::string RoomMemberRequestHandler::getUsername() const {
+	return m_user.m_username;
+}
+
 RequestResult RoomMemberRequestHandler::leaveRoom() {
 	LeaveRoomResponse resp{ m_roomManager.getRoomById(m_roomId).removeUser(m_user) };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username) };
