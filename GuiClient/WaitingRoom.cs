@@ -29,6 +29,8 @@ namespace GuiClient
         public void RefreshScreen()
         {
             string[] usersInRoom = _communicator.GetUsersInRoom();
+            if (usersInRoom.Length > 0)
+                usersInRoom[0]+=" (admin)";
             connectedUsersLabel.Text = string.Join("\n", usersInRoom);
         }
     }
