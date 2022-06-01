@@ -31,7 +31,7 @@ namespace GuiClient
             string[] usersInRoom = _communicator.GetUsersInRoom();
             if (usersInRoom.Length > 0)
                 usersInRoom[0]+=" (admin)";
-            connectedUsersLabel.Text = string.Join("\n", usersInRoom);
+            connectedUsersListLabel.Text = string.Join("\n", usersInRoom);
         }
     }
 }
