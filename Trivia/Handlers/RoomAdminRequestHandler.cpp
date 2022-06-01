@@ -3,9 +3,9 @@
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 
 RoomAdminRequestHandler::RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact) :
-	RoomHandler(roomId, user, roomManager, fact) {}
+	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact) {}
 
-bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo req) const {
+bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo req) {
 	return req.buffer[0] >= CLOSE_ROOM_CODE && req.buffer[0] <= GET_ROOM_STATE_CODE;
 }
 
@@ -15,7 +15,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo req) {
 	if (req.buffer[0] == START_GAME_CODE)
 		return startGame();
 	if (req.buffer[0] == GET_ROOM_STATE_CODE)
-		return getRoomState();
+		return getRoomState(m_roomManager, m_roomId, this);
 	
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }

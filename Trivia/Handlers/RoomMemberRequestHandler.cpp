@@ -2,13 +2,16 @@
 #include "../Serializing/JsonResponsePacketSerializer.h"
 
 
+RoomMemberRequestHandler::RoomMemberRequestHandler(const unsigned int roomId, const LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact) :
+	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact) {}
+
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo req) {
 	return req.buffer[0] >= GET_ROOMS_CODE && req.buffer[0] <= LEAVE_ROOM_CODE;
 }
 
 RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
 	if (req.buffer[0] == GET_ROOMS_CODE)
-		return getRoomState();
+		return getRoomState(m_roomManager, m_roomId, this);
 	else if (req.buffer[0] == LEAVE_ROOM_CODE)
 		return leaveRoom();
 	
