@@ -120,7 +120,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 	// it doesnt matter to us, because at this point, if it's not a menu request handler it means it couldn't connect,
 	// so it has nothing to log out from.
 	try {
-		m_handlerFactory.getLoginManager().logout(((MenuRequestHandler*)m_clients[sock])->getUsername());
+		m_handlerFactory.getLoginManager().logout(m_clients[sock]->getUsername());
 	}
 	catch (...) {}
 

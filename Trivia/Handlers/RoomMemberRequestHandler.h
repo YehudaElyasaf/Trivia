@@ -9,7 +9,7 @@ public:
 	RoomMemberRequestHandler(const unsigned int roomId, const LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact);
 	bool isRequestRelevant(struct RequestInfo req) override;
 	RequestResult handleRequest(struct RequestInfo req) override;
-	std::string getUsername() const;
+	std::string getUsername() const override;
 
 private:
 	unsigned int m_roomId;
