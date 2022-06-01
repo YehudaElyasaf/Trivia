@@ -48,7 +48,7 @@ void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req) {
 					Helper::sendData(client.first, req.response);
 			}
 			catch (...) {
-				// it means the client is not in a room, because it doesnt have m_user.m_username
+				// it means the client is not in a room, because it doesnt have getUsername function
 			}
 		}
 	}
