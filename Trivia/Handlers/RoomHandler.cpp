@@ -6,6 +6,6 @@ RequestResult getRoomState(RoomManager& roomManager, const unsigned int roomId, 
 	RoomData roomData = room.getRoomData();
 
 	std::string buffer = JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse{
-		true, roomData.isActive, room.getAllUsers(), roomData.numOfQuestionsInGame, roomData.timePerQuestion });
+		roomData.isActive, roomData.isActive, room.getAllUsers(), roomData.numOfQuestionsInGame, roomData.timePerQuestion });
 	return RequestResult{ buffer, handler };
 }

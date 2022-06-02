@@ -53,7 +53,4 @@
     <ClInclude Include="Handlers\RoomHandler.h" />
     <ClInclude Include="Handlers\RoomMemberRequestHandler.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="x64\Debug\Helper.obj" />
-  </ItemGroup>
 </Project>

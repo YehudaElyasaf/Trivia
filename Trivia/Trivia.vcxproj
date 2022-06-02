@@ -71,9 +71,6 @@
     <ClInclude Include="Serializing\JsonRequestPacketDeserializer.h" />
     <ClInclude Include="Serializing\JsonResponsePacketSerializer.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="x64\Debug\Helper.obj" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
