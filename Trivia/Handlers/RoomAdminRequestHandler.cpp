@@ -43,6 +43,8 @@ RequestResult RoomAdminRequestHandler::startGame() {
 void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req) {
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
+			if (user == m_user)
+				continue;
 			try {
 				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername())
 					Helper::sendData(client.first, req.response);
