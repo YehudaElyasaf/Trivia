@@ -122,6 +122,8 @@ namespace GuiClient
         }
         private void homeButton_Click(object sender, EventArgs e)
         {
+            if (_currentScreen.GetType() == typeof(WaitingRoom))
+                _communicator.LeaveRoom();
             ShowMainMenu();
         }
         private void AutoRefresh()
