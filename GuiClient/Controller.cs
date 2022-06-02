@@ -32,10 +32,10 @@ namespace GuiClient
 
         public void ShowMainMenu()
         {
-            Controls.Clear();
-            _currentScreen = new MainMenu(_communicator, this);
-            Controls.Add(_currentScreen);
-            _currentScreen.BringToFront();
+            Invoke((MethodInvoker)(() => Controls.Clear()));
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new MainMenu(_communicator, this)));
+            Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
         }
 
         public void ShowLoginScreen()

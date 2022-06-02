@@ -21,5 +21,5 @@ public:
 	virtual ~IRequestHandler()=default;
 	virtual bool isRequestRelevant(struct RequestInfo req)=0;
 	virtual RequestResult handleRequest(struct RequestInfo req)=0;
-	virtual std::string getUsername() const;
+	virtual std::string getUsername() const = 0;
 };

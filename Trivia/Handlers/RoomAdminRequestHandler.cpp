@@ -18,7 +18,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo req) {
 		return startGame();
 	if (req.buffer[0] == GET_ROOM_STATE_CODE)
 		return getRoomState(m_roomManager, m_roomId, this);
-	
+
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
@@ -27,10 +27,10 @@ std::string RoomAdminRequestHandler::getUsername() const {
 }
 
 RequestResult RoomAdminRequestHandler::closeRoom() {
-	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), nullptr});
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), m_handlerFactory.createMenuRequestHandler(m_user.m_username) });
 
 	CloseRoomResponse resp{ m_roomManager.deleteRoom(m_roomId) };
-	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username)};
+	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username) };
 }
 
 RequestResult RoomAdminRequestHandler::startGame() {

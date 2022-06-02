@@ -170,6 +170,9 @@ namespace GuiClient
 
             Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
+            if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
+                throw new RoomClosedException();
+
             return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
         }
         public bool LeaveRoom(bool isAdmin)

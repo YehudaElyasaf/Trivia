@@ -34,11 +34,18 @@ namespace GuiClient
 
         public void RefreshScreen()
         {
-            string[] usersInRoom = _communicator.GetUsersInRoom();
-            if (usersInRoom.Length > 0)
-                usersInRoom[0]+=" (admin)";
+            try
+            {
+                string[] usersInRoom = _communicator.GetUsersInRoom();
+                if (usersInRoom.Length > 0)
+                    usersInRoom[0]+=" (admin)";
 
-            connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", usersInRoom)));
+                connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", usersInRoom)));
+            }
+            catch (RoomClosedException)
+            {
+                _controller.ShowMainMenu();
+            }
         }
     }
 }
