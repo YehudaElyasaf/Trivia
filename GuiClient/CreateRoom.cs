@@ -32,7 +32,8 @@ namespace GuiClient
                 {
                     bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
                     if (worked)
-                        _controller.ShowWaitingRoom();
+                        //create room as admin
+                        _controller.ShowWaitingRoom(true);
                     else
                         MessageBox.Show("Error");
                 }

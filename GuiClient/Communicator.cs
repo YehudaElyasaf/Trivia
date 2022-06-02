@@ -172,10 +172,16 @@ namespace GuiClient
 
             return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
         }
-        public bool LeaveRoom()
+        public bool LeaveRoom(bool isAdmin)
         {
-            Message leaveRoomMessage = new Message(Const.LEAVE_ROOM_CODE,
-                new Dictionary<string, string> { });
+            Message leaveRoomMessage = null;
+
+            if (isAdmin)
+                leaveRoomMessage = new Message(Const.CLOSE_ROOM_CODE,
+                    new Dictionary<string, string> { });
+            else
+                leaveRoomMessage = new Message(Const.LEAVE_ROOM_CODE,
+                    new Dictionary<string, string> { });
 
             Message leaveRoomResponse = SendToServer(leaveRoomMessage);
 

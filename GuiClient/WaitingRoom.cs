@@ -14,11 +14,17 @@ namespace GuiClient
     {
         Communicator _communicator;
         Controller _controller;
-        public WaitingRoom(Communicator communicator, Controller controller)
+        bool _isAdmin;
+        public bool isAdmin
+        {
+            get { return _isAdmin; }
+        }
+        public WaitingRoom(Communicator communicator, Controller controller, bool isAdmin)
         {
             InitializeComponent();
             _communicator = communicator;
             _controller = controller;
+            _isAdmin = isAdmin;
         }
 
         private void WaitingRoom_Load(object sender, EventArgs e)

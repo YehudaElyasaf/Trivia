@@ -37,7 +37,8 @@ namespace GuiClient
             {
                 if (_communicator.JoinRoom(_roomIds[roomsList.SelectedIndex]))
                 {
-                    _controller.ShowWaitingRoom();
+                    //create room not as admin
+                    _controller.ShowWaitingRoom(false);
                 }
                 else
                 {

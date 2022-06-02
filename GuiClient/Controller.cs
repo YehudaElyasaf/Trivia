@@ -72,10 +72,10 @@ namespace GuiClient
             ShowHomeBtn();
         }
 
-        public void ShowWaitingRoom()
+        public void ShowWaitingRoom(bool isAdmin)
         {
             Controls.Clear();
-            _currentScreen = new WaitingRoom(_communicator, this);
+            _currentScreen = new WaitingRoom(_communicator, this, isAdmin);
             Controls.Add(_currentScreen);
             _currentScreen.BringToFront();
             ShowHomeBtn();
@@ -123,7 +123,7 @@ namespace GuiClient
         private void homeButton_Click(object sender, EventArgs e)
         {
             if (_currentScreen.GetType() == typeof(WaitingRoom))
-                _communicator.LeaveRoom();
+                _communicator.LeaveRoom(((WaitingRoom)_currentScreen).isAdmin);
             ShowMainMenu();
         }
         private void AutoRefresh()
