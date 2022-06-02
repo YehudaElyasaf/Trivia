@@ -172,5 +172,14 @@ namespace GuiClient
 
             return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
         }
+        public bool LeaveRoom()
+        {
+            Message leaveRoomMessage = new Message(Const.LEAVE_ROOM_CODE,
+                new Dictionary<string, string> { });
+
+            Message leaveRoomResponse = SendToServer(leaveRoomMessage);
+
+            return leaveRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
     }
 }
