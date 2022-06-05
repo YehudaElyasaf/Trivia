@@ -32,9 +32,18 @@ namespace GuiClient
 
         public void ShowMainMenu()
         {
-            Invoke((MethodInvoker)(() => Controls.Clear()));
+            try
+            {
+            this.Invoke((MethodInvoker)(() => Controls.Clear()));
+            }
+            catch(NoDataToReadException)
+            {
+                //do nothing
+                //because Communicator::SendToServer didn't get any message from server
+            }
+
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new MainMenu(_communicator, this)));
-            Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
+            this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
         }
 

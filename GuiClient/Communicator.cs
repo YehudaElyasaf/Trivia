@@ -64,22 +64,32 @@ namespace GuiClient
 
         private Message SendToServer(Message msg)
         {
-            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
-
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-
-            Message resp = new Message(Encoding.Default.GetString(_buffer));
-
-            if (resp.GetCode() == Const.ERROR_CODE)
+            try
             {
-                throw new Exception("Error! " + resp.GetData()["message"]);
+                byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
+                _clientStream.Write(_buffer, 0, _buffer.Length);
+                _clientStream.Flush();
+
+                _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+
+                Message resp = new Message(Encoding.Default.GetString(_buffer));
+
+                if (resp.GetCode() == Const.ERROR_CODE)
+                    throw new Exception("Error! " + resp.GetData()["message"]);
+                return resp;
+
+            }
+            catch (System.IO.IOException)
+            {
+                throw new NoDataToReadException();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Unknow connection error occured!");
             }
 
-            return resp;
         }
 
         public bool Login(string username, string password)

@@ -22,4 +22,21 @@ namespace GuiClient
         {
         }
     }
+
+    public class NoDataToReadException : Exception
+    {
+        public NoDataToReadException()
+        {
+        }
+
+        public NoDataToReadException(string message)
+            : base(message)
+        {
+        }
+
+        public NoDataToReadException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }
