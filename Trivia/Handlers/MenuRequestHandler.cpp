@@ -32,6 +32,8 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
     case PERSONAL_STATS_CODE:
         return getStats(req.buffer);
         break;
+    default:
+        throw std::exception("Invalid code!");
     }
 }
 
