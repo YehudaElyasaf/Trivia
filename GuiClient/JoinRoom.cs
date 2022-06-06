@@ -66,8 +66,12 @@ namespace GuiClient
             {
 
                 Dictionary<string, string> rooms = _communicator.GetRooms();
+                if (roomsList.Items.Count != 0 &&
+                    rooms["Rooms"].Split(Const.LIST_SEPERATOR).SequenceEqual(roomsList.Items.Cast<string>()))
+                    return;
+
                 roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Clear()));
-                foreach (string roomName in rooms["Rooms"].Split(Const.LIST_SEPERATOR))
+				foreach (string roomName in rooms["Rooms"].Split(Const.LIST_SEPERATOR))
                 {
                     roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Add(roomName)));
                 }
@@ -80,5 +84,12 @@ namespace GuiClient
                 MessageBox.Show(ex.Message);
             }
         }
-    }
+
+		private void roomsList_ItemCheck(object sender, ItemCheckEventArgs e) {
+            if (e.NewValue == CheckState.Checked)
+                for (int i = 0; i < roomsList.Items.Count; i++)
+                    if (e.Index != i)
+                        roomsList.SetItemChecked(i, false);
+		}
+	}
 }
