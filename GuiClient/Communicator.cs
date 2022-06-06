@@ -25,11 +25,18 @@ static class Const
     public const int CREATE_ROOM_CODE = 8;
     public const int HIGH_SCORE_CODE = 9;
     public const int PERSONAL_STATS_CODE = 10;
+    public const int CLOSE_ROOM_CODE = 11;
+    public const int START_GAME_CODE = 12;
+    public const int GET_ROOM_STATE_CODE = 13;
+    public const int LEAVE_ROOM_CODE = 14;
 
     public const int HEADERS_LENGTH = 5;
 
     public const int FAILURE_STATUS = 0;
     public const int SUCCESS_STATUS = 1;
+
+    public const int REFRESH_INTERVAL_MS = 3000;
+    public const int NOT_FOUND = -1;
 }
 
 namespace GuiClient
@@ -57,22 +64,27 @@ namespace GuiClient
 
         private Message SendToServer(Message msg)
         {
-            byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
-            _clientStream.Write(_buffer, 0, _buffer.Length);
-            _clientStream.Flush();
-
-            _buffer = new byte[Const.MAX_BUFFER_SIZE];
-            _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-
-            Message resp = new Message(Encoding.Default.GetString(_buffer));
-
-            if (resp.GetCode() == Const.ERROR_CODE)
+            try
             {
-                throw new Exception("Error! " + resp.GetData()["message"]);
-            }
+                byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
+                _clientStream.Write(_buffer, 0, _buffer.Length);
+                _clientStream.Flush();
 
-            return resp;
+                _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+
+                Message resp = new Message(Encoding.Default.GetString(_buffer));
+
+                if (resp.GetCode() == Const.ERROR_CODE)
+                    throw new Exception("Error! " + resp.GetData()["message"]);
+                return resp;
+
+            }
+            catch (System.IO.IOException)
+            {
+                throw new NoDataToReadException();
+            }
         }
 
         public bool Login(string username, string password)
@@ -142,17 +154,45 @@ namespace GuiClient
             return getTopRatedUsersResponse.GetData()["HighScores"].Split(Const.LIST_SEPERATOR);
         }
 
-        public Dictionary<string, string> GetRooms() {
+        public Dictionary<string, string> GetRooms()
+        {
             Message getRoomsMessage = new Message(Const.GET_ROOMS_CODE, new Dictionary<string, string> { });
             Message getRoomsResponse = SendToServer(getRoomsMessage);
             return getRoomsResponse.GetData();
-		}
+        }
 
-        public bool JoinRoom(string roomId) {
+        public bool JoinRoom(string roomId)
+        {
             Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
             Message joinRoomResponse = SendToServer(joinRoomMessage);
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+        public string[] GetUsersInRoom()
+        {
+            Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
+                new Dictionary<string, string> { });
+
+            Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
+
+            if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
+                throw new Exception("Room closed");
+            return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+        }
+        public bool LeaveRoom(bool isAdmin)
+        {
+            Message leaveRoomMessage = null;
+
+            if (isAdmin)
+                leaveRoomMessage = new Message(Const.CLOSE_ROOM_CODE,
+                    new Dictionary<string, string> { });
+            else
+                leaveRoomMessage = new Message(Const.LEAVE_ROOM_CODE,
+                    new Dictionary<string, string> { });
+
+            Message leaveRoomResponse = SendToServer(leaveRoomMessage);
+
+            return leaveRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
     }
 }

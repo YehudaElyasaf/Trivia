@@ -23,6 +23,14 @@ std::string JsonResponsePacketSerializer::join(const std::vector<std::string>& l
 		out += divider + list[i];
 	return out;
 }
+std::string JsonResponsePacketSerializer::join(const std::vector<LoggedUser>& list, const std::string& divider) {
+	std::vector<std::string> stringList;
+	for (LoggedUser loggedUser : list)
+		stringList.push_back(loggedUser.m_username);
+
+	return join(stringList, divider);
+}
+
 
 std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& resp) {
 	std::string out = { (unsigned char)ERROR_CODE };
@@ -121,6 +129,45 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetHighScoreRe
 std::string JsonResponsePacketSerializer::serializeResponse(const GetPersonalStatsResponse& resp) {
 	std::string out = { (unsigned char)PERSONAL_STATS_CODE };
 	json data{ {"status", resp.status}, {"UserStatistics", join(resp.statistics)} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const CloseRoomResponse& resp)
+{
+	std::string out = { (unsigned char)CLOSE_ROOM_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const StartGameResponse& resp)
+{
+	std::string out = { (unsigned char)START_GAME_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const GetRoomStateResponse& resp) {
+	std::string out = { (unsigned char)GET_ROOM_STATE_CODE };
+	json data{ {"status", resp.status}, {"HasGameBegun", resp.hasGameBegun}, {"Players", join(resp.players)}, {"QuestionCount", resp.questionCount}, {"AnswerTimeout",resp.answerTimeout} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& resp)
+{
+	std::string out = { (unsigned char)LEAVE_ROOM_CODE };
+	json data{ {"status", resp.status} };
 
 	out += bitwiseLen(data);
 	out += data.dump();

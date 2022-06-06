@@ -24,15 +24,41 @@ namespace GuiClient
 
         private void createButton_Click(object sender, EventArgs e)
         {
-            try {
-                bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
-                if (worked)
-                    _controller.ShowMainMenu();
-                else
-                    MessageBox.Show("Error");
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
+
+            if (int.TryParse(playersNum.Text, out int n1) &&
+                int.TryParse(questionsNum.Text, out int n2) &&
+                int.TryParse(answerTime.Text, out int n3))
+                try
+                {
+                    bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
+                    if (worked)
+                        //create room as admin
+                        _controller.ShowWaitingRoom(true);
+                    else
+                        MessageBox.Show("Error");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            else
+            {
+                //one of the fields is not an integer
+                MessageBox.Show(playersNumLabel.Text + ", " + questionsNumLabel.Text + " and " + answerTimeLabel.Text + " must be integers");
+                playersNum.Text = "";
+                questionsNum.Text = "";
+                answerTime.Text = "";
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CreateRoom_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
