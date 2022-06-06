@@ -1,4 +1,6 @@
 #include"../Room/RoomManager.h"
+#include"../Defines/Exceptions.h"
+
 #define NULL_ID 0
 
 int RoomManager::createRoom(const LoggedUser& roomCreator, RoomData& roomData)
@@ -39,7 +41,7 @@ std::vector<RoomData> RoomManager::getRooms() const
 
 Room& RoomManager::getRoomById(const int id) {
 	if (m_rooms.find(id) == m_rooms.end())
-		throw std::exception("room not found");
+		throw RoomNotFoundException();
 	
 	return m_rooms.at(id);
 }

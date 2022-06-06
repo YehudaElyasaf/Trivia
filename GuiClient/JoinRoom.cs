@@ -35,14 +35,22 @@ namespace GuiClient
             }
             else
             {
-                if (_communicator.JoinRoom(_roomIds[roomsList.SelectedIndex]))
+                try
                 {
-                    //create room not as admin
-                    _controller.ShowWaitingRoom(false);
+                    if (_communicator.JoinRoom(_roomIds[roomsList.SelectedIndex]))
+                    {
+                        //false = not as admin
+                        _controller.ShowWaitingRoom(false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not join room");
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    MessageBox.Show("Could not join room");
+                    //selected room was closed
+                    //do nothing
                 }
             }
         }

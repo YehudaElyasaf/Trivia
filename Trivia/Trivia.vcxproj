@@ -51,6 +51,7 @@
     <ClInclude Include="Databases\SQLiteCallbacks.h" />
     <ClInclude Include="Databases\SQLiteDatabase.h" />
     <ClInclude Include="Databases\StatisticsManager.h" />
+    <ClInclude Include="Defines\Exceptions.h" />
     <ClInclude Include="Defines\msgCodes.h" />
     <ClInclude Include="Defines\requests.h" />
     <ClInclude Include="Defines\responses.h" />

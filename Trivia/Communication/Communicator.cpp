@@ -6,6 +6,7 @@
 #include "../Handlers/LoginRequestHandler.h"
 #include "../Serializing/JsonResponsePacketSerializer.h"
 #include "../Serializing/JsonRequestPacketDeserializer.h"
+#include"../Defines/Exceptions.h"
 
 #define HELLO_MSG "Hello"
 #define EXIT_MSG  "Exit"
@@ -83,8 +84,8 @@ void Communicator::handleNewClient(SOCKET sock) {
 	m_clients[sock] = m_handlerFactory.createLoginRequestHandler();
 	Helper::sendData(sock, HELLO_MSG);
 
-	try {
-		while (m_running && lastMsg != EXIT_MSG) {
+	while (m_running && lastMsg != EXIT_MSG) {
+		try {
 			// get first 5 bytes of the message
 			lastMsg = Helper::getStringPartFromSocket(sock, MESSAGE_CODE_LENGTH);
 			int dataLen = Helper::getDataLengthFromSockect(sock);
@@ -94,7 +95,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 			RequestInfo req = { 0, time(0), lastMsg };
 			std::string responseBytes;
 			RequestResult res;
-			
+
 			std::lock_guard<std::mutex> lock_clients(clientsMutex);
 			if (m_clients[sock]->isRequestRelevant(req)) {
 				res = m_clients[sock]->handleRequest(req);
@@ -109,9 +110,13 @@ void Communicator::handleNewClient(SOCKET sock) {
 				m_clients[sock] = res.newHandler;
 			}
 		}
-	}
-	catch (const std::exception& e) {
-		std::cout << e.what() << std::endl;
+		catch (const RoomNotFoundException& e) {
+			std::cerr << e.what() << std::endl;
+		}
+		catch (const std::exception& e) {
+			std::cerr << e.what() << std::endl;
+			break;
+		}
 	}
 
 	std::cout << "socket " << sock << " disconnected" << std::endl;
@@ -122,7 +127,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 	// so it has nothing to log out from.
 	try {
 		m_handlerFactory.getLoginManager().logout(m_clients[sock]->getUsername());
-		
+
 		if (typeid(m_clients[sock]) == typeid(RoomAdminRequestHandler*))
 			((RoomAdminRequestHandler*)m_clients[sock])->closeRoom();
 		else if (typeid(m_clients[sock]) == typeid(RoomMemberRequestHandler*))

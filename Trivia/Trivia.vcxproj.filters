@@ -52,5 +52,6 @@
     <ClInclude Include="Handlers\RoomAdminRequestHandler.h" />
     <ClInclude Include="Handlers\RoomHandler.h" />
     <ClInclude Include="Handlers\RoomMemberRequestHandler.h" />
+    <ClInclude Include="Defines\Exceptions.h" />
   </ItemGroup>
 </Project>
