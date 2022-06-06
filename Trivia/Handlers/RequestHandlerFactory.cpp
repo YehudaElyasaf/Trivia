@@ -1,14 +1,22 @@
 #include "../Handlers/RequestHandlerFactory.h"
 
 RequestHandlerFactory::RequestHandlerFactory(IDatabase* database) :
-    m_database(database), m_loginManager(database), m_statisticsManager(database) { }
+    m_database(database), m_loginManager(database), m_statisticsManager(database), m_communicator(nullptr) {}
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() {
     return new LoginRequestHandler(m_loginManager, *this);
 }
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(std::string& username) {
-    return new MenuRequestHandler(username, m_roomManager, m_statisticsManager);
+    return new MenuRequestHandler(username, m_roomManager, m_statisticsManager, *this);
+}
+
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(const std::string& username, const unsigned int roomId) {
+    return new RoomAdminRequestHandler(roomId, {username}, m_roomManager, *this);
+}
+
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(const std::string& username, const unsigned int roomId) {
+    return new RoomMemberRequestHandler(roomId, {username}, m_roomManager, *this);
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager() {
@@ -21,4 +29,12 @@ StatisticsManager& RequestHandlerFactory::getStatisticsManager() {
 
 RoomManager& RequestHandlerFactory::getRoomManager() {
     return m_roomManager;
+}
+
+void RequestHandlerFactory::setCommunicator(Communicator* communicator) {
+    m_communicator = communicator;
+}
+
+Communicator* RequestHandlerFactory::getCommunicator() {
+    return m_communicator;
 }

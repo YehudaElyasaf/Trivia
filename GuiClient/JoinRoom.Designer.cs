@@ -36,6 +36,7 @@
 			this.roomsList.Name = "roomsList";
 			this.roomsList.Size = new System.Drawing.Size(593, 364);
 			this.roomsList.TabIndex = 0;
+			this.roomsList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.roomsList_ItemCheck);
 			// 
 			// joinButton
 			// 

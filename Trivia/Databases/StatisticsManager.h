@@ -3,8 +3,7 @@
 #include<vector>
 #include<string>
 
-class StatisticsManager
-{
+class StatisticsManager {
 public:
     //c'tor
     StatisticsManager(IDatabase* db);

@@ -18,9 +18,14 @@ public:
 	static std::string serializeResponse(const CreateRoomResponse& resp);
 	static std::string serializeResponse(const GetHighScoreResponse& resp);
 	static std::string serializeResponse(const GetPersonalStatsResponse& resp);
+	static std::string serializeResponse(const CloseRoomResponse& resp);
+	static std::string serializeResponse(const StartGameResponse& resp);
+	static std::string serializeResponse(const GetRoomStateResponse& resp);
+	static std::string serializeResponse(const LeaveRoomResponse& resp);
 
 
 	// get the length (in bytes) of a json's string
 	static std::string bitwiseLen(const json& data);
 	static std::string join(const std::vector<std::string>& list, const std::string& divider = DIVIDER);
+	static std::string join(const std::vector<LoggedUser>& list, const std::string& divider = DIVIDER);
 };
