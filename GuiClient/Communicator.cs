@@ -81,9 +81,9 @@ namespace GuiClient
                 return resp;
 
             }
-            catch (System.IO.IOException)
+            catch (System.IO.IOException ex)
             {
-                throw new NoDataToReadException();
+                throw new NoDataToReadException(ex.Message);
             }
         }
 
@@ -170,14 +170,23 @@ namespace GuiClient
         }
         public string[] GetUsersInRoom()
         {
-            Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
-                new Dictionary<string, string> { });
+            try {
+                Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
+                    new Dictionary<string, string> { });
 
-            Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
+                Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
-            if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
-                throw new Exception("Room closed");
-            return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+                if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
+                    throw new Exception("Room closed");
+                return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Equals("Error! room not found"))
+                    throw new Exception("room closed");
+
+                throw ex;
+            }
         }
         public bool LeaveRoom(bool isAdmin)
         {
