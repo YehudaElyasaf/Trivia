@@ -27,27 +27,35 @@ std::string RoomAdminRequestHandler::getUsername() const {
 }
 
 RequestResult RoomAdminRequestHandler::closeRoom() {
-	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}), m_handlerFactory.createMenuRequestHandler(m_user.m_username) });
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{true}),
+					  m_handlerFactory.createMenuRequestHandler(m_user.m_username) }, CLOSE_ROOM_CODE);
 
 	CloseRoomResponse resp{ m_roomManager.deleteRoom(m_roomId) };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username) };
 }
 
 RequestResult RoomAdminRequestHandler::startGame() {
-	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), nullptr });
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), nullptr }, START_GAME_CODE);
 
 	StartGameResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
-void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req) {
+void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req, int msgType) {
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 			if (user == m_user)
 				continue;
 			try {
-				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername())
+				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
 					Helper::sendData(client.first, req.response);
+					IRequestHandler** handler = &m_handlerFactory.getCommunicator()->getClients()[client.first];
+					delete (*handler);
+					if (msgType == CLOSE_ROOM_CODE)
+						*handler = m_handlerFactory.createMenuRequestHandler(user.m_username);
+					// create game request handler...
+					else if (msgType == START_GAME_CODE) {}
+				}
 			}
 			catch (...) {
 				// it means the client is not in a room, because it doesnt have getUsername function

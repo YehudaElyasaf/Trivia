@@ -14,7 +14,7 @@ public:
 
 private:
 	RequestResult startGame();
-	void sendToUsersInRoom(RequestResult req);
+	void sendToUsersInRoom(RequestResult req, int msgType);
 
 	unsigned int m_roomId;
 	LoggedUser m_user;
