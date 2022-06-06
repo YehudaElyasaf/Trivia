@@ -53,3 +53,23 @@ struct GetPersonalStatsResponse {
 	
 	std::vector<std::string> statistics;
 };
+
+struct CloseRoomResponse {
+	unsigned int status;
+};
+
+struct StartGameResponse {
+	unsigned int status;
+};
+
+struct GetRoomStateResponse {
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<LoggedUser> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+};
+
+struct LeaveRoomResponse {
+	unsigned int status;
+};

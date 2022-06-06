@@ -18,6 +18,8 @@ struct RequestResult {
 
 class IRequestHandler {
 public:
+	virtual ~IRequestHandler()=default;
 	virtual bool isRequestRelevant(struct RequestInfo req)=0;
 	virtual RequestResult handleRequest(struct RequestInfo req)=0;
+	virtual std::string getUsername() const = 0;
 };

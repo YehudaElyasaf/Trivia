@@ -12,6 +12,7 @@ public:
 	//check if the message code is valid
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
+	std::string getUsername() const { throw std::exception("Action not supported, no user logged in\n"); }
 
 private:
 	LoginManager& m_loginManager;
