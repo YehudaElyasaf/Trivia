@@ -85,11 +85,6 @@ namespace GuiClient
             {
                 throw new NoDataToReadException();
             }
-            catch (Exception)
-            {
-                throw new Exception("Unknow connection error occured!");
-            }
-
         }
 
         public bool Login(string username, string password)
@@ -181,8 +176,7 @@ namespace GuiClient
             Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
             if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
-                throw new RoomClosedException();
-
+                throw new Exception("Room closed");
             return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
         }
         public bool LeaveRoom(bool isAdmin)

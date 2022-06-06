@@ -1,6 +1,7 @@
 #pragma once
 #include "../lib/WSAInitializer.h"
 #include <map>
+#include <mutex>
 #include "../Handlers/IRequestHandler.h"
 #include "../Handlers/RequestHandlerFactory.h"
 
@@ -16,6 +17,7 @@ public:
 	// added to stop all of the threads
 	void stop();
 	std::map<SOCKET, IRequestHandler*> getClients();
+	std::mutex clientsMutex;
 
 private:
 	WSAInitializer m_initServer;

@@ -3,4 +3,4 @@
 #include "../Room/RoomManager.h"
 #include "RequestHandlerFactory.h"
 
-RequestResult getRoomState(RoomManager& roomManager, const unsigned int roomId, IRequestHandler* handler);
+RequestResult getRoomState(RoomManager& roomManager, const unsigned int roomId, IRequestHandler* handler, RequestHandlerFactory& fact);

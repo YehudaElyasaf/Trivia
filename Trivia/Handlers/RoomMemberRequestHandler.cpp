@@ -11,7 +11,7 @@ bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo req) {
 
 RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
 	if (req.buffer[0] == GET_ROOM_STATE_CODE)
-		return getRoomState(m_roomManager, m_roomId, this);
+		return getRoomState(m_roomManager, m_roomId, this, m_handlerFactory);
 	if (req.buffer[0] == LEAVE_ROOM_CODE)
 		return leaveRoom();
 

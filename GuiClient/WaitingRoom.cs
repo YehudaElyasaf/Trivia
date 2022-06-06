@@ -42,8 +42,8 @@ namespace GuiClient
 
                 connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", usersInRoom)));
             }
-            catch (RoomClosedException)
-            {
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
                 _controller.ShowMainMenu();
             }
         }

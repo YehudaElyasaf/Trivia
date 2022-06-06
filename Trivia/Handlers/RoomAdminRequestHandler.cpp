@@ -17,7 +17,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo req) {
 	if (req.buffer[0] == START_GAME_CODE)
 		return startGame();
 	if (req.buffer[0] == GET_ROOM_STATE_CODE)
-		return getRoomState(m_roomManager, m_roomId, this);
+		return getRoomState(m_roomManager, m_roomId, this, m_handlerFactory);
 
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
@@ -47,12 +47,13 @@ void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req, int msgType) 
 			if (user == m_user)
 				continue;
 			try {
+				std::lock_guard<std::mutex> lock_clients(m_handlerFactory.getCommunicator()->clientsMutex);
+				
 				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
 					Helper::sendData(client.first, req.response);
-					IRequestHandler** handler = &m_handlerFactory.getCommunicator()->getClients()[client.first];
-					delete (*handler);
+					delete m_handlerFactory.getCommunicator()->getClients()[client.first];
 					if (msgType == CLOSE_ROOM_CODE)
-						*handler = m_handlerFactory.createMenuRequestHandler(user.m_username);
+						m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createMenuRequestHandler(user.m_username);
 					// create game request handler...
 					else if (msgType == START_GAME_CODE) {}
 				}
