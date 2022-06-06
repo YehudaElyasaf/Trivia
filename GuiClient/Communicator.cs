@@ -182,7 +182,7 @@ namespace GuiClient
             }
             catch (Exception ex)
             {
-                if (ex.Message.Equals("Error! room not found"))
+                if (ex.Message.Equals("Error! Room not found"))
                     throw new Exception("room closed");
 
                 throw ex;
