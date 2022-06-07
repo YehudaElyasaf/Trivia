@@ -3,6 +3,7 @@
 #include"../Game/Question.h"
 #include<vector>
 #include<map>
+#include<string>
 
 struct GamaData {
 	Question currentQuestion;
@@ -13,5 +14,12 @@ struct GamaData {
 
 class Game {
 private:
+	std::vector<Question> m_questions;
+	std::map<LoggedUser, GamaData> m_players;
 
+public:
+	Game();
+	Question getQuestionForUser(const LoggedUser& user);
+	void submitAnswer(const LoggedUser& user, const std::string& answer);
+	void removePlayer(const LoggedUser& user);
 };

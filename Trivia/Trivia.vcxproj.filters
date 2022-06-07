@@ -8,7 +8,6 @@
     <ClCompile Include="Room\RoomManager.cpp" />
     <ClCompile Include="Databases\SQLiteDatabase.cpp" />
     <ClCompile Include="Databases\SQLiteCallbacks.cpp" />
-    <ClCompile Include="Databases\Question.cpp" />
     <ClCompile Include="Serializing\JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="Serializing\JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="Login\LoggedUser.cpp" />
@@ -23,6 +22,7 @@
     <ClCompile Include="Handlers\RoomHandler.cpp" />
     <ClCompile Include="Handlers\RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Handlers\IRequestHandler.cpp" />
+    <ClCompile Include="Game\Question.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Room\RoomManager.h" />
@@ -32,7 +32,6 @@
     <ClInclude Include="Databases\IDatabase.h" />
     <ClInclude Include="Databases\SQLiteCallbacks.h" />
     <ClInclude Include="Defines\msgCodes.h" />
-    <ClInclude Include="Databases\Question.h" />
     <ClInclude Include="Handlers\RequestHandlerFactory.h" />
     <ClInclude Include="Defines\requests.h" />
     <ClInclude Include="Defines\responses.h" />
@@ -53,5 +52,7 @@
     <ClInclude Include="Handlers\RoomHandler.h" />
     <ClInclude Include="Handlers\RoomMemberRequestHandler.h" />
     <ClInclude Include="Defines\Exceptions.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Question.h" />
   </ItemGroup>
 </Project>
