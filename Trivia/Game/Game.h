@@ -18,7 +18,7 @@ private:
 	std::map<LoggedUser, GamaData> m_players;
 
 public:
-	Game(const std::map<LoggedUser, GamaData>& players);
+	Game(const std::vector<Question>& questions, const std::vector<LoggedUser>& users);
 	Question getQuestionForUser(const LoggedUser& user);
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
 	void removePlayer(const LoggedUser& user);
