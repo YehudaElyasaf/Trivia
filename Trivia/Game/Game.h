@@ -22,5 +22,5 @@ public:
 	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users);
 	Question getQuestionForUser(const LoggedUser& user);
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
-	void removePlayer(const LoggedUser& user);
+	bool removePlayer(const LoggedUser& user);
 };
