@@ -25,4 +25,5 @@ public:
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
 	bool removePlayer(const LoggedUser& user);
 	int getId() const;
+	std::map<LoggedUser, GameData> getPlayers() const;
 };

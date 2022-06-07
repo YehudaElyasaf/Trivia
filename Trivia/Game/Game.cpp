@@ -22,3 +22,8 @@ int Game::getId() const
 {
 	return m_id;
 }
+
+std::map<LoggedUser, GameData> Game::getPlayers() const
+{
+	return m_players;
+}
