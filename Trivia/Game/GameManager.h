@@ -7,9 +7,10 @@ class GameManager {
 private:
 	IDatabase* m_database;
 	std::vector<Game> m_games;
+	unsigned int m_nextId;
 
 public:
 	GameManager(IDatabase* database);
 	Game createGame(const Room& room);
-	void deleteGame(const Game& game);
+	void deleteGame(const unsigned int id);
 };

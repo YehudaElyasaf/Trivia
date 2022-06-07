@@ -1,7 +1,9 @@
 #include "Game.h"
+#include "Game.h"
 #include"Game.h"
 
-Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users)
+Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
+	m_id(id)
 {
 	//beima shell Magshimimm hem lo yachloo la'asot meha'athala sheashe'elot yahzero bevector?
 	for (Question question : questions)
@@ -14,4 +16,9 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 bool Game::removePlayer(const LoggedUser& user)
 {
 	m_players.erase(user);
+}
+
+int Game::getId() const
+{
+	return m_id;
 }
