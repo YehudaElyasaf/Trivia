@@ -1,4 +1,4 @@
-#include "../Databases/Question.h"
+#include "../Game/Question.h"
 #include <algorithm>
 
 Question::Question(const std::string& question, const std::vector<std::string>& possibleAnswers) :

@@ -4,22 +4,29 @@
 #include<vector>
 #include<map>
 #include<string>
+#include<list>
 
-struct GamaData {
-	Question currentQuestion;
+#define KEY_FOUND_IN_MAP 1
+
+struct GameData {
+	unsigned int currentQuestionId;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	unsigned int averageAnswerTime;
+	unsigned int totalAnswerTime;
 };
 
 class Game {
 private:
 	std::vector<Question> m_questions;
-	std::map<LoggedUser, GamaData> m_players;
+	std::map<LoggedUser, GameData> m_players;
+	unsigned int m_id;
 
 public:
-	Game(const std::vector<Question>& questions, const std::vector<LoggedUser>& users);
-	Question getQuestionForUser(const LoggedUser& user);
+	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id);
+	Question getQuestionForUser(const LoggedUser& user) const;
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
-	void removePlayer(const LoggedUser& user);
+	bool removePlayer(const LoggedUser& user);
+	int getId() const;
+	std::map<LoggedUser, GameData> getPlayers() const;
 };

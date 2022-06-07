@@ -6,10 +6,11 @@
 class GameManager {
 private:
 	IDatabase* m_database;
-	std::vector<Game> m_games;
+	std::map<unsigned int, Game> m_games;
+	unsigned int m_nextId;
 
 public:
-	GameManager(const IDatabase* database);
+	GameManager(IDatabase* database);
 	Game createGame(const Room& room);
-	void deleteGame(const Game& game);
+	bool deleteGame(const unsigned int id);
 };
