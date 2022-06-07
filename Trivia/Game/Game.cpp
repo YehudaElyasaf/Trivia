@@ -1,6 +1,6 @@
-#include "Game.h"
-#include "Game.h"
-#include"Game.h"
+#include "../Game/Game.h"
+
+#define KEY_FOUND_IN_MAP 1
 
 Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
 	m_id(id)
@@ -15,7 +15,7 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 
 bool Game::removePlayer(const LoggedUser& user)
 {
-	m_players.erase(user);
+	return m_players.erase(user) == KEY_FOUND_IN_MAP;
 }
 
 int Game::getId() const

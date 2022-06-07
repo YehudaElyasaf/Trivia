@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <map>
 #include "../Room/Room.h"
 
 struct LoginResponse {
