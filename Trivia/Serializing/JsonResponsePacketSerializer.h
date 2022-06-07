@@ -22,6 +22,11 @@ public:
 	static std::string serializeResponse(const StartGameResponse& resp);
 	static std::string serializeResponse(const GetRoomStateResponse& resp);
 	static std::string serializeResponse(const LeaveRoomResponse& resp);
+	//
+	static std::string serializeResponse(const LeaveGameResponse& resp);
+	static std::string serializeResponse(const GetGameResultsResponse& resp);
+	static std::string serializeResponse(const GetQuestionResponse& resp);
+	static std::string serializeResponse(const SubmitAnswerResponse& resp);
 
 
 	// get the length (in bytes) of a json's string

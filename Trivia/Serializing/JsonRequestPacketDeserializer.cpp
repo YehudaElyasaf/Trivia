@@ -48,3 +48,11 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(co
     out.roomName = data["roomName"];
     return out;
 }
+
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(const std::string& buffer) {
+    SubmitAnswerRequest out;
+    json data = json::parse(buffer.substr(DATA_START));
+
+    out.answerId = stoi(std::string(data["answerId"]));
+    return out;
+}
