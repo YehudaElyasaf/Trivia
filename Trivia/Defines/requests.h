@@ -28,5 +28,5 @@ struct CreateRoomRequest {
 };
 
 struct SubmitAnswerRequest {
-	unsigned int answerId;
+	std::string answer;
 };
