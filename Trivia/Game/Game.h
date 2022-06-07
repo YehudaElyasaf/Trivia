@@ -4,6 +4,7 @@
 #include<vector>
 #include<map>
 #include<string>
+#include<list>
 
 struct GameData {
 	unsigned int currentQuestion;
@@ -18,7 +19,7 @@ private:
 	std::map<LoggedUser, GameData> m_players;
 
 public:
-	Game(const std::vector<Question>& questions, const std::vector<LoggedUser>& users);
+	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users);
 	Question getQuestionForUser(const LoggedUser& user);
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
 	void removePlayer(const LoggedUser& user);

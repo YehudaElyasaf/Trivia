@@ -1,5 +1,5 @@
 #include "../Databases/SQLiteCallbacks.h"
-#include "../Databases/Question.h"
+#include "../Game/Question.h"
 #include <list>
 
 int doesExistCallback(void* data, int argc, char** argv, char** azColumnName) {

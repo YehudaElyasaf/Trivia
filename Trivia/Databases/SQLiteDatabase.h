@@ -1,7 +1,7 @@
 #pragma once
 #include "../lib/sqlite3.h"
 #include "../Databases/IDatabase.h"
-#include "../Databases/Question.h"
+#include "../Game/Question.h"
 #include <list>
 
 #define DATABASE_FILENAME "DB.sqlite"
