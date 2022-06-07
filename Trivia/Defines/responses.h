@@ -81,7 +81,7 @@ struct LeaveGameResponse {
 struct GetQuestionResponse {
 	unsigned int status;
 	std::string question;
-	std::map<unsigned int, std::string> answers;
+	std::vector<std::string> answers;
 };
 
 struct SubmitAnswerResponse {
@@ -100,4 +100,3 @@ struct GetGameResultsResponse {
 	unsigned int status;
 	std::vector<PlayerResult> results;
 };
-

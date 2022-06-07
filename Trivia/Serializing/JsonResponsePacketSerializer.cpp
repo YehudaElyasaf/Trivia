@@ -208,7 +208,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(const SubmitAnswerRe
 	return out;
 }
 
-std::vector<std::map<std::string, std::string>> serializeResults(std::vector<PlayerResult> results) {
+std::vector<std::map<std::string, std::string>> JsonResponsePacketSerializer::serializeResults(std::vector<PlayerResult> results) {
 	std::vector<std::map<std::string, std::string>> out;
 	std::map<std::string, std::string> tmp;
 	

@@ -22,7 +22,6 @@ public:
 	static std::string serializeResponse(const StartGameResponse& resp);
 	static std::string serializeResponse(const GetRoomStateResponse& resp);
 	static std::string serializeResponse(const LeaveRoomResponse& resp);
-	//
 	static std::string serializeResponse(const LeaveGameResponse& resp);
 	static std::string serializeResponse(const GetGameResultsResponse& resp);
 	static std::string serializeResponse(const GetQuestionResponse& resp);
@@ -33,4 +32,5 @@ public:
 	static std::string bitwiseLen(const json& data);
 	static std::string join(const std::vector<std::string>& list, const std::string& divider = DIVIDER);
 	static std::string join(const std::vector<LoggedUser>& list, const std::string& divider = DIVIDER);
+	std::vector<std::map<std::string, std::string>> serializeResults(std::vector<PlayerResult> results);
 };

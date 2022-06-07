@@ -53,6 +53,6 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
     SubmitAnswerRequest out;
     json data = json::parse(buffer.substr(DATA_START));
 
-    out.answerId = stoi(std::string(data["answerId"]));
+    out.answer = data["answer"];
     return out;
 }
