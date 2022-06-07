@@ -6,10 +6,13 @@
 #include<string>
 #include<list>
 
+#define KEY_FOUND_IN_MAP 1
+
 struct GameData {
-	unsigned int currentQuestion;
+	unsigned int currentQuestionId;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerTime;
 	unsigned int totalAnswerTime;
 };
 

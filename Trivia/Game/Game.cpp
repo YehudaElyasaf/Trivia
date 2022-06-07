@@ -1,6 +1,5 @@
+#include "Game.h"
 #include "../Game/Game.h"
-
-#define KEY_FOUND_IN_MAP 1
 
 Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
 	m_id(id)
@@ -11,6 +10,13 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 
 	for (LoggedUser user : users)
 		m_players[user] = { 0,0,0,0 };
+}
+
+Question Game::getQuestionForUser(const LoggedUser& user) const
+{
+	unsigned int currentQuestionId = m_players.at(user).currentQuestionId;
+	return m_questions.at(currentQuestionId);
+		
 }
 
 bool Game::removePlayer(const LoggedUser& user)
