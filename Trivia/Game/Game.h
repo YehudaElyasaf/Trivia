@@ -5,17 +5,17 @@
 #include<map>
 #include<string>
 
-struct GamaData {
-	Question currentQuestion;
+struct GameData {
+	unsigned int currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
+	unsigned int totalAnswerTime;
 };
 
 class Game {
 private:
 	std::vector<Question> m_questions;
-	std::map<LoggedUser, GamaData> m_players;
+	std::map<LoggedUser, GameData> m_players;
 
 public:
 	Game(const std::vector<Question>& questions, const std::vector<LoggedUser>& users);
