@@ -9,6 +9,7 @@ private:
 	std::vector<Game> m_games;
 
 public:
+	GameManager(const IDatabase* database);
 	Game createGame(const Room& room);
 	void deleteGame(const Game& game);
 };
