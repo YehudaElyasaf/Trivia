@@ -14,7 +14,7 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 
 Question Game::getQuestionForUser(const LoggedUser& user) const
 {
-	unsigned int currentQuestionId = m_players.at(user).currentQuestion;
+	unsigned int currentQuestionId = m_players.at(user).currentQuestionId;
 	return m_questions.at(currentQuestionId);
 		
 }
