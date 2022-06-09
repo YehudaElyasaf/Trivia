@@ -5,13 +5,18 @@
 #include "../Handlers/MenuRequestHandler.h"
 #include "../Handlers/RoomAdminRequestHandler.h"
 #include "../Handlers/RoomMemberRequestHandler.h"
+#include "../Handlers/GameRequestHandler.h"
 #include "../Login/LoginManager.h"
+#include "../Game/GameManager.h"
 #include "../Communication/Communicator.h"
+#include "../Game/Game.h"
 
 class LoginRequestHandler;
 class RoomAdminRequestHandler;
 class MenuRequestHandler;
 class RoomMemberRequestHandler;
+class GameRequestHandler;
+
 class Communicator;
 class StatisticsManager;
 
@@ -23,6 +28,7 @@ public:
 	MenuRequestHandler* createMenuRequestHandler(std::string& username);
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(const std::string& username, const unsigned int roomId);
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(const std::string& username, const unsigned int roomId);
+	GameRequestHandler* createGameRequestHandler(const std::string& username, const unsigned int roomId, Game& game);
 	
 	LoginManager& getLoginManager();
 	StatisticsManager& getStatisticsManager();
@@ -34,6 +40,7 @@ public:
 private:
 	LoginManager m_loginManager;
 	RoomManager m_roomManager;
+	GameManager m_gameManager;
 	StatisticsManager m_statisticsManager;
 	IDatabase* m_database;
 	Communicator* m_communicator;

@@ -26,6 +26,14 @@ std::string GameRequestHandler::getUsername() const {
 	return m_user.m_username;
 }
 
+Game& GameRequestHandler::getGame() {
+	return m_game;
+}
+
+unsigned int GameRequestHandler::getRoomId() const {
+	return m_roomId;
+}
+
 RequestResult GameRequestHandler::getResults() {
 	GetGameResultsResponse resp;
 	resp.status = !(m_roomManager.getRoomById(m_roomId).getRoomData().isActive);

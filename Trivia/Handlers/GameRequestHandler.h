@@ -1,8 +1,8 @@
 #pragma once
 #include "IRequestHandler.h"
-#include <RoomManager.h>
 #include "RequestHandlerFactory.h"
-#include <Game.h>
+
+class RequestHandlerFactory;
 
 class GameRequestHandler : public IRequestHandler {
 public:
@@ -10,6 +10,9 @@ public:
 	bool isRequestRelevant(struct RequestInfo req) override;
 	RequestResult handleRequest(struct RequestInfo req) override;
 	std::string getUsername() const override;
+	
+	Game& getGame();
+	unsigned int getRoomId() const;
 
 private:
 	unsigned int m_roomId;

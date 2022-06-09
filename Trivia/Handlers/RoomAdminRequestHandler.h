@@ -1,11 +1,11 @@
 #pragma once
-#include "RoomHandler.h"
+#include "RequestHandlerFactory.h"
 
 class RequestHandlerFactory;
 
 class RoomAdminRequestHandler : public IRequestHandler {
 public:
-	RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact);
+	RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, GameManager& gameManager, RequestHandlerFactory& fact);
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
 
@@ -19,5 +19,6 @@ private:
 	unsigned int m_roomId;
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
+	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 };
