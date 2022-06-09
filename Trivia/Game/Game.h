@@ -5,15 +5,17 @@
 #include<map>
 #include<string>
 #include<list>
+#include<chrono>
 
 #define KEY_FOUND_IN_MAP 1
+#define NO_AVERAGE_ANSWER_TIME -1
 
 struct GameData {
 	unsigned int currentQuestionId;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
-	unsigned int totalAnswerTime;
+	int averageAnswerTime;
+	std::chrono::steady_clock::time_point beginningTime;
 };
 
 class Game {
