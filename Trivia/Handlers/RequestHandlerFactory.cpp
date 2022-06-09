@@ -7,7 +7,7 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler() {
     return new LoginRequestHandler(m_loginManager, *this);
 }
 
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(std::string& username) {
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(const std::string& username) {
     return new MenuRequestHandler(username, m_roomManager, m_statisticsManager, *this);
 }
 

@@ -11,10 +11,10 @@
 #define NO_AVERAGE_ANSWER_TIME -1
 
 struct GameData {
-	unsigned int currentQuestionId;
+	int currentQuestionId;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int totalAnswerTime;
+	int totalAnswerTime;
 	int averageAnswerTime;
 	std::chrono::steady_clock::time_point beginningTime;
 };
@@ -26,6 +26,7 @@ private:
 	unsigned int m_id;
 
 public:
+	Game() { throw std::exception("Class 'Game' doesn't support a default c'tor"); }
 	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id);
 	Question getQuestionForUser(const LoggedUser& user) const;
 	void submitAnswer(const LoggedUser& user, const std::string& answer);

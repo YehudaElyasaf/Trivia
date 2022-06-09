@@ -25,7 +25,7 @@ public:
 	RequestHandlerFactory(IDatabase* database);
 	
 	LoginRequestHandler* createLoginRequestHandler();
-	MenuRequestHandler* createMenuRequestHandler(std::string& username);
+	MenuRequestHandler* createMenuRequestHandler(const std::string& username);
 	RoomAdminRequestHandler* createRoomAdminRequestHandler(const std::string& username, const unsigned int roomId);
 	RoomMemberRequestHandler* createRoomMemberRequestHandler(const std::string& username, const unsigned int roomId);
 	GameRequestHandler* createGameRequestHandler(const std::string& username, const unsigned int roomId, Game& game);
