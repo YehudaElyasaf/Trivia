@@ -138,7 +138,9 @@ void SQLiteDatabase::addToAnswerTime(const std::string& username, const unsigned
 }
 
 void SQLiteDatabase::addToCorrectAnswers(const std::string& username, const unsigned int correctAnswersToAdd) {
-
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET CORRECT_ANSWERS = CORRECT_ANSWERS + " + std::to_string(correctAnswersToAdd) + " WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
 }
 
 void SQLiteDatabase::addToTotalAnswers(const std::string& username, const unsigned int answersToAdd) {
