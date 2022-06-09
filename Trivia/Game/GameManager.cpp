@@ -14,5 +14,12 @@ Game GameManager::createGame(const Room& room)
 
 bool GameManager::deleteGame(const unsigned int id)
 {
+	std::map<LoggedUser, GameData> players = m_games.at(id).getPlayers();
+	for (auto it = players.begin(); it != players.end(); it++) {
+		m_database.addToAnswerTime(it->first.m_username, it->second.totalAnswerTime);
+		m_database.addToCorrectAnswers(it->first.m_username, it->second.correctAnswerCount);
+		m_database.addToTotalAnswers(it->first.m_username, it->second.currentQuestionId);
+	}
+
 	return m_games.erase(id) == KEY_FOUND_IN_MAP;
 }

@@ -17,7 +17,7 @@ Question Game::getQuestionForUser(const LoggedUser& user) const
 {
 	unsigned int currentQuestionId = m_players.at(user).currentQuestionId;
 	return m_questions.at(currentQuestionId);
-		
+
 }
 
 void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
@@ -30,6 +30,10 @@ void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 		gameData.wrongAnswerCount++;
 
 	gameData.currentQuestionId++;
+
+	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+	gameData.totalAnswerTime = std::chrono::duration_cast<std::chrono::seconds>(now - gameData.beginningTime);
+	gameData.averageAnswerTime = gameData.totalAnswerTime / gameData.currentQuestionId;
 }
 
 bool Game::removePlayer(const LoggedUser& user)
