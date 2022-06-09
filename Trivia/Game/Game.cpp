@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game.h"
 #include "../Game/Game.h"
 
 Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
@@ -18,6 +19,8 @@ Question Game::getQuestionForUser(const LoggedUser& user) const
 	return m_questions.at(currentQuestionId);
 		
 }
+
+void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {}
 
 bool Game::removePlayer(const LoggedUser& user)
 {
