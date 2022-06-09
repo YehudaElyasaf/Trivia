@@ -10,7 +10,7 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 		m_questions.push_back(question);
 
 	for (LoggedUser user : users)
-		m_players[user] = { 0,0,0, NO_AVERAGE_ANSWER_TIME, std::chrono::steady_clock::now() };
+		m_players[user] = { 0, 0, 0, 0, NO_AVERAGE_ANSWER_TIME, std::chrono::steady_clock::now() };
 }
 
 Question Game::getQuestionForUser(const LoggedUser& user) const
@@ -21,8 +21,8 @@ Question Game::getQuestionForUser(const LoggedUser& user) const
 }
 
 void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
-	GameData& gameData = m_players.at(user.m_username);
-	if (answer == m_questions.at(gameData.currentQuestionId))
+	GameData& gameData = m_players.at(user);
+	if (answer == m_questions.at(gameData.currentQuestionId).getCorrectAnswer())
 		//correct answer
 		gameData.correctAnswerCount++;
 	else
@@ -32,7 +32,7 @@ void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 	gameData.currentQuestionId++;
 
 	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-	gameData.totalAnswerTime = std::chrono::duration_cast<std::chrono::seconds>(now - gameData.beginningTime);
+	gameData.totalAnswerTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - gameData.beginningTime).count();
 	gameData.averageAnswerTime = gameData.totalAnswerTime / gameData.currentQuestionId;
 }
 

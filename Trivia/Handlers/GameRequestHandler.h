@@ -3,6 +3,7 @@
 #include "RequestHandlerFactory.h"
 
 class RequestHandlerFactory;
+class Game;
 
 class GameRequestHandler : public IRequestHandler {
 public:
