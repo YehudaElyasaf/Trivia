@@ -149,8 +149,11 @@ void SQLiteDatabase::addToTotalAnswers(const std::string& username, const unsign
 	executeAndValidate(sqlStatement);
 }
 
-void SQLiteDatabase::increaseTotalGames(const std::string& username) {
-
+void SQLiteDatabase::increaseTotalGames(const std::string& username)
+{
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET NUM_OF_GAMES = NUM_OF_GAMES + 1 WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
 }
 
 
