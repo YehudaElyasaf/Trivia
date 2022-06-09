@@ -1,8 +1,8 @@
 #include "GameRequestHandler.h"
-#include <responses.h>
-#include <JsonResponsePacketSerializer.h>
-#include <JsonRequestPacketDeserializer.h>
-#include <Game.h>
+#include "../Defines/responses.h"
+#include "../Serializing/JsonResponsePacketSerializer.h"
+#include "../Serializing/JsonRequestPacketDeserializer.h"
+#include "../Game/Game.h"
 
 GameRequestHandler::GameRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact, Game& game):
 	m_roomId(roomId), m_user(user), m_roomManager(RoomManager), m_handlerFactory(fact), m_game(game) {}

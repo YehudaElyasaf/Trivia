@@ -23,6 +23,9 @@
     <ClCompile Include="Handlers\RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Handlers\IRequestHandler.cpp" />
     <ClCompile Include="Game\Question.cpp" />
+    <ClCompile Include="Handlers\GameRequestHandler.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Room\RoomManager.h" />
@@ -54,5 +57,7 @@
     <ClInclude Include="Defines\Exceptions.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\Question.h" />
+    <ClInclude Include="Handlers\GameRequestHandler.h" />
+    <ClInclude Include="Game\GameManager.h" />
   </ItemGroup>
 </Project>
