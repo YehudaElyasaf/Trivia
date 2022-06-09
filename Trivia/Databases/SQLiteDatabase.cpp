@@ -125,10 +125,28 @@ std::vector<std::string> SQLiteDatabase::getTopRatedUsers(const int numberOfUser
 {
 	std::vector<std::string> topUsers;
 	std::string sqlStatement;
-	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers);
+	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers) + ";";
 	executeAndValidate(sqlStatement, &topUsers, getTopRatedUserCallback);
 
 	return topUsers;
+}
+
+void SQLiteDatabase::addToAnswerTime(const std::string& username, const unsigned int timeToAdd) {
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET ANSWER_TIME_SECONDS = ANSWER_TIME_SECONDS + " + std::to_string(timeToAdd) + " WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
+}
+
+void SQLiteDatabase::addToCorrectAnswers(const std::string& username, const unsigned int correctAnswersToAdd) {
+
+}
+
+void SQLiteDatabase::addToTotalAnswers(const std::string& username, const unsigned int answersToAdd) {
+
+}
+
+void SQLiteDatabase::increaseTotalGames(const std::string& username) {
+
 }
 
 

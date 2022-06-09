@@ -19,7 +19,7 @@ bool GameManager::deleteGame(const unsigned int id)
 		m_database.addToAnswerTime(it->first.m_username, it->second.totalAnswerTime);
 		m_database.addToCorrectAnswers(it->first.m_username, it->second.correctAnswerCount);
 		m_database.addToTotalAnswers(it->first.m_username, it->second.currentQuestionId);
-		m_database.addToTotalGames(it->first.m_username);
+		m_database.increaseTotalGames(it->first.m_username);
 	}
 
 	return m_games.erase(id) == KEY_FOUND_IN_MAP;

@@ -26,6 +26,8 @@ public:
 	void addNewQuestion(const Question& q) override;
 	// get (optional: a limited number of) all questions from the database
 	std::list<Question> getQuestions(const int limit = UNLIMITED) override;
+
+	//get and set to statistincs
 	std::string getPlayerAverageAnswerTime(const std::string& name) override;
 	std::string getNumOfCorrectAnswers(const std::string& name) override;
 	std::string getNumOfTotalAnswers(const std::string& name) override;
@@ -33,6 +35,10 @@ public:
 	//returns the top rated users.
 	//the rate is (numberOfCorrectAnswers /numberOfTotalAnswers)
 	std::vector<std::string> getTopRatedUsers(const int numberOfUsers) override;
+	void addToAnswerTime(const std::string& username, const unsigned int timeToAdd);
+	void addToCorrectAnswers(const std::string& username, const unsigned int correctAnswersToAdd);
+	void addToTotalAnswers(const std::string& username, const unsigned int answersToAdd);
+	void increaseTotalGames(const std::string& username);
 
 private:
 	sqlite3* _db;
