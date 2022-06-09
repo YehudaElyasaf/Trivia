@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Game.h"
-#include "../Game/Game.h"
 
 Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
 	m_id(id)
