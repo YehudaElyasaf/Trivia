@@ -14,6 +14,7 @@ struct GameData {
 	unsigned int currentQuestionId;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
+	unsigned int totalAnswerTime;
 	int averageAnswerTime;
 	std::chrono::steady_clock::time_point beginningTime;
 };
