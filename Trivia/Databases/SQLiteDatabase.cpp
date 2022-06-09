@@ -56,6 +56,10 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
 	executeAndValidate(sqlStatement);
+
+	sqlStatement = "INSERT INTO STATISTICS (USERNAME, TOTAL_ANSWERS, CORRECT_ANSWERS, ANSWER_TIME_SECONDS, NUM_OF_GAMES) VALUES ('" + name + "', 0, 0, 0, 0);";
+
+	executeAndValidate(sqlStatement);
 }
 
 void SQLiteDatabase::addNewQuestion(const Question& q) {
