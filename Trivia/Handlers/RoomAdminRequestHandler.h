@@ -7,7 +7,7 @@ class RoomManager;
 
 class RoomAdminRequestHandler : public IRequestHandler {
 public:
-	RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, GameManager& gameManager, RequestHandlerFactory& fact);
+	RoomAdminRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, GameManager& gameManager, RequestHandlerFactory& fact);
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
 
@@ -16,7 +16,7 @@ public:
 
 private:
 	RequestResult startGame();
-	void sendToUsersInRoom(RequestResult req, int msgType);
+	void sendToUsersInRoom(const RequestResult& req, const int msgType);
 
 	unsigned int m_roomId;
 	LoggedUser m_user;
