@@ -48,3 +48,13 @@ std::map<LoggedUser, GameData> Game::getPlayers() const
 {
 	return m_players;
 }
+
+bool Game::isGameFinished() const
+{
+	for (auto it = m_players.begin(); it != m_players.end(); it++)
+		if (it->second.currentQuestionId < m_questions.size())
+			//the player didn't answer all questions
+			return false;
+
+	return true;
+}

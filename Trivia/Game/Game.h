@@ -20,11 +20,6 @@ struct GameData {
 };
 
 class Game {
-private:
-	std::vector<Question> m_questions;
-	std::map<LoggedUser, GameData> m_players;
-	unsigned int m_id;
-
 public:
 	Game() { throw std::exception("Class 'Game' doesn't support a default c'tor"); }
 	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id);
@@ -33,4 +28,10 @@ public:
 	bool removePlayer(const LoggedUser& user);
 	int getId() const;
 	std::map<LoggedUser, GameData> getPlayers() const;
+	bool isGameFinished() const;
+
+private:
+	std::vector<Question> m_questions;
+	std::map<LoggedUser, GameData> m_players;
+	unsigned int m_id;
 };
