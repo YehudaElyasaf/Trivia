@@ -14,8 +14,10 @@ Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& 
 Question Game::getQuestionForUser(const LoggedUser& user) const
 {
 	unsigned int currentQuestionId = m_players.at(user).currentQuestionId;
-	return m_questions.at(currentQuestionId);
-
+	if (currentQuestionId < m_questions.size())
+		return m_questions.at(currentQuestionId);
+	else
+		throw std::exception("Question is out of range!");
 }
 
 void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
@@ -36,7 +38,15 @@ void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 
 bool Game::removePlayer(const LoggedUser& user)
 {
-	return m_players.erase(user) == KEY_FOUND_IN_MAP;
+	try {
+		//set question id to one after the last id
+		m_players.at(user).currentQuestionId = m_questions.size();
+		return true;
+	}
+	catch (...) {
+		//failed to remove
+		return false;
+	}
 }
 
 int Game::getId() const
