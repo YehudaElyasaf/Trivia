@@ -25,29 +25,36 @@ namespace GuiClient
         private void createButton_Click(object sender, EventArgs e)
         {
 
-            if (int.TryParse(playersNum.Text, out int n1) &&
-                int.TryParse(questionsNum.Text, out int n2) &&
-                int.TryParse(answerTime.Text, out int n3))
-                try
-                {
-                    bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
-                    if (worked)
-                        //create room as admin
-                        _controller.ShowWaitingRoom(true);
-                    else
-                        MessageBox.Show("Error");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            else
+            try
             {
-                //one of the fields is not an integer
-                MessageBox.Show(playersNumLabel.Text + ", " + questionsNumLabel.Text + " and " + answerTimeLabel.Text + " must be integers");
-                playersNum.Text = "";
-                questionsNum.Text = "";
-                answerTime.Text = "";
+                if (!int.TryParse(playersNum.Text, out int numOfPlayers) ||
+                    !int.TryParse(questionsNum.Text, out int numOfQuestions) ||
+                    !int.TryParse(answerTime.Text, out int timeToAnswer))
+                {
+                    //one of the fields is not an integer
+                    playersNum.Text = "";
+                    questionsNum.Text = "";
+                    answerTime.Text = "";
+                    throw new Exception(playersNumLabel.Text + ", " + questionsNumLabel.Text + " and " + answerTimeLabel.Text + " must be integers");
+                }
+                if (numOfPlayers < 1)
+                    throw new Exception("Room must have a least one player");
+                if (numOfQuestions < 1 || numOfQuestions > Const.MAX_NUM_OF_QUESTIONS)
+                    throw new Exception("Room must have between 1 to " + Const.MAX_NUM_OF_QUESTIONS + "questions");
+                if (timeToAnswer < 1)
+                    throw new Exception("Time to answer must be at least one");
+
+
+                bool worked = _communicator.CreateRoom(roomName.Text, playersNum.Text, questionsNum.Text, answerTime.Text);
+                if (worked)
+                    //create room as admin
+                    _controller.ShowWaitingRoom(true);
+                else
+                    MessageBox.Show("Error");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

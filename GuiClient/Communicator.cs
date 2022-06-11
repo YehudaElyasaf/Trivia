@@ -37,6 +37,7 @@ static class Const
 
     public const int REFRESH_INTERVAL_MS = 3000;
     public const int NOT_FOUND = -1;
+    public const int MAX_NUM_OF_QUESTIONS = 20;
 }
 
 namespace GuiClient
