@@ -4,7 +4,7 @@
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 #include "../Game/Game.h"
 
-GameRequestHandler::GameRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact, Game& game):
+GameRequestHandler::GameRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& fact, Game& game):
 	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_game(game) {}
 
 bool GameRequestHandler::isRequestRelevant(RequestInfo req) {
@@ -46,8 +46,7 @@ RequestResult GameRequestHandler::getResults() {
 }
 
 RequestResult GameRequestHandler::leaveGame() {
-	m_game.removePlayer(m_user);
-	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{true}}), m_handlerFactory.createMenuRequestHandler(getUsername())};
+	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{m_game.removePlayer(m_user)}}), m_handlerFactory.createMenuRequestHandler(getUsername())};
 }
 
 RequestResult GameRequestHandler::submitAns(RequestInfo req) {

@@ -4,9 +4,8 @@
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 #include "../Communication/Helper.h"
 
-RoomAdminRequestHandler::RoomAdminRequestHandler(unsigned int roomId, LoggedUser user, RoomManager& roomManager,
-												 GameManager& gameManager, RequestHandlerFactory& fact) :
-	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_gameManager(gameManager) {}
+RoomAdminRequestHandler::RoomAdminRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, GameManager& gameManager,
+	RequestHandlerFactory& fact) : m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_gameManager(gameManager) {}
 
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo req) {
 	return req.buffer[0] >= CLOSE_ROOM_CODE && req.buffer[0] <= GET_ROOM_STATE_CODE;
@@ -43,7 +42,7 @@ RequestResult RoomAdminRequestHandler::startGame() {
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createGameRequestHandler(m_user.m_username, m_roomId, game) };
 }
 
-void RoomAdminRequestHandler::sendToUsersInRoom(RequestResult req, int msgType) {
+void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const int msgType) {
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 			if (user == m_user)
