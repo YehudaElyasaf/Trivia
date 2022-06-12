@@ -34,9 +34,9 @@ namespace GuiClient
         {
             try
             {
-            this.Invoke((MethodInvoker)(() => Controls.Clear()));
+                this.Invoke((MethodInvoker)(() => Controls.Clear()));
             }
-            catch(NoDataToReadException)
+            catch (NoDataToReadException)
             {
                 //do nothing
                 //because Communicator::SendToServer didn't get any message from server
@@ -45,6 +45,24 @@ namespace GuiClient
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new MainMenu(_communicator, this)));
             this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
+            ShowHomeBtn();
+        }
+        public void ShowGameRoom()
+        {
+            try
+            {
+                this.Invoke((MethodInvoker)(() => Controls.Clear()));
+            }
+            catch (NoDataToReadException)
+            {
+                //do nothing
+                //because Communicator::SendToServer didn't get any message from server
+            }
+
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new GameRoom(_communicator, this)));
+            this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
+            ShowHomeBtn();
         }
 
         public void ShowLoginScreen()

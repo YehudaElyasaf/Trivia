@@ -25,6 +25,11 @@ namespace GuiClient
             _communicator = communicator;
             _controller = controller;
             _isAdmin = isAdmin;
+
+            if (isAdmin)
+                startGameButton.Show();
+            else
+                startGameButton.Hide();
         }
 
         private void WaitingRoom_Load(object sender, EventArgs e)
@@ -42,10 +47,19 @@ namespace GuiClient
 
                 connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", usersInRoom)));
             }
+            catch (GameStartedException)
+            {
+                _controller.ShowGameRoom();
+            }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
                 _controller.ShowMainMenu();
             }
+        }
+
+        private void startGameButton_Click(object sender, EventArgs e)
+        {
+            _communicator.StartGame();
         }
     }
 }

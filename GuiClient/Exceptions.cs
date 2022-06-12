@@ -22,4 +22,20 @@ namespace GuiClient
         {
         }
     }
+    public class GameStartedException : Exception
+    {
+        public GameStartedException()
+        {
+        }
+
+        public GameStartedException(string message)
+            : base(message)
+        {
+        }
+
+        public GameStartedException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }

@@ -29,6 +29,11 @@ static class Const
     public const int START_GAME_CODE = 12;
     public const int GET_ROOM_STATE_CODE = 13;
     public const int LEAVE_ROOM_CODE = 14;
+    public const int GET_RESULTS_CODE = 15;
+    public const int SUBMIT_ANS_CODE = 16;
+    public const int GET_QUESTION_RESP_CODE = 17;
+    public const int LEAVE_GAME_CODE = 18;
+
 
     public const int HEADERS_LENGTH = 5;
 
@@ -178,8 +183,15 @@ namespace GuiClient
                 Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
-                    throw new Exception("Room closed");
+                    throw new Exception("room closed");
+                else if (getUsersInRoomResponse.GetCode() == Const.START_GAME_CODE)
+                    throw new GameStartedException();
+
                 return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+            }
+            catch(GameStartedException ex)
+            {
+                throw new GameStartedException();
             }
             catch (Exception ex)
             {
