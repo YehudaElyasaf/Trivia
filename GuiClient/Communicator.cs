@@ -174,7 +174,7 @@ namespace GuiClient
             Message joinRoomResponse = SendToServer(joinRoomMessage);
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
-        public string[] GetUsersInRoom()
+        public RoomData GetRoomData()
         {
             try
             {
@@ -188,7 +188,11 @@ namespace GuiClient
                 else if (getUsersInRoomResponse.GetCode() == Const.START_GAME_CODE)
                     throw new GameStartedException();
 
-                return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+                RoomData roomData = new RoomData();
+                roomData.useres = getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+                roomData.questionCount = int.Parse(getUsersInRoomResponse.GetData()["QuestionCount"]);
+                roomData.answerTimeout = int.Parse(getUsersInRoomResponse.GetData()["AnswerTimeout"]);
+                return roomData;
             }
             catch (GameStartedException)
             {

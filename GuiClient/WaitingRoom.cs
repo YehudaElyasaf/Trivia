@@ -10,11 +10,20 @@ using System.Windows.Forms;
 
 namespace GuiClient
 {
+    public partial class RoomData
+    {
+        public string[] useres;
+        public int questionCount;
+        public int answerTimeout;
+    }
+
     public partial class WaitingRoom : UserControl
     {
         Communicator _communicator;
         Controller _controller;
         bool _isAdmin;
+        RoomData _roomData;
+
         public bool isAdmin
         {
             get { return _isAdmin; }
@@ -41,15 +50,15 @@ namespace GuiClient
         {
             try
             {
-                string[] usersInRoom = _communicator.GetUsersInRoom();
-                if (usersInRoom.Length > 0)
-                    usersInRoom[0]+=" (admin)";
+                _roomData = _communicator.GetRoomData();
+                if (_roomData.useres.Length > 0)
+                    _roomData.useres[0]+=" (admin)";
 
-                connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", usersInRoom)));
+                connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", _roomData.useres)));
             }
             catch (GameStartedException ex)
             {
-                _controller.ShowGameRoom();
+                _controller.ShowGameRoom(_roomData);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -60,7 +69,7 @@ namespace GuiClient
         private void startGameButton_Click(object sender, EventArgs e)
         {
             _communicator.StartGame();
-            _controller.ShowGameRoom();
+            _controller.ShowGameRoom(_roomData);
         }
     }
 }

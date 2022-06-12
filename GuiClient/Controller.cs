@@ -47,7 +47,7 @@ namespace GuiClient
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
             ShowHomeBtn();
         }
-        public void ShowGameRoom()
+        public void ShowGameRoom(RoomData roomData)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace GuiClient
                 //because Communicator::SendToServer didn't get any message from server
             }
 
-            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new GameRoom(_communicator, this)));
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new GameRoom(_communicator, this, roomData.questionCount, roomData.answerTimeout)));
             this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
             ShowHomeBtn();

@@ -40,7 +40,7 @@ namespace GuiClient
                 if (numOfPlayers < 1)
                     throw new Exception("Room must have a least one player");
                 if (numOfQuestions < 1 || numOfQuestions > Const.MAX_NUM_OF_QUESTIONS)
-                    throw new Exception("Room must have between 1 to " + Const.MAX_NUM_OF_QUESTIONS + "questions");
+                    throw new Exception("Room must have between 1 to " + Const.MAX_NUM_OF_QUESTIONS + " questions");
                 if (timeToAnswer < 1)
                     throw new Exception("Time to answer must be at least one");
 
