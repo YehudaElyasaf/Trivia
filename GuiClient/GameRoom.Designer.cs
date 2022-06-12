@@ -151,7 +151,7 @@
             this.questionTextTextbox.Text = "Question text here... Question text here... Question text here... Question text h" +
     "ere... Question text here...";
             // 
-            // gameRoom
+            // GameRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -165,8 +165,9 @@
             this.Controls.Add(this.answer3Button);
             this.Controls.Add(this.answer2Button);
             this.Controls.Add(this.answer1Button);
-            this.Name = "gameRoom";
+            this.Name = "GameRoom";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.GameRoom_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

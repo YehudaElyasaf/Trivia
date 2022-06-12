@@ -21,7 +21,7 @@ struct GameData {
 
 class Game {
 public:
-	Game() { throw std::exception("Class 'Game' doesn't support a default c'tor"); }
+	Game();
 	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id);
 	Question getQuestionForUser(const LoggedUser& user) const;
 	void submitAnswer(const LoggedUser& user, const std::string& answer);

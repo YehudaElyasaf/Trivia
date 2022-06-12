@@ -1,5 +1,9 @@
 #include "Game.h"
 
+Game::Game() :
+	m_id(0)
+{}
+
 Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
 	m_id(id)
 {

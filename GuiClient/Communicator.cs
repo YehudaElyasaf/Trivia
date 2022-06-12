@@ -176,7 +176,8 @@ namespace GuiClient
         }
         public string[] GetUsersInRoom()
         {
-            try {
+            try
+            {
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
 
@@ -189,7 +190,7 @@ namespace GuiClient
 
                 return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
             }
-            catch(GameStartedException ex)
+            catch (GameStartedException)
             {
                 throw new GameStartedException();
             }
@@ -215,6 +216,14 @@ namespace GuiClient
             Message leaveRoomResponse = SendToServer(leaveRoomMessage);
 
             return leaveRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+        public bool StartGame()
+        {
+            Message startGameMessage = new Message(Const.START_GAME_CODE, new Dictionary<string, string> { });
+
+            Message startGameResponse = SendToServer(startGameMessage);
+
+            return startGameResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
     }
 }

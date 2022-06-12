@@ -36,5 +36,10 @@ namespace GuiClient
         {
 
         }
+
+        private void GameRoom_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
