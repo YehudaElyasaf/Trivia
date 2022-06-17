@@ -61,8 +61,9 @@ void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const 
 					}
 				}
 			}
-			catch (...) {
-				// it means the client is not in a room, because it doesnt have getUsername function
+			catch (const NoUsernameException& e) {
+				//do nothing
+				// it means the client is not logged in, because it doesnt have getUsername function
 			}
 		}
 	}

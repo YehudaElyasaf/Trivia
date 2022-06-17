@@ -19,6 +19,12 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo req) {
 	return signup(req);
 }
 
+std::string LoginRequestHandler::getUsername() const
+{
+	throw NoUsernameException();
+	//before login, there is no username
+}
+
 RequestResult LoginRequestHandler::login(RequestInfo req) {
 	LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(req.buffer);
 	LoginResponse resp = { m_loginManager.login(logReq.username, logReq.password) };
