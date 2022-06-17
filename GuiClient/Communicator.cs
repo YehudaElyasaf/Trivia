@@ -178,6 +178,19 @@ namespace GuiClient
         {
             try
             {
+                try
+                {
+                    Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }));
+                    if (PlayerResults.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
+                        //status = is game active
+                        throw new GameStartedException();
+                }
+                catch (Exception)
+                {
+                    //do nothing
+                    //game didn't start, the server can't recognize message
+                }
+
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
 
@@ -185,8 +198,6 @@ namespace GuiClient
 
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
                     throw new Exception("room closed");
-                else if (getUsersInRoomResponse.GetCode() == Const.START_GAME_CODE)
-                    throw new GameStartedException();
 
                 RoomData roomData = new RoomData();
                 roomData.useres = getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
