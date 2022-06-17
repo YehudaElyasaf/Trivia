@@ -3,6 +3,7 @@
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 
 #define NULL_ID 0
+#define MAX_QUESTION_COUNT 20
 
 MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr, RequestHandlerFactory& fact) :
 	m_username(username), m_roomManager(roomMngr), m_statisticsManager(statsMngr), m_handlerFactory(fact) {}
@@ -66,13 +67,23 @@ RequestResult MenuRequestHandler::getPlayersInRoom(const std::string& buffer) {
 
 RequestResult MenuRequestHandler::joinRoom(const std::string& buffer) {
 	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(buffer);
-	m_roomManager.getRoomById(request.roomId).addUser({ m_username });
+	Room& room = m_roomManager.getRoomById(request.roomId);
+	
+	if (room.getRoomData().maxPlayers > room.getAllUsers().size())
+		m_roomManager.getRoomById(request.roomId).addUser({ m_username });
+	else
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Room Full"}), this};
+	
 	JoinRoomResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createRoomMemberRequestHandler(m_username, request.roomId) };
 }
 
 RequestResult MenuRequestHandler::createRoom(const std::string& buffer) {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
+	
+	if (request.questionCount > MAX_QUESTION_COUNT)
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Too many questions, " + std::to_string(MAX_QUESTION_COUNT) + " is the maximum"})};
+
 	RoomData roomData{ NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
 	unsigned int roomId = m_roomManager.createRoom({ m_username }, roomData);
 	CreateRoomResponse resp{ true };
