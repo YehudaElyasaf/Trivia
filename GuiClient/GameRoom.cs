@@ -54,36 +54,36 @@ namespace GuiClient
 
             Question question = _communicator.GetQuestion();
             questionTextTextbox.Text = question.question;
-            answer1Button.Text = question.answers[1];
-            answer2Button.Text = question.answers[2];
-            answer3Button.Text = question.answers[3];
-            answer4Button.Text = question.answers[4];
+            answer1Button.Text = question.answers[0];
+            answer2Button.Text = question.answers[1];
+            answer3Button.Text = question.answers[2];
+            answer4Button.Text = question.answers[3];
         }
         private void answer1Button_Click(object sender, EventArgs e)
         {
-            SubmitAnswer(1);
+            SubmitAnswer(answer1Button.Text);
         }
         private void answer2Button_Click(object sender, EventArgs e)
         {
-            SubmitAnswer(2);
+            SubmitAnswer(answer2Button.Text);
         }
         private void answer3Button_Click(object sender, EventArgs e)
         {
-            SubmitAnswer(3);
+            SubmitAnswer(answer3Button.Text);
         }
         private void answer4Button_Click(object sender, EventArgs e)
         {
-            SubmitAnswer(4);
+            SubmitAnswer(answer4Button.Text);
         }
 
-        private void SubmitAnswer(int answerId)
+        private void SubmitAnswer(string answer)
         {
             timerLabel.Text = _answerTimeout.ToString();
             timer.Interval = 1 * Const.SECONDS_TO_MS;
             timer.Start();
 
-            int correctAnswerId = _communicator.SubmitAnswer(answerId);
-            if (answerId == correctAnswerId)
+            string correctAnswer = _communicator.SubmitAnswer(answer);
+            if (answer == correctAnswer)
             {
                 correctAnswerLabel.Show();
                 wrongAnswerLabel.Hide();
@@ -110,7 +110,7 @@ namespace GuiClient
             timeRemaining--;
 
             if (timeRemaining < 1)
-                SubmitAnswer(Const.ERROR_ID);
+                SubmitAnswer("");
             else
             {
                 timerLabel.Text = timeRemaining.ToString();

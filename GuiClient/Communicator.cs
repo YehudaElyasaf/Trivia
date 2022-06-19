@@ -276,12 +276,14 @@ namespace GuiClient
         }
 
         //return correct answer id
-        public int SubmitAnswer(int answerId)
+        public string SubmitAnswer(string answer)
         {
-            Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> { });
+            Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> {
+                { "Answer", answer}
+            });
             Message response = SendToServer(request);
 
-            return int.Parse(response.GetData()["CorrectAnswerId"]);
+            return response.GetData()["CorrectAnswer"];
         }
 
         public List<PlayerResult> GetResults()
