@@ -47,6 +47,7 @@ namespace GuiClient
 
             correctAnswerLabel.Hide();
             wrongAnswerLabel.Hide();
+            timeoutLabel.Hide();
         }
         private void getNewQuestion()
         {
@@ -78,20 +79,29 @@ namespace GuiClient
 
         private void SubmitAnswer(string answer)
         {
+            wrongAnswerLabel.Hide();
+            correctAnswerLabel.Hide();
+            timeoutLabel.Hide();
+
             timerLabel.Text = _answerTimeout.ToString();
             timer.Interval = 1 * Const.SECONDS_TO_MS;
             timer.Start();
 
-            string correctAnswer = _communicator.SubmitAnswer(answer);
-            if (answer == correctAnswer)
+            try
             {
-                correctAnswerLabel.Show();
-                wrongAnswerLabel.Hide();
+                string correctAnswer = _communicator.SubmitAnswer(answer);
+                if (answer == correctAnswer)
+                {
+                    correctAnswerLabel.Show();
+                }
+                else
+                {
+                    wrongAnswerLabel.Show();
+                }
             }
-            else
+            catch (TimeoutException)
             {
-                correctAnswerLabel.Hide();
-                wrongAnswerLabel.Show();
+                timeoutLabel.Show();
             }
 
             _questionsLeft--;

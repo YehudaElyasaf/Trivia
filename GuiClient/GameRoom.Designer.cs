@@ -41,6 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.wrongAnswerLabel = new System.Windows.Forms.Label();
             this.correctAnswerLabel = new System.Windows.Forms.Label();
+            this.timeoutLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // questionTextTextbox
@@ -192,10 +193,22 @@
             this.correctAnswerLabel.TabIndex = 13;
             this.correctAnswerLabel.Text = "correct!";
             // 
+            // timeoutLabel
+            // 
+            this.timeoutLabel.AutoSize = true;
+            this.timeoutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.timeoutLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.timeoutLabel.Location = new System.Drawing.Point(367, 180);
+            this.timeoutLabel.Name = "timeoutLabel";
+            this.timeoutLabel.Size = new System.Drawing.Size(90, 26);
+            this.timeoutLabel.TabIndex = 14;
+            this.timeoutLabel.Text = "timeout!";
+            // 
             // GameRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.timeoutLabel);
             this.Controls.Add(this.correctAnswerLabel);
             this.Controls.Add(this.wrongAnswerLabel);
             this.Controls.Add(this.label3);
@@ -232,5 +245,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label wrongAnswerLabel;
         private System.Windows.Forms.Label correctAnswerLabel;
+        private System.Windows.Forms.Label timeoutLabel;
     }
 }
