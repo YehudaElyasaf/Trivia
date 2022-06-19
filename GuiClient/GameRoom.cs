@@ -17,6 +17,7 @@ namespace GuiClient
         Controller _controller;
         int _questionCount;
         int _answerTimeout;
+        int _questionsLeft;
         public GameRoom(Communicator communicator, Controller controller, int questionCount, int answerTimeout)
         {
             InitializeComponent();
@@ -24,6 +25,7 @@ namespace GuiClient
             _controller = controller;
             _questionCount = questionCount;
             _answerTimeout = answerTimeout;
+            _questionsLeft = questionCount;
         }
 
         private void questionsRemainingLabel_Click(object sender, EventArgs e)
@@ -43,10 +45,20 @@ namespace GuiClient
 
         private void GameRoom_Load(object sender, EventArgs e)
         {
-            for (int questionId = 0; questionId < _questionCount; questionId++)
-            {
+            getNewQuestion();
+        }
+        private void getNewQuestion()
+        {
 
-            }
+            questionsLeftLabel.Text = _questionsLeft.ToString();
+
+            Question question = _communicator.getQuestion();
+            questionTextTextbox.Text = question.question;
+            answer1Button.Text = question.answers[1];
+            answer2Button.Text = question.answers[2];
+            answer3Button.Text = question.answers[3];
+            answer4Button.Text = question.answers[4];
         }
     }
+}
 }

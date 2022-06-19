@@ -47,6 +47,12 @@ static class Const
 
 namespace GuiClient
 {
+    public class Question
+    {
+        public string question;
+        public Dictionary<int, string> answers;
+    }
+
     public class Communicator
     {
         private TcpClient _client;

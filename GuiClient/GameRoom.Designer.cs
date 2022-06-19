@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.RichTextBox questionTextTextbox;
+            this.questionTextTextbox = new System.Windows.Forms.RichTextBox();
             this.answer1Button = new System.Windows.Forms.Button();
             this.answer2Button = new System.Windows.Forms.Button();
             this.answer3Button = new System.Windows.Forms.Button();
@@ -38,8 +38,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            questionTextTextbox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
+            // 
+            // questionTextTextbox
+            // 
+            this.questionTextTextbox.BackColor = System.Drawing.SystemColors.Control;
+            this.questionTextTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.questionTextTextbox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.questionTextTextbox.Enabled = false;
+            this.questionTextTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.questionTextTextbox.Location = new System.Drawing.Point(138, 32);
+            this.questionTextTextbox.Name = "questionTextTextbox";
+            this.questionTextTextbox.ReadOnly = true;
+            this.questionTextTextbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.questionTextTextbox.Size = new System.Drawing.Size(472, 158);
+            this.questionTextTextbox.TabIndex = 10;
+            this.questionTextTextbox.Text = "Question text here... Question text here... Question text here... Question text h" +
+    "ere... Question text here...";
             // 
             // answer1Button
             // 
@@ -138,27 +153,11 @@
             this.label3.Text = "--:--";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // questionTextTextbox
-            // 
-            questionTextTextbox.BackColor = System.Drawing.SystemColors.Control;
-            questionTextTextbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            questionTextTextbox.Cursor = System.Windows.Forms.Cursors.Default;
-            questionTextTextbox.Enabled = false;
-            questionTextTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            questionTextTextbox.Location = new System.Drawing.Point(138, 32);
-            questionTextTextbox.Name = "questionTextTextbox";
-            questionTextTextbox.ReadOnly = true;
-            questionTextTextbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            questionTextTextbox.Size = new System.Drawing.Size(472, 158);
-            questionTextTextbox.TabIndex = 10;
-            questionTextTextbox.Text = "Question text here... Question text here... Question text here... Question text h" +
-    "ere... Question text here...";
-            // 
             // GameRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(questionTextTextbox);
+            this.Controls.Add(this.questionTextTextbox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -187,5 +186,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox questionTextTextbox;
     }
 }
