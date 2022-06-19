@@ -62,6 +62,7 @@ namespace GuiClient
         public int correctAnswerCount;
         public int wrongAnswerCount;
         public int averageAnswerTime;
+        //grade = correctAnswerCount / playerResult
         public int grade;
     }
 
@@ -265,7 +266,8 @@ namespace GuiClient
             Message response = SendToServer(request);
 
             string answersAsString = response.GetData()["Answers"];
-            Question question = new Question {
+            Question question = new Question
+            {
                 question = response.GetData()["Question"],
                 answers = JsonConvert.DeserializeObject<Dictionary<int, string>>(answersAsString)
             };
@@ -276,11 +278,34 @@ namespace GuiClient
         //return correct answer id
         public int SubmitAnswer(int answerId)
         {
-
-            Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
+            Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> { });
             Message response = SendToServer(request);
 
             return int.Parse(response.GetData()["CorrectAnswerId"]);
+        }
+
+        public List<PlayerResult> GetResults()
+        {
+            Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
+            Message response = SendToServer(request);
+
+            List<PlayerResult> results = new List<PlayerResult>();
+            foreach (string resultAsString in response.GetData()["Results"].Split(Const.LIST_SEPERATOR))
+            {
+                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultAsString);
+                PlayerResult playerResult = new PlayerResult
+                {
+                    username = result["username"],
+                    correctAnswerCount = int.Parse(result["correctAnswerCount"]),
+                    wrongAnswerCount = int.Parse(result["wrongAnswerCount"]),
+                    averageAnswerTime = int.Parse(result["averageAnswerTime"])
+                };
+                playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime);
+
+                results.Add(playerResult);
+            }
+
+            return results;
         }
     }
 }
