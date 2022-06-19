@@ -57,8 +57,7 @@
             this.questionTextTextbox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
             this.questionTextTextbox.Size = new System.Drawing.Size(472, 158);
             this.questionTextTextbox.TabIndex = 10;
-            this.questionTextTextbox.Text = "Question text here... Question text here... Question text here... Question text h" +
-    "ere... Question text here...";
+            this.questionTextTextbox.Text = "Question text here...";
             // 
             // answer1Button
             // 
