@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace GuiClient
 {
     public partial class Results : UserControl
@@ -20,8 +19,29 @@ namespace GuiClient
             _communicator = communicator;
             _controller = controller;
 
-            while (!tryToGetResults())
-                System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
+            List<PlayerResult> results = GetResults();
+            results.OrderBy(o => o.grade);
+            
+            foreach(PlayerResult result in results)
+            {
+                ListViewItem item = new ListViewItem(result.username);
+                item.SubItems.Add(result.grade.ToString());
+                resultsList.Items.Add(item);
+            }
+        }
+
+        private List<PlayerResult> GetResults()
+        {
+            while (true)
+                try
+                {
+                    return _controller.GetResults();
+                }
+                catch (Exception)
+                {
+                    System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
+                    //try again
+                }
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)

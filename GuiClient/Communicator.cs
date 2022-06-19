@@ -62,6 +62,7 @@ namespace GuiClient
         public int correctAnswerCount;
         public int wrongAnswerCount;
         public int averageAnswerTime;
+        public int grade;
     }
 
     public class Communicator
