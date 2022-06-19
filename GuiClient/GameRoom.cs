@@ -18,8 +18,6 @@ namespace GuiClient
         int _questionCount;
         int _answerTimeout;
         int _questionsLeft;
-        int _alarmCounter = 1;
-        bool timerFlag = false;
         Timer timer = new Timer();
 
         public GameRoom(Communicator communicator, Controller controller, int questionCount, int answerTimeout)
@@ -30,6 +28,8 @@ namespace GuiClient
             _questionCount = questionCount;
             _answerTimeout = answerTimeout;
             _questionsLeft = questionCount;
+
+            timer.Tick += new EventHandler(timerTick);
         }
 
         private void questionsRemainingLabel_Click(object sender, EventArgs e)
@@ -46,6 +46,9 @@ namespace GuiClient
         private void GameRoom_Load(object sender, EventArgs e)
         {
             getNewQuestion();
+
+            correctAnswerLabel.Hide();
+            wrongAnswerLabel.Hide();
         }
         private void getNewQuestion()
         {
@@ -77,13 +80,30 @@ namespace GuiClient
 
         private void submitAnswer(int answerId)
         {
-            timer.Tick += new EventHandler(timerTick);
             timerLabel.Text = _answerTimeout.ToString();
-            timer.Interval = Const.MS_TO_SECONDS;
+            timer.Interval = 1 * Const.SECONDS_TO_MS;
             timer.Start();
 
             int correctAnswerId = _communicator.submitAnswer(answerId);
+            if (answerId == correctAnswerId)
+            {
+                correctAnswerLabel.Show();
+                wrongAnswerLabel.Hide();
+            }
+            else
+            {
+                correctAnswerLabel.Hide();
+                wrongAnswerLabel.Show();
+            }
 
+            _questionsLeft--;
+            if (_questionsLeft == 0)
+            {
+                //game finished
+                System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
+                _controller.ShowResults();
+            }
+            getNewQuestion();
         }
 
         private void timerTick(Object myObject, EventArgs myEventArgs)

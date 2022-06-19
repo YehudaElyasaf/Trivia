@@ -44,7 +44,7 @@ static class Const
     public const int REFRESH_INTERVAL_MS = 3000;
     public const int NOT_FOUND = -1;
     public const int MAX_NUM_OF_QUESTIONS = 20;
-    public const int MS_TO_SECONDS = 1000;
+    public const int SECONDS_TO_MS = 1000;
     public const int ERROR_ID = -1;
 }
 

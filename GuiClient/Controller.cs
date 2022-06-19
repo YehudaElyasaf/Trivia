@@ -107,6 +107,14 @@ namespace GuiClient
             _currentScreen.BringToFront();
             ShowHomeBtn();
         }
+        public void ShowResults()
+        {
+            Controls.Clear();
+            _currentScreen = new Results(_communicator, this);
+            Controls.Add(_currentScreen);
+            _currentScreen.BringToFront();
+            ShowHomeBtn();
+        }
 
         public void ResetCommunicator()
         {

@@ -39,6 +39,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.timerLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.wrongAnswerLabel = new System.Windows.Forms.Label();
+            this.correctAnswerLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // questionTextTextbox
@@ -168,10 +170,34 @@
             this.label3.Text = "Time ramaining:";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // wrongAnswerLabel
+            // 
+            this.wrongAnswerLabel.AutoSize = true;
+            this.wrongAnswerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.wrongAnswerLabel.ForeColor = System.Drawing.Color.Red;
+            this.wrongAnswerLabel.Location = new System.Drawing.Point(367, 180);
+            this.wrongAnswerLabel.Name = "wrongAnswerLabel";
+            this.wrongAnswerLabel.Size = new System.Drawing.Size(77, 26);
+            this.wrongAnswerLabel.TabIndex = 12;
+            this.wrongAnswerLabel.Text = "wrong!";
+            // 
+            // correctAnswerLabel
+            // 
+            this.correctAnswerLabel.AutoSize = true;
+            this.correctAnswerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.correctAnswerLabel.ForeColor = System.Drawing.Color.ForestGreen;
+            this.correctAnswerLabel.Location = new System.Drawing.Point(367, 180);
+            this.correctAnswerLabel.Name = "correctAnswerLabel";
+            this.correctAnswerLabel.Size = new System.Drawing.Size(84, 26);
+            this.correctAnswerLabel.TabIndex = 13;
+            this.correctAnswerLabel.Text = "correct!";
+            // 
             // GameRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.correctAnswerLabel);
+            this.Controls.Add(this.wrongAnswerLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.questionTextTextbox);
             this.Controls.Add(this.timerLabel);
@@ -204,5 +230,7 @@
         private System.Windows.Forms.RichTextBox questionTextTextbox;
         private System.Windows.Forms.Label timerLabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label wrongAnswerLabel;
+        private System.Windows.Forms.Label correctAnswerLabel;
     }
 }
