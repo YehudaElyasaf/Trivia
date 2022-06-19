@@ -37,6 +37,7 @@
             this.correctAnswersLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.timerLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -76,6 +77,7 @@
             this.answer2Button.TabIndex = 1;
             this.answer2Button.Text = "Answer 2";
             this.answer2Button.UseVisualStyleBackColor = true;
+            this.answer2Button.Click += new System.EventHandler(this.answer2Button_Click);
             // 
             // answer3Button
             // 
@@ -86,6 +88,7 @@
             this.answer3Button.TabIndex = 2;
             this.answer3Button.Text = "Answer 3";
             this.answer3Button.UseVisualStyleBackColor = true;
+            this.answer3Button.Click += new System.EventHandler(this.answer3Button_Click);
             // 
             // answer4Button
             // 
@@ -96,6 +99,7 @@
             this.answer4Button.TabIndex = 3;
             this.answer4Button.Text = "Answer 4";
             this.answer4Button.UseVisualStyleBackColor = true;
+            this.answer4Button.Click += new System.EventHandler(this.answer4Button_Click);
             // 
             // questionsLeftLabel
             // 
@@ -141,24 +145,36 @@
             this.label2.Text = "Correct Answers:  ";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // timerLabel
+            // 
+            this.timerLabel.AutoSize = true;
+            this.timerLabel.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.timerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.timerLabel.Location = new System.Drawing.Point(775, 110);
+            this.timerLabel.Name = "timerLabel";
+            this.timerLabel.Size = new System.Drawing.Size(30, 24);
+            this.timerLabel.TabIndex = 9;
+            this.timerLabel.Text = "00";
+            this.timerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F);
-            this.label3.Location = new System.Drawing.Point(686, 102);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label3.Location = new System.Drawing.Point(628, 107);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 39);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "--:--";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Size = new System.Drawing.Size(146, 24);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Time ramaining:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // GameRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.questionTextTextbox);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.questionTextTextbox);
+            this.Controls.Add(this.timerLabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.correctAnswersLabel);
@@ -185,7 +201,8 @@
         private System.Windows.Forms.Label correctAnswersLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RichTextBox questionTextTextbox;
+        private System.Windows.Forms.Label timerLabel;
+        private System.Windows.Forms.Label label3;
     }
 }
