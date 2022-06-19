@@ -19,6 +19,14 @@ namespace GuiClient
             InitializeComponent();
             _communicator = communicator;
             _controller = controller;
+
+            while (!tryToGetResults())
+                System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -56,6 +56,14 @@ namespace GuiClient
         public Dictionary<int, string> answers;
     }
 
+    public class PlayerResult
+    {
+        public string username;
+        public int correctAnswerCount;
+        public int wrongAnswerCount;
+        public int averageAnswerTime;
+    }
+
     public class Communicator
     {
         private TcpClient _client;
