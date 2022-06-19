@@ -49,10 +49,9 @@ namespace GuiClient
         }
         private void getNewQuestion()
         {
-
             questionsLeftLabel.Text = _questionsLeft.ToString();
 
-            Question question = _communicator.getQuestion();
+            Question question = _communicator.GetQuestion();
             questionTextTextbox.Text = question.question;
             answer1Button.Text = question.answers[1];
             answer2Button.Text = question.answers[2];
@@ -60,5 +59,4 @@ namespace GuiClient
             answer4Button.Text = question.answers[4];
         }
     }
-}
 }

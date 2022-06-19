@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -245,6 +246,20 @@ namespace GuiClient
             Message startGameResponse = SendToServer(startGameMessage);
 
             return startGameResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+
+        public Question GetQuestion()
+        {
+            Message request = new Message(Const.GET_QUESTION_RESP_CODE, new Dictionary<string, string> { });
+            Message response = SendToServer(request);
+
+            string answersAsString = response.GetData()["Answers"];
+            Question question = new Question {
+                question = response.GetData()["Question"],
+                answers = JsonConvert.DeserializeObject<Dictionary<int, string>>(answersAsString)
+            };
+
+            return question;
         }
     }
 }

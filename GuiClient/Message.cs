@@ -9,6 +9,9 @@ namespace GuiClient
 {
     internal class Message
     {   
+        private int code;
+        private Dictionary<string, string> data;
+
         public Message(int _code, Dictionary<string, string> _data) {
             code = _code;
             data = _data;
@@ -32,9 +35,6 @@ namespace GuiClient
             buffer += jsonData;
             return buffer;
         }
-
-        private int code;
-        private Dictionary<string, string> data;
 
         // return number as a string of bytes.
         private string IntToBytes(int num) {
