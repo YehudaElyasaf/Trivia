@@ -56,7 +56,7 @@ namespace GuiClient
 
                 connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", _roomData.useres)));
             }
-            catch (GameStartedException ex)
+            catch (GameStartedException)
             {
                 _controller.ShowGameRoom(_roomData);
             }

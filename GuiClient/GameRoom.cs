@@ -15,7 +15,6 @@ namespace GuiClient
     {
         Communicator _communicator;
         Controller _controller;
-        int _questionCount;
         int _answerTimeout;
         int _questionsLeft;
         Timer timer = new Timer();
@@ -25,11 +24,10 @@ namespace GuiClient
             InitializeComponent();
             _communicator = communicator;
             _controller = controller;
-            _questionCount = questionCount;
             _answerTimeout = answerTimeout;
             _questionsLeft = questionCount;
 
-            timer.Tick += new EventHandler(timerTick);
+            timer.Tick += new EventHandler(TimerTick);
         }
 
         private void questionsRemainingLabel_Click(object sender, EventArgs e)
@@ -63,28 +61,28 @@ namespace GuiClient
         }
         private void answer1Button_Click(object sender, EventArgs e)
         {
-            submitAnswer(1);
+            SubmitAnswer(1);
         }
         private void answer2Button_Click(object sender, EventArgs e)
         {
-            submitAnswer(2);
+            SubmitAnswer(2);
         }
         private void answer3Button_Click(object sender, EventArgs e)
         {
-            submitAnswer(3);
+            SubmitAnswer(3);
         }
         private void answer4Button_Click(object sender, EventArgs e)
         {
-            submitAnswer(4);
+            SubmitAnswer(4);
         }
 
-        private void submitAnswer(int answerId)
+        private void SubmitAnswer(int answerId)
         {
             timerLabel.Text = _answerTimeout.ToString();
             timer.Interval = 1 * Const.SECONDS_TO_MS;
             timer.Start();
 
-            int correctAnswerId = _communicator.submitAnswer(answerId);
+            int correctAnswerId = _communicator.SubmitAnswer(answerId);
             if (answerId == correctAnswerId)
             {
                 correctAnswerLabel.Show();
@@ -106,13 +104,13 @@ namespace GuiClient
             getNewQuestion();
         }
 
-        private void timerTick(Object myObject, EventArgs myEventArgs)
+        private void TimerTick(Object myObject, EventArgs myEventArgs)
         {
             int timeRemaining = int.Parse(timerLabel.Text);
             timeRemaining--;
 
             if (timeRemaining < 1)
-                submitAnswer(Const.ERROR_ID);
+                SubmitAnswer(Const.ERROR_ID);
             else
             {
                 timerLabel.Text = timeRemaining.ToString();

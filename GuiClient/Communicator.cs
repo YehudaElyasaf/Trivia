@@ -263,5 +263,15 @@ namespace GuiClient
 
             return question;
         }
+
+        //return correct answer id
+        public int SubmitAnswer(int answerId)
+        {
+
+            Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
+            Message response = SendToServer(request);
+
+            return int.Parse(response.GetData()["CorrectAnswerId"]);
+        }
     }
 }
