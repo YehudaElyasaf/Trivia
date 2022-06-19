@@ -43,7 +43,10 @@ namespace GuiClient
 
         private void GameRoom_Load(object sender, EventArgs e)
         {
+            for (int questionId = 0; questionId < _questionCount; questionId++)
+            {
 
+            }
         }
     }
 }

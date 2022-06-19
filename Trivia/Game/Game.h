@@ -16,13 +16,13 @@ struct GameData {
 	unsigned int wrongAnswerCount;
 	int totalAnswerTime;
 	int averageAnswerTime;
-	std::chrono::steady_clock::time_point beginningTime;
+	std::chrono::steady_clock::time_point questionBeginningTime;
 };
 
 class Game {
 public:
 	Game();
-	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id);
+	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id, const unsigned int maxQuestionTime);
 	Question getQuestionForUser(const LoggedUser& user) const;
 	void submitAnswer(const LoggedUser& user, const std::string& answer);
 	bool removePlayer(const LoggedUser& user);
@@ -34,4 +34,5 @@ private:
 	std::vector<Question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
 	unsigned int m_id;
+	unsigned int m_maxQuestionTime;
 };

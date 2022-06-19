@@ -1,11 +1,12 @@
 #include "Game.h"
+#include"../Defines/Exceptions.h"
 
 Game::Game() :
 	m_id(0)
 {}
 
-Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id) :
-	m_id(id)
+Game::Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id, const unsigned int maxQuestionTime) :
+	m_id(id), m_maxQuestionTime(maxQuestionTime)
 {
 	//beima shell Magshimimm hem lo yachloo la'asot meha'athala sheashe'elot yahzero bevector?
 	for (Question question : questions)
@@ -26,18 +27,32 @@ Question Game::getQuestionForUser(const LoggedUser& user) const
 
 void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 	GameData& gameData = m_players.at(user);
-	if (answer == m_questions.at(gameData.currentQuestionId).getCorrectAnswer())
-		//correct answer
-		gameData.correctAnswerCount++;
-	else
-		//wrong answer
+
+	//calculate gameData statistics
+	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+	int currentQuestionAnswerTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - gameData.questionBeginningTime).count();
+	gameData.totalAnswerTime += currentQuestionAnswerTime;
+	gameData.averageAnswerTime = gameData.totalAnswerTime / gameData.currentQuestionId;
+
+	//set the new question's new beginning time
+	gameData.questionBeginningTime = now;
+
+	//check if question time passed
+	if (currentQuestionAnswerTime > m_maxQuestionTime) {
 		gameData.wrongAnswerCount++;
+		throw QuestionTimeOutException();
+	}
+
+		//check answer
+		if (answer == m_questions.at(gameData.currentQuestionId).getCorrectAnswer())
+			//correct answer
+			gameData.correctAnswerCount++;
+		else
+			//wrong answer
+			gameData.wrongAnswerCount++;
 
 	gameData.currentQuestionId++;
 
-	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-	gameData.totalAnswerTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - gameData.beginningTime).count();
-	gameData.averageAnswerTime = gameData.totalAnswerTime / gameData.currentQuestionId;
 }
 
 bool Game::removePlayer(const LoggedUser& user)

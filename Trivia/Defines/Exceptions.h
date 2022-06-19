@@ -16,3 +16,10 @@ struct NoUsernameException : public std::exception
 		return "this request handler has no field 'username'";
 	}
 };
+struct QuestionTimeOutException : public std::exception
+{
+	const char* what() const throw ()
+	{
+		return "question timed out";
+	}
+};
