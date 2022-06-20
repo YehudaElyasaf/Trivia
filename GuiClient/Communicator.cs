@@ -16,7 +16,7 @@ static class Const
     public const char LIST_SEPERATOR = ',';
 
     //message codes
-    public const int TIMEOUT_CODE = -2;
+    public const int TIMEOUT_CODE = 0;
     public const int ERROR_CODE = 1;
     public const int LOGIN_CODE = 2;
     public const int SIGNUP_CODE = 3;
