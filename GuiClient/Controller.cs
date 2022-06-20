@@ -45,7 +45,6 @@ namespace GuiClient
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new MainMenu(_communicator, this)));
             this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
-            ShowHomeBtn();
         }
         public void ShowGameRoom(RoomData roomData)
         {

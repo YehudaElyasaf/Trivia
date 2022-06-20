@@ -25,7 +25,7 @@ Question Game::getQuestionForUser(const LoggedUser& user) const
 		throw std::exception("Question is out of range!");
 }
 
-void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
+std::string Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 	GameData& gameData = m_players.at(user);
 
 	//calculate gameData statistics
@@ -52,7 +52,7 @@ void Game::submitAnswer(const LoggedUser& user, const std::string& answer) {
 			gameData.wrongAnswerCount++;
 
 	gameData.currentQuestionId++;
-
+	return m_questions.at(gameData.currentQuestionId).getCorrectAnswer();
 }
 
 bool Game::removePlayer(const LoggedUser& user)

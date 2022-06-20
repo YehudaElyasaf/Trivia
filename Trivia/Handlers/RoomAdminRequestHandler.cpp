@@ -43,13 +43,13 @@ RequestResult RoomAdminRequestHandler::startGame() {
 }
 
 void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const int msgType) {
+	std::lock_guard<std::mutex> lock_clients(m_handlerFactory.getCommunicator()->clientsMutex);
+	
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 			if (user == m_user)
 				continue;
-			try {
-				std::lock_guard<std::mutex> lock_clients(m_handlerFactory.getCommunicator()->clientsMutex);
-				
+			try {				
 				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
 					Helper::sendData(client.first, req.response);
 					delete m_handlerFactory.getCommunicator()->getClients()[client.first];

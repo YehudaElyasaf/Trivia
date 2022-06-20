@@ -24,7 +24,7 @@ public:
 	Game();
 	Game(const std::list<Question>& questions, const std::vector<LoggedUser>& users, const unsigned int id, const unsigned int maxQuestionTime);
 	Question getQuestionForUser(const LoggedUser& user) const;
-	void submitAnswer(const LoggedUser& user, const std::string& answer);
+	std::string submitAnswer(const LoggedUser& user, const std::string& answer);
 	bool removePlayer(const LoggedUser& user);
 	int getId() const;
 	std::map<LoggedUser, GameData> getPlayers() const;

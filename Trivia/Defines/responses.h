@@ -87,7 +87,7 @@ struct GetQuestionResponse {
 
 struct SubmitAnswerResponse {
 	unsigned int status;
-	unsigned int correctAnswerId;
+	std::string correctAnswer;
 };
 
 struct PlayerResult {
