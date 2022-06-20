@@ -51,8 +51,17 @@ RequestResult GameRequestHandler::leaveGame() {
 
 RequestResult GameRequestHandler::submitAns(RequestInfo req) {
 	SubmitAnswerRequest request = JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(req.buffer);
-	m_game.submitAnswer(m_user, request.answer);
-	return { JsonResponsePacketSerializer::serializeResponse({SubmitAnswerResponse{true}}), this };
+	std::string correctAns("");
+	unsigned int status = true;
+
+	// if the client was out of time, the status tells it has failed.
+	try {
+		correctAns = m_game.submitAnswer(m_user, request.answer);
+	}
+	catch (const QuestionTimeOutException& ex) {
+		status = false;
+	}
+	return { JsonResponsePacketSerializer::serializeResponse({SubmitAnswerResponse{status, correctAns}}), this };
 }
 
 RequestResult GameRequestHandler::questionResponse() {

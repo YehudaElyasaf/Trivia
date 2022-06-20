@@ -201,7 +201,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetQuestionRes
 
 std::string JsonResponsePacketSerializer::serializeResponse(const SubmitAnswerResponse& resp) {
 	std::string out = { (unsigned char)SUBMIT_ANS_CODE };
-	json data{ {"status", resp.status}, {"CorrectId", resp.correctAnswerId} };
+	json data{ {"status", resp.status}, {"CorrectAns", resp.correctAnswer} };
 
 	out += bitwiseLen(data);
 	out += data.dump();
