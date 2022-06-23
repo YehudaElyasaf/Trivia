@@ -43,7 +43,7 @@ RequestResult RoomAdminRequestHandler::startGame() {
 }
 
 void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const int msgType) {
-	m_handlerFactory.getCommunicator()->clientsMutex.lock();
+	std::lock_guard<std::mutex> lock_clients(m_handlerFactory.getCommunicator()->clientsMutex);
 
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
@@ -68,6 +68,4 @@ void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const 
 
 		}
 	}
-	
-	m_handlerFactory.getCommunicator()->clientsMutex.unlock();
 }
