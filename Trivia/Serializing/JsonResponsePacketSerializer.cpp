@@ -192,7 +192,8 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetGameResults
 
 std::string JsonResponsePacketSerializer::serializeResponse(const GetQuestionResponse& resp) {
 	std::string out = { (unsigned char)GET_QUESTION_RESP_CODE };
-	json data{ {"status", resp.status}, {"Question", resp.question}, {"Answers", resp.answers} };
+
+	json data{ {"status", resp.status}, {"Question", resp.question}, {"Ans1", resp.answers.at(0)}, {"Ans1", resp.answers.at(0)}, {"Ans2", resp.answers.at(1)}, {"Ans3", resp.answers.at(2)}, {"Ans4", resp.answers.at(3)}};
 
 	out += bitwiseLen(data);
 	out += data.dump();

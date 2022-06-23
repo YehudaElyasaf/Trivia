@@ -47,6 +47,7 @@ static class Const
     public const int MAX_NUM_OF_QUESTIONS = 20;
     public const int SECONDS_TO_MS = 1000;
     public const int ERROR_ID = -1;
+    public const int NUM_OF_ANSWERS = 4;
 }
 
 namespace GuiClient
@@ -54,7 +55,7 @@ namespace GuiClient
     public class Question
     {
         public string question;
-        public Dictionary<int, string> answers;
+        public string[] answers;
     }
 
     public class PlayerResult
@@ -266,12 +267,15 @@ namespace GuiClient
             Message request = new Message(Const.GET_QUESTION_RESP_CODE, new Dictionary<string, string> { });
             Message response = SendToServer(request);
 
-            string answersAsString = response.GetData()["Answers"];
             Question question = new Question
             {
                 question = response.GetData()["Question"],
-                answers = JsonConvert.DeserializeObject<Dictionary<int, string>>(answersAsString)
+                answers = new string[Const.NUM_OF_ANSWERS]
             };
+            question.answers[0] = response.GetData()["Ans1"];
+            question.answers[1] = response.GetData()["Ans2"];
+            question.answers[2] = response.GetData()["Ans3"];
+            question.answers[3] = response.GetData()["Ans4"];
 
             return question;
         }

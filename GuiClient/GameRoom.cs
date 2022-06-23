@@ -127,5 +127,9 @@ namespace GuiClient
             }
         }
 
+        private void questionTextTextbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

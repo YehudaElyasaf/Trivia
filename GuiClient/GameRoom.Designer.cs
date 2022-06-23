@@ -58,6 +58,7 @@
             this.questionTextTextbox.Size = new System.Drawing.Size(472, 158);
             this.questionTextTextbox.TabIndex = 10;
             this.questionTextTextbox.Text = "Question text here...";
+            this.questionTextTextbox.TextChanged += new System.EventHandler(this.questionTextTextbox_TextChanged);
             // 
             // answer1Button
             // 

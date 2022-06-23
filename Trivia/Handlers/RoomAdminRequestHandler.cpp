@@ -36,20 +36,20 @@ RequestResult RoomAdminRequestHandler::closeRoom() {
 
 RequestResult RoomAdminRequestHandler::startGame() {
 	Game game = m_gameManager.createGame(m_roomManager.getRoomById(m_roomId));
-	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), m_handlerFactory.createGameRequestHandler("", m_roomId, game)}, START_GAME_CODE);
+	sendToUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), m_handlerFactory.createGameRequestHandler("", m_roomId, game) }, START_GAME_CODE);
 
 	StartGameResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createGameRequestHandler(m_user.m_username, m_roomId, game) };
 }
 
 void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const int msgType) {
-	std::lock_guard<std::mutex> lock_clients(m_handlerFactory.getCommunicator()->clientsMutex);
-	
+	m_handlerFactory.getCommunicator()->clientsMutex.lock();
+
 	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 			if (user == m_user)
 				continue;
-			try {				
+			try {
 				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
 					Helper::sendData(client.first, req.response);
 					delete m_handlerFactory.getCommunicator()->getClients()[client.first];
@@ -65,6 +65,9 @@ void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const 
 				//do nothing
 				// it means the client is not logged in, because it doesnt have getUsername function
 			}
+
 		}
 	}
+	
+	m_handlerFactory.getCommunicator()->clientsMutex.unlock();
 }

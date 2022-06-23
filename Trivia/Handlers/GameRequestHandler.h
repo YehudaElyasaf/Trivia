@@ -1,6 +1,7 @@
 #pragma once
 #include "IRequestHandler.h"
 #include "RequestHandlerFactory.h"
+#include"../Game/Game.h"
 
 class RequestHandlerFactory;
 class Game;
@@ -20,7 +21,7 @@ private:
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;
-	Game& m_game;
+	Game m_game;
 
 	RequestResult getResults();
 	RequestResult submitAns(RequestInfo req);
