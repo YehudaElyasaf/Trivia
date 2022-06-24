@@ -284,14 +284,14 @@ namespace GuiClient
         public string SubmitAnswer(string answer)
         {
             Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> {
-                { "Answer", answer}
+                { "answer", answer}
             });
             Message response = SendToServer(request);
 
             if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
                 throw new TimeoutException();
 
-            return response.GetData()["CorrectAnswer"];
+            return response.GetData()["CorrectAns"];
         }
 
         public List<PlayerResult> GetResults()
@@ -305,10 +305,10 @@ namespace GuiClient
                 Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultAsString);
                 PlayerResult playerResult = new PlayerResult
                 {
-                    username = result["username"],
-                    correctAnswerCount = int.Parse(result["correctAnswerCount"]),
-                    wrongAnswerCount = int.Parse(result["wrongAnswerCount"]),
-                    averageAnswerTime = int.Parse(result["averageAnswerTime"])
+                    username = result["Username"],
+                    correctAnswerCount = int.Parse(result["CorrectAnswerCount"]),
+                    wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
+                    averageAnswerTime = int.Parse(result["AverageAnswerTime"])
                 };
                 playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime);
 

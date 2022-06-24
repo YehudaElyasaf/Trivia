@@ -17,6 +17,7 @@ namespace GuiClient
         {
             InitializeComponent();
             resultsList.Hide();
+            waitingLabel.Show();
             _communicator = communicator;
             _controller = controller;
 

@@ -50,7 +50,7 @@
             this.ClientSize = new System.Drawing.Size(814, 487);
             this.Controls.Add(this.homeButton);
             this.Name = "Controller";
-            this.Text = "Controller";
+            this.Text = "Trivia";
             this.Load += new System.EventHandler(this.Controller_Load);
             this.ResumeLayout(false);
 

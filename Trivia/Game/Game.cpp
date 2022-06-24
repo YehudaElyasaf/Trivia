@@ -30,9 +30,9 @@ std::string Game::submitAnswer(const LoggedUser& user, const std::string& answer
 
 	//calculate gameData statistics
 	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-	int currentQuestionAnswerTime = std::chrono::duration_cast<std::chrono::milliseconds>(now - gameData.questionBeginningTime).count();
+	int currentQuestionAnswerTime = std::chrono::duration_cast<std::chrono::seconds>(now - gameData.questionBeginningTime).count();
 	gameData.totalAnswerTime += currentQuestionAnswerTime;
-	gameData.averageAnswerTime = gameData.totalAnswerTime / gameData.currentQuestionId;
+	gameData.averageAnswerTime = gameData.totalAnswerTime / (gameData.currentQuestionId + 1); //+1 because index starts from 0
 
 	//set the new question's new beginning time
 	gameData.questionBeginningTime = now;
@@ -51,8 +51,7 @@ std::string Game::submitAnswer(const LoggedUser& user, const std::string& answer
 			//wrong answer
 			gameData.wrongAnswerCount++;
 
-	gameData.currentQuestionId++;
-	return m_questions.at(gameData.currentQuestionId).getCorrectAnswer();
+	return m_questions.at(gameData.currentQuestionId++).getCorrectAnswer();
 }
 
 bool Game::removePlayer(const LoggedUser& user)
