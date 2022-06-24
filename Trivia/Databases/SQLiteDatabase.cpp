@@ -204,10 +204,4 @@ void SQLiteDatabase::testDatabase() {
 	this->addNewUser("3", "3", "user2@shovinism.com");
 	this->addNewUser("4", "4", "user4@homofobism.com");
 	this->addNewUser("5", "5", "user5@homofobism.com");
-
-	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
-	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
-
-	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
-	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
 }
