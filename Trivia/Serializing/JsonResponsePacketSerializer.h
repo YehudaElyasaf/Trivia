@@ -32,5 +32,4 @@ public:
 	static std::string bitwiseLen(const json& data);
 	static std::string join(const std::vector<std::string>& list, const std::string& divider = DIVIDER);
 	static std::string join(const std::vector<LoggedUser>& list, const std::string& divider = DIVIDER);
-	static std::vector<std::map<std::string, std::string>> serializeResults(std::vector<PlayerResult> results);
 };

@@ -183,7 +183,11 @@ std::string JsonResponsePacketSerializer::serializeResponse(const LeaveGameRespo
 
 std::string JsonResponsePacketSerializer::serializeResponse(const GetGameResultsResponse& resp) {
 	std::string out = { (unsigned char)GET_RESULTS_CODE };
-	json data{ {"status", resp.status}, {"Results", serializeResults(resp.results)}};
+	json data{ {"status", resp.status} };
+	for (PlayerResult result : resp.results) {
+		json resultAsJson{ {"CorrectAnswerCount", result.correctAnswerCount}, {"WrongAnswerCount", result.wrongAnswerCount}, {"AverageAnswerTime", result.averageAnswerTime} };
+		data += {result.username, resultAsJson.dump()};
+	}
 
 	out += bitwiseLen(data);
 	out += data.dump();
@@ -193,7 +197,7 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetGameResults
 std::string JsonResponsePacketSerializer::serializeResponse(const GetQuestionResponse& resp) {
 	std::string out = { (unsigned char)GET_QUESTION_RESP_CODE };
 
-	json data{ {"status", resp.status}, {"Question", resp.question}, {"Ans1", resp.answers.at(0)}, {"Ans1", resp.answers.at(0)}, {"Ans2", resp.answers.at(1)}, {"Ans3", resp.answers.at(2)}, {"Ans4", resp.answers.at(3)}};
+	json data{ {"status", resp.status}, {"Question", resp.question}, {"Ans1", resp.answers.at(0)}, {"Ans1", resp.answers.at(0)}, {"Ans2", resp.answers.at(1)}, {"Ans3", resp.answers.at(2)}, {"Ans4", resp.answers.at(3)} };
 
 	out += bitwiseLen(data);
 	out += data.dump();
@@ -206,22 +210,5 @@ std::string JsonResponsePacketSerializer::serializeResponse(const SubmitAnswerRe
 
 	out += bitwiseLen(data);
 	out += data.dump();
-	return out;
-}
-
-std::vector<std::map<std::string, std::string>> JsonResponsePacketSerializer::serializeResults(std::vector<PlayerResult> results) {
-	std::vector<std::map<std::string, std::string>> out;
-	std::map<std::string, std::string> tmp;
-	
-	for (PlayerResult res : results) {
-		tmp = std::map<std::string, std::string>();
-		tmp["Username"] = res.username;
-		tmp["AverageAnswerTime"] = res.averageAnswerTime;
-		tmp["CorrectAnswerCount"] = res.correctAnswerCount;
-		tmp["WrongAnswerCount"] = res.wrongAnswerCount;
-
-		out.push_back(tmp);
-	}
-
 	return out;
 }

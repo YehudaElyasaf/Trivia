@@ -110,6 +110,8 @@ namespace GuiClient
                 //game finished
                 System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
                 _controller.ShowResults();
+                timer.Stop();
+                return;
             }
             getNewQuestion();
         }

@@ -195,22 +195,32 @@ namespace GuiClient
             Message joinRoomResponse = SendToServer(joinRoomMessage);
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
-        public RoomData GetRoomData()
+
+        private void checkIfGameStarted()
         {
             try
             {
-                try
-                {
-                    Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }));
-                    if (PlayerResults.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
-                        //status = is game active
-                        throw new GameStartedException();
-                }
-                catch (Exception)
-                {
-                    //do nothing
-                    //game didn't start, the server can't recognize message
-                }
+                Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }));
+                if (PlayerResults.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
+                    //status = is game active
+                    throw new GameStartedException();
+            }
+            catch (GameStartedException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+                //do nothing
+                //game didn't start, the server can't recognize message
+            }
+        }
+        public RoomData GetRoomData(bool isAdmin)
+        {
+            try
+            {
+                if (!isAdmin)
+                    checkIfGameStarted();
 
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
@@ -300,17 +310,26 @@ namespace GuiClient
             Message response = SendToServer(request);
 
             List<PlayerResult> results = new List<PlayerResult>();
-            foreach (string resultAsString in response.GetData()["Results"].Split(Const.LIST_SEPERATOR))
+            foreach (KeyValuePair<string, string> resultAsPair in response.GetData())
             {
-                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultAsString);
+                if (resultAsPair.Key.Equals("status"))
+                    continue;
+                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultAsPair.Value);
                 PlayerResult playerResult = new PlayerResult
                 {
-                    username = result["Username"],
+                    username = resultAsPair.Key,
                     correctAnswerCount = int.Parse(result["CorrectAnswerCount"]),
                     wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
                     averageAnswerTime = int.Parse(result["AverageAnswerTime"])
                 };
-                playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime);
+                try
+                {
+                    playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime);
+                }
+                catch (DivideByZeroException)
+                {
+                    playerResult.grade = 0;
+                }
 
                 results.Add(playerResult);
             }

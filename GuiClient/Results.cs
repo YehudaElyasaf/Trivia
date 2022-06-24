@@ -16,23 +16,8 @@ namespace GuiClient
         public Results(Communicator communicator, Controller controller)
         {
             InitializeComponent();
-            resultsList.Hide();
-            waitingLabel.Show();
             _communicator = communicator;
             _controller = controller;
-
-            List<PlayerResult> results = GetResults();
-            waitingLabel.Hide();
-            results.OrderBy(o => o.grade);
-            
-            resultsList.Show();
-            resultsList.Items.Clear();
-            foreach(PlayerResult result in results)
-            {
-                ListViewItem item = new ListViewItem(result.username);
-                item.SubItems.Add(result.grade.ToString());
-                resultsList.Items.Add(item);
-            }
         }
 
         private List<PlayerResult> GetResults()
@@ -52,6 +37,25 @@ namespace GuiClient
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Results_Load(object sender, EventArgs e)
+        {
+            resultsList.Hide();
+            waitingLabel.Show();
+
+            List<PlayerResult> results = GetResults();
+            waitingLabel.Hide();
+            results.OrderBy(o => o.grade);
+
+            resultsList.Show();
+            resultsList.Items.Clear();
+            foreach (PlayerResult result in results)
+            {
+                ListViewItem item = new ListViewItem(result.username);
+                item.SubItems.Add(result.grade.ToString());
+                resultsList.Items.Add(item);
+            }
         }
     }
 }

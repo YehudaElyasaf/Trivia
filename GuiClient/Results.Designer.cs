@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("");
             this.waitingLabel = new System.Windows.Forms.Label();
-            this.resultsList = new System.Windows.Forms.ListView();
             this.username = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grade = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.resultsList = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // waitingLabel
@@ -44,6 +45,16 @@
             this.waitingLabel.TabIndex = 0;
             this.waitingLabel.Text = "Waiting to all players to finish...";
             // 
+            // username
+            // 
+            this.username.Text = "username";
+            this.username.Width = 367;
+            // 
+            // grade
+            // 
+            this.grade.Text = "grade";
+            this.grade.Width = 365;
+            // 
             // resultsList
             // 
             this.resultsList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -51,20 +62,15 @@
             this.grade});
             this.resultsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.resultsList.HideSelection = false;
-            this.resultsList.Location = new System.Drawing.Point(3, 3);
+            this.resultsList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
+            this.resultsList.Location = new System.Drawing.Point(74, 3);
             this.resultsList.Name = "resultsList";
-            this.resultsList.Size = new System.Drawing.Size(810, 442);
+            this.resultsList.Size = new System.Drawing.Size(742, 483);
             this.resultsList.TabIndex = 1;
             this.resultsList.UseCompatibleStateImageBehavior = false;
+            this.resultsList.View = System.Windows.Forms.View.Details;
             this.resultsList.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // username
-            // 
-            this.username.Text = "username";
-            // 
-            // grade
-            // 
-            this.grade.Text = "grade";
             // 
             // Results
             // 
@@ -74,6 +80,7 @@
             this.Controls.Add(this.waitingLabel);
             this.Name = "Results";
             this.Size = new System.Drawing.Size(816, 489);
+            this.Load += new System.EventHandler(this.Results_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,8 +89,8 @@
         #endregion
 
         private System.Windows.Forms.Label waitingLabel;
-        private System.Windows.Forms.ListView resultsList;
         private System.Windows.Forms.ColumnHeader username;
         private System.Windows.Forms.ColumnHeader grade;
+        private System.Windows.Forms.ListView resultsList;
     }
 }
