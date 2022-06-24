@@ -59,6 +59,9 @@ namespace GuiClient
             answer2Button.Text = question.answers[1];
             answer3Button.Text = question.answers[2];
             answer4Button.Text = question.answers[3];
+
+            timer.Start();
+            timerLabel.Text = _answerTimeout.ToString();
         }
         private void answer1Button_Click(object sender, EventArgs e)
         {
@@ -79,13 +82,12 @@ namespace GuiClient
 
         private void SubmitAnswer(string answer)
         {
+            timer.Stop();
             wrongAnswerLabel.Hide();
             correctAnswerLabel.Hide();
             timeoutLabel.Hide();
 
-            timerLabel.Text = _answerTimeout.ToString();
             timer.Interval = 1 * Const.SECONDS_TO_MS;
-            timer.Start();
 
             try
             {
@@ -93,6 +95,8 @@ namespace GuiClient
                 if (answer == correctAnswer)
                 {
                     correctAnswerLabel.Show();
+                    int correctAnswers = int.Parse(correctAnswersLabel.Text);
+                    correctAnswersLabel.Text = (correctAnswers + 1).ToString();
                 }
                 else
                 {

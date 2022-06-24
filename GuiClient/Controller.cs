@@ -164,12 +164,19 @@ namespace GuiClient
         {
             while (true)
             {
-                Thread.Sleep(Const.REFRESH_INTERVAL_MS);
+                try
+                {
+                    Thread.Sleep(Const.REFRESH_INTERVAL_MS);
 
-                if (_currentScreen.GetType() == typeof(JoinRoom))
-                    ((JoinRoom)_currentScreen).RefreshScreen();
-                else if (_currentScreen.GetType() == typeof(WaitingRoom))
-                    ((WaitingRoom)_currentScreen).RefreshScreen();
+                    if (_currentScreen.GetType() == typeof(JoinRoom))
+                        ((JoinRoom)_currentScreen).RefreshScreen();
+                    else if (_currentScreen.GetType() == typeof(WaitingRoom))
+                        ((WaitingRoom)_currentScreen).RefreshScreen();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }
