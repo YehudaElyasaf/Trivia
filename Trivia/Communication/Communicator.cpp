@@ -96,9 +96,7 @@ void Communicator::handleNewClient(SOCKET sock) {
 			std::string responseBytes;
 			RequestResult res;
 
-			clientsMutex.lock();
-			//wait until mutex closed
-			clientsMutex.unlock();
+			std::lock_guard<std::mutex> lock_clients(clientsMutex);
 			if (m_clients[sock]->isRequestRelevant(req)) {
 				res = m_clients[sock]->handleRequest(req);
 			}
