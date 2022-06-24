@@ -60,8 +60,9 @@ namespace GuiClient
             answer3Button.Text = question.answers[2];
             answer4Button.Text = question.answers[3];
 
-            timer.Start();
             timerLabel.Text = _answerTimeout.ToString();
+            timer.Interval = 1 * Const.SECONDS_TO_MS;
+            timer.Start();
         }
         private void answer1Button_Click(object sender, EventArgs e)
         {
@@ -86,8 +87,6 @@ namespace GuiClient
             wrongAnswerLabel.Hide();
             correctAnswerLabel.Hide();
             timeoutLabel.Hide();
-
-            timer.Interval = 1 * Const.SECONDS_TO_MS;
 
             try
             {
