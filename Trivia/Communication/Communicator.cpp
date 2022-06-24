@@ -33,7 +33,7 @@ void Communicator::stop() {
 	m_running = false;
 }
 
-std::map<SOCKET, IRequestHandler*> Communicator::getClients() {
+std::map<SOCKET, IRequestHandler*>& Communicator::getClients() {
 	return m_clients;
 }
 
