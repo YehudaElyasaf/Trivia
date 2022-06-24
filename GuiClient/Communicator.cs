@@ -320,7 +320,7 @@ namespace GuiClient
                     username = resultAsPair.Key,
                     correctAnswerCount = int.Parse(result["CorrectAnswerCount"]),
                     wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
-                    averageAnswerTime = int.Parse(result["AverageAnswerTime"])
+                    averageAnswerTime = int.Parse(result["AverageAnswerTime"] + 1) //+1 because first second is counted
                 };
                 try
                 {

@@ -77,7 +77,7 @@ void SQLiteDatabase::addNewQuestion(const Question& q) {
 
 std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 	std::list<Question> out;
-	std::string sqlStatement = "SELECT * FROM QUESTIONS";
+	std::string sqlStatement = "SELECT * FROM QUESTIONS ORDER BY RANDOM()";
 	if (limit > 0)
 		sqlStatement += " LIMIT " + std::to_string(limit);
 	sqlStatement += ";";
@@ -184,11 +184,26 @@ void SQLiteDatabase::initDatabase() {
 	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
 	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
 	this->addNewQuestion(Question("Conventziot?", { "I like Linux and Injeras!", "Maybe?", "Yes... Clion is the best!", "No!!!!" }));
+	this->addNewQuestion(Question("Which is the most interesting Masechet?", { "Makot", "Mishna", "Kodashim", "Yesodey Hatorah" }));
+	this->addNewQuestion(Question("What is the name of froilich?", { "Al", "Aliyahoo", "AI", "AL" }));
+	this->addNewQuestion(Question("Which is the best gender?", { "There is no such thing \"gender\"", "bisexual", "female", "homosexual" }));
+	this->addNewQuestion(Question("Which comes before: private or public?", { "private", "public", "depending on the programming langauge", "it does not matter" }));
+	this->addNewQuestion(Question("What is the value of G?", { "6.67 * 10^-11 m^3*kg^-1*sec^-2", "1 kg * m * sec^-2", "10N (Newtons)", "G is not constant" }));
+	this->addNewQuestion(Question("The last words of Pythagoras were...", { "Do not touch my circles!","eureka","nobody knows","Heil Hitler!" }));
+	this->addNewQuestion(Question("How did Muhamad die?", { "he did not","in a car crash","he fell of his unicorn","he was very old" }));
+	this->addNewQuestion(Question("What is the meaning of life?", { "life has no meaning","life has no meaning.","life has no meaning!","life has no meaning!!!" })); //purposely the same
+	this->addNewQuestion(Question("just guess the answer", { "1","2","3","4" }));
+	this->addNewQuestion(Question("Who is called \"King David\"?", { "King David","Yosi Yafe","Many peoples","David Yurman" }));
+	this->addNewQuestion(Question("2 + 2 * 2 = ?", { "6","8","0","Math Error" }));
+	this->addNewQuestion(Question("Itetey itetey are...", { "amtahta deachnaey","go to the kitchen","useless","inferior" }));
 }
 
 void SQLiteDatabase::testDatabase() {
-	this->addNewUser("user1", "123", "user1@shovinism.com");
-	this->addNewUser("user2", "456", "user2@homofobism.com");
+	this->addNewUser("1", "1", "user1@shovinism.com");
+	this->addNewUser("2", "2", "user2@homofobism.com");
+	this->addNewUser("3", "3", "user2@shovinism.com");
+	this->addNewUser("4", "4", "user4@homofobism.com");
+	this->addNewUser("5", "5", "user5@homofobism.com");
 
 	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
 	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
