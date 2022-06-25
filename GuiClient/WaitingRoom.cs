@@ -52,17 +52,18 @@ namespace GuiClient
             {
                 _roomData = _communicator.GetRoomData(isAdmin);
                 if (_roomData.useres.Length > 0)
-                    _roomData.useres[0]+=" (admin)";
+                    _roomData.useres[0] += " (admin)";
 
                 connectedUsersListLabel.Invoke((MethodInvoker)(() => connectedUsersListLabel.Text = string.Join("\n", _roomData.useres)));
             }
             catch (GameStartedException)
             {
-                _controller.ShowGameRoom(_roomData);
+                Invoke((MethodInvoker)(() => _controller.ShowGameRoom(_roomData)));
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
-                _controller.ShowMainMenu();
+                Invoke((MethodInvoker)(() => _controller.ShowMainMenu()));
             }
         }
 

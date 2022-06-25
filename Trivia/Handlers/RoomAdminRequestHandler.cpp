@@ -3,6 +3,7 @@
 #include "../Serializing/JsonResponsePacketSerializer.h"
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 #include "../Communication/Helper.h"
+#include<iostream>
 
 RoomAdminRequestHandler::RoomAdminRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, GameManager& gameManager,
 	RequestHandlerFactory& fact) : m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_gameManager(gameManager) {}
@@ -48,20 +49,24 @@ void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const 
 			if (user == m_user)
 				continue;
 			try {
-				if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
-					Helper::sendData(client.first, req.response);
-					delete m_handlerFactory.getCommunicator()->getClients()[client.first];
-					if (msgType == CLOSE_ROOM_CODE)
-						m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createMenuRequestHandler(user.m_username);
-					else if (msgType == START_GAME_CODE) {
-						m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createGameRequestHandler(user.m_username, m_roomId, ((GameRequestHandler*)req.newHandler)->getGame());
-						delete req.newHandler;
+				if (((RoomMemberRequestHandler*)client.second) != nullptr)
+					if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
+						Helper::sendData(client.first, req.response);
+						delete m_handlerFactory.getCommunicator()->getClients()[client.first];
+						if (msgType == CLOSE_ROOM_CODE)
+							m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createMenuRequestHandler(user.m_username);
+						else if (msgType == START_GAME_CODE) {
+							m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createGameRequestHandler(user.m_username, m_roomId, ((GameRequestHandler*)req.newHandler)->getGame());
+							delete req.newHandler;
+						}
 					}
-				}
 			}
 			catch (const NoUsernameException& e) {
 				//do nothing
 				// it means the client is not logged in, because it doesnt have getUsername function
+			}
+			catch (...) {
+				std::cerr << "EXCEPTION THROWN, STILL RUNNING!\n";
 			}
 
 		}

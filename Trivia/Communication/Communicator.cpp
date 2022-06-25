@@ -136,4 +136,5 @@ void Communicator::handleNewClient(SOCKET sock) {
 	catch (...) {}
 
 	delete m_clients[sock];
+	m_clients.erase(sock);
 }
