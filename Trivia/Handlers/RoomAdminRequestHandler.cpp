@@ -61,7 +61,6 @@ void RoomAdminRequestHandler::changeHandlerOfUsersInRoom(const RequestResult& re
 							m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createMenuRequestHandler(user.m_username);
 						else if (msgType == START_GAME_CODE) {
 							m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createGameRequestHandler(user.m_username, m_roomId, ((GameRequestHandler*)req.newHandler)->getGame());
-							delete req.newHandler;
 						}
 					}
 			}
@@ -75,4 +74,6 @@ void RoomAdminRequestHandler::changeHandlerOfUsersInRoom(const RequestResult& re
 
 		}
 	}
+	if (msgType == START_GAME_CODE)
+		delete req.newHandler;
 }
