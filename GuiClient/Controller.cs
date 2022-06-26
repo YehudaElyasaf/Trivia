@@ -48,15 +48,7 @@ namespace GuiClient
         }
         public void ShowGameRoom(RoomData roomData)
         {
-            try
-            {
-                this.Invoke((MethodInvoker)(() => Controls.Clear()));
-            }
-            catch (NoDataToReadException)
-            {
-                //do nothing
-                //because Communicator::SendToServer didn't get any message from server
-            }
+            Invoke((MethodInvoker)(() => Controls.Clear()));
 
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new GameRoom(_communicator, this, roomData.questionCount, roomData.answerTimeout)));
             this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
@@ -75,7 +67,7 @@ namespace GuiClient
         public void ShowCreateRoom()
         {
             Controls.Clear();
-            _currentScreen= new CreateRoom(_communicator, this);
+            _currentScreen = new CreateRoom(_communicator, this);
             Controls.Add(_currentScreen);
             _currentScreen.BringToFront();
             ShowHomeBtn();
@@ -119,7 +111,7 @@ namespace GuiClient
         {
             try
             {
-                if (_communicator!=null)
+                if (_communicator != null)
                     _communicator.Close();
                 _communicator = new Communicator();
                 ShowLoginScreen();
@@ -173,9 +165,9 @@ namespace GuiClient
                     else if (_currentScreen.GetType() == typeof(WaitingRoom))
                         ((WaitingRoom)_currentScreen).RefreshScreen();
                 }
-                catch(Exception ex)
+                catch (Exception)
                 {
-                    MessageBox.Show(ex.Message);
+                    //
                 }
             }
         }
