@@ -10,6 +10,7 @@ public:
 	RoomAdminRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, GameManager& gameManager, RequestHandlerFactory& fact);
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
+	HANDLER_TYPE getType() const override;
 
 	RequestResult closeRoom();
 	std::string getUsername() const override;

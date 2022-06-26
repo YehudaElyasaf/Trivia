@@ -19,6 +19,10 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo req) {
 	return signup(req);
 }
 
+HANDLER_TYPE LoginRequestHandler::getType() const {
+	return LOGIN;
+}
+
 std::string LoginRequestHandler::getUsername() const
 {
 	throw NoUsernameException();

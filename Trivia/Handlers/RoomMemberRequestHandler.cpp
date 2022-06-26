@@ -18,6 +18,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
+HANDLER_TYPE RoomMemberRequestHandler::getType() const {
+	return MEMBER;
+}
+
 std::string RoomMemberRequestHandler::getUsername() const {
 	return m_user.m_username;
 }
