@@ -150,6 +150,8 @@ namespace GuiClient
         {
             if (_currentScreen.GetType() == typeof(WaitingRoom))
                 _communicator.LeaveRoom(((WaitingRoom)_currentScreen).isAdmin);
+            if (_currentScreen.GetType() == typeof(GameRoom))
+                _communicator.LeaveGame();
             ShowMainMenu();
         }
         private void AutoRefresh()

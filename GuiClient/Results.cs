@@ -29,6 +29,8 @@ namespace GuiClient
                 }
                 catch (GameNotFinishedException)
                 {
+                    resultsList.Hide();
+                    waitingLabel.Show();
                     System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
                     //try again
                 }

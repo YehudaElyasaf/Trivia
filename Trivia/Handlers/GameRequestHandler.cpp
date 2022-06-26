@@ -42,13 +42,17 @@ unsigned int GameRequestHandler::getRoomId() const {
 
 RequestResult GameRequestHandler::getResults() {
 	GetGameResultsResponse resp;
-	resp.status = !(m_roomManager.getRoomById(m_roomId).getRoomData().isActive);
-
-	for (auto user : m_game.getPlayers()) {
-		resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
-			user.second.wrongAnswerCount, user.second.averageAnswerTime);
+	resp.status = m_game.isGameFinished();
+	if (resp.status) {
+		for (auto user : m_game.getPlayers()) {
+			resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
+									  user.second.wrongAnswerCount, user.second.averageAnswerTime);
+		}
+		RequestResult res = leaveGame();
+		res.response = JsonResponsePacketSerializer::serializeResponse(resp);
+		return res;
 	}
-	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username) };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this};
 }
 
 RequestResult GameRequestHandler::leaveGame() {
