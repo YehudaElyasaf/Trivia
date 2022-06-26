@@ -48,6 +48,8 @@ static class Const
     public const int SECONDS_TO_MS = 1000;
     public const int ERROR_ID = -1;
     public const int NUM_OF_ANSWERS = 4;
+    public const int DESCENDING_ORDER = -1;
+    public const int THOUSANDS_OF_POINTS = 1000;
 }
 
 namespace GuiClient
@@ -315,7 +317,7 @@ namespace GuiClient
             if (response.GetData()["status"] == Const.FAILURE_STATUS.ToString())
                 throw new GameNotFinishedException();
 
-            List <PlayerResult> results = new List<PlayerResult>();
+            List<PlayerResult> results = new List<PlayerResult>();
             foreach (KeyValuePair<string, string> resultAsPair in response.GetData())
             {
                 if (resultAsPair.Key.Equals("status"))
@@ -328,7 +330,11 @@ namespace GuiClient
                     wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
                     averageAnswerTime = int.Parse(result["AverageAnswerTime"])
                 };
-                playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime + 1); //+1 because first second is counted
+
+                //calculate grade
+                if (playerResult.averageAnswerTime <= 0)
+                    playerResult.averageAnswerTime = 1;
+                playerResult.grade = ((playerResult.correctAnswerCount * Const.THOUSANDS_OF_POINTS) / playerResult.averageAnswerTime);
 
                 results.Add(playerResult);
             }
@@ -336,9 +342,10 @@ namespace GuiClient
             return results;
         }
 
-        public void LeaveGame() {
+        public void LeaveGame()
+        {
             Message request = new Message(Const.LEAVE_GAME_CODE, new Dictionary<string, string> { });
             SendToServer(request);
-		}
+        }
     }
 }

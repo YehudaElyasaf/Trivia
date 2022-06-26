@@ -40,7 +40,7 @@ namespace GuiClient
 
             List<PlayerResult> results = _communicator.GetResults();
             waitingLabel.Hide();
-            results.OrderBy(o => o.grade);
+            results.OrderBy(o => o.grade * Const.DESCENDING_ORDER);
 
             resultsList.Show();
             resultsList.Items.Clear();
