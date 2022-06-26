@@ -25,7 +25,7 @@ bool RoomManager::deleteRoom(const int id)
 	return true;
 }
 
-unsigned int RoomManager::getRoomState(const int id) const
+unsigned int RoomManager::getRoomState(const int id)
 {
 	return m_rooms.at(id).getRoomData().isActive;
 }

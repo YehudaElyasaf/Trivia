@@ -11,6 +11,6 @@ private:
 
 public:
 	GameManager(IDatabase* database);
-	Game& createGame(const Room& room);
+	Game& createGame(Room& room);
 	bool deleteGame(const unsigned int id);
 };

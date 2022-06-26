@@ -88,7 +88,7 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
 	std::string averageAnswerTime = EMPTY_VALUE;
 	std::string sqlStatement;
-	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "' AND STATISTICS.TOTAL_ANSWERS <> 0;";
 	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberAsStringCallback);
 
 	return averageAnswerTime;
@@ -126,7 +126,9 @@ std::vector<std::string> SQLiteDatabase::getTopRatedUsers(const int numberOfUser
 	std::vector<std::string> topUsers;
 	std::string sqlStatement;
 	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers) + ";";
-	executeAndValidate(sqlStatement, &topUsers, getTopRatedUserCallback);
+
+	while (topUsers.size() < numberOfUsers)
+		topUsers.push_back(EMPTY_VALUE);
 
 	return topUsers;
 }

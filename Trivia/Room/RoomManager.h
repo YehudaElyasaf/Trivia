@@ -6,13 +6,13 @@
 class RoomManager
 {
 public:
-    //create a room and return its index
-    int createRoom(const LoggedUser& roomCreator, RoomData& roomData);
-    bool deleteRoom(const int id);
-    unsigned int getRoomState(const int id) const;
-    std::vector<RoomData> getRooms() const;
-    Room& getRoomById(const int id);
+	//create a room and return its index
+	int createRoom(const LoggedUser& roomCreator, RoomData& roomData);
+	bool deleteRoom(const int id);
+	unsigned int getRoomState(const int id);
+	std::vector<RoomData> getRooms() const;
+	Room& getRoomById(const int id);
 private:
-    int m_nextIndex = 1;
-    std::map<int, Room> m_rooms;
+	int m_nextIndex = 1;
+	std::map<int, Room> m_rooms;
 };
