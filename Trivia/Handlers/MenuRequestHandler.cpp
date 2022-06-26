@@ -79,7 +79,7 @@ RequestResult MenuRequestHandler::joinRoom(const std::string& buffer) {
 	if (room.getRoomData().maxPlayers > room.getAllUsers().size())
 		m_roomManager.getRoomById(request.roomId).addUser({ m_username });
 	else
-		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Room Full"}), this};
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Room is Full"}), this};
 	
 	JoinRoomResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createRoomMemberRequestHandler(m_username, request.roomId) };

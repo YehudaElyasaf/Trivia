@@ -332,5 +332,10 @@ namespace GuiClient
 
             return results;
         }
+
+        public void LeaveGame() {
+            Message request = new Message(Const.LEAVE_GAME_CODE, new Dictionary<string, string> { });
+            SendToServer(request);
+		}
     }
 }
