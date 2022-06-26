@@ -64,7 +64,7 @@ namespace GuiClient
         public int correctAnswerCount;
         public int wrongAnswerCount;
         public int averageAnswerTime;
-        //grade = correctAnswerCount / playerResult
+        //grade = (correctAnswerCount / averageAnswerTime) + 1
         public int grade;
     }
 
@@ -334,16 +334,9 @@ namespace GuiClient
                     username = resultAsPair.Key,
                     correctAnswerCount = int.Parse(result["CorrectAnswerCount"]),
                     wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
-                    averageAnswerTime = int.Parse(result["AverageAnswerTime"] + 1) //+1 because first second is counted
+                    averageAnswerTime = int.Parse(result["AverageAnswerTime"])
                 };
-                try
-                {
-                    playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime);
-                }
-                catch (DivideByZeroException)
-                {
-                    playerResult.grade = 0;
-                }
+                playerResult.grade = (playerResult.correctAnswerCount / playerResult.averageAnswerTime + 1); //+1 because first second is counted
 
                 results.Add(playerResult);
             }
