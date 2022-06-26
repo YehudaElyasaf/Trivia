@@ -48,6 +48,7 @@ RequestResult GameRequestHandler::getResults() {
 			resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
 									  user.second.wrongAnswerCount, user.second.averageAnswerTime);
 		}
+		
 		RequestResult res = leaveGame();
 		res.response = JsonResponsePacketSerializer::serializeResponse(resp);
 		return res;
@@ -57,7 +58,7 @@ RequestResult GameRequestHandler::getResults() {
 
 RequestResult GameRequestHandler::leaveGame() {
 	unsigned int status = m_game.removePlayer(m_user);
-	if (m_game.getPlayers().size() == 0) {
+	if (m_game.isGameFinished()) {
 		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
 		m_handlerFactory.getRoomManager().deleteRoom(m_roomId);
 	}
