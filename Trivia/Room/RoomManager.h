@@ -13,6 +13,6 @@ public:
     std::vector<RoomData> getRooms() const;
     Room& getRoomById(const int id);
 private:
-    int m_nextIndex = 1;
-    std::map<int, Room> m_rooms;
+	int m_nextIndex = 1;
+	std::map<int, Room> m_rooms;
 };

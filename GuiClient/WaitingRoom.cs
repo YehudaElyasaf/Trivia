@@ -62,7 +62,6 @@ namespace GuiClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
                 Invoke((MethodInvoker)(() => _controller.ShowMainMenu()));
             }
         }
