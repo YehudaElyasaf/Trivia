@@ -17,7 +17,7 @@ public:
 
 private:
 	RequestResult startGame();
-	void sendToUsersInRoom(const RequestResult& req, const int msgType);
+	void changeHandlerOfUsersInRoom(const RequestResult& req, const int msgType);
 
 	unsigned int m_roomId;
 	LoggedUser m_user;
