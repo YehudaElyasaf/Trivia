@@ -55,7 +55,6 @@ void RoomAdminRequestHandler::sendToUsersInRoom(const RequestResult& req, const 
 			try {
 				if (((RoomMemberRequestHandler*)client.second) != nullptr)
 					if (user.m_username == ((RoomMemberRequestHandler*)client.second)->getUsername()) {
-						Helper::sendData(client.first, req.response);
 						delete m_handlerFactory.getCommunicator()->getClients()[client.first];
 						if (msgType == CLOSE_ROOM_CODE)
 							m_handlerFactory.getCommunicator()->getClients()[client.first] = m_handlerFactory.createMenuRequestHandler(user.m_username);

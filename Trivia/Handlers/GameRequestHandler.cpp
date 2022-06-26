@@ -8,18 +8,20 @@ GameRequestHandler::GameRequestHandler(const unsigned int roomId, const LoggedUs
 	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_game(game) {}
 
 bool GameRequestHandler::isRequestRelevant(RequestInfo req) {
-	return req.buffer[0] >= GET_RESULTS_CODE && req.buffer[0] <= LEAVE_GAME_CODE;
+	return req.buffer[0] >= GET_RESULTS_CODE && req.buffer[0] <= LEAVE_GAME_CODE || req.buffer[0] == GET_ROOM_STATE_CODE;
 }
 
 RequestResult GameRequestHandler::handleRequest(RequestInfo req) {
 	if (req.buffer[0] == GET_RESULTS_CODE)
 		return getResults();
-	if (req.buffer[0] == SUBMIT_ANS_CODE)
+	else if (req.buffer[0] == SUBMIT_ANS_CODE)
 		return submitAns(req);
-	if (req.buffer[0] == GET_QUESTION_RESP_CODE)
+	else if (req.buffer[0] == GET_QUESTION_RESP_CODE)
 		return questionResponse();
-	if (req.buffer[0] == LEAVE_GAME_CODE)
+	else if (req.buffer[0] == LEAVE_GAME_CODE)
 		return leaveGame();
+	else if (req.buffer[0] == GET_ROOM_STATE_CODE)
+		return {JsonResponsePacketSerializer::serializeResponse(StartGameResponse{0})};
 }
 
 HANDLER_TYPE GameRequestHandler::getType() const {

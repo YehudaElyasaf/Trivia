@@ -10,7 +10,7 @@ MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager&
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo req) {
 	int code = (unsigned char)req.buffer[0];
-	return code >= GET_ROOMS_CODE && code <= PERSONAL_STATS_CODE;
+	return code >= GET_ROOMS_CODE && code <= PERSONAL_STATS_CODE || code == GET_ROOM_STATE_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
@@ -32,6 +32,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
 		break;
 	case PERSONAL_STATS_CODE:
 		return getStats(req.buffer);
+		break;
+	case GET_ROOM_STATE_CODE:
+		return {JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{0}), this};
 		break;
 	default:
 		throw std::exception("Invalid code!");
