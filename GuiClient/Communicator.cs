@@ -208,7 +208,7 @@ namespace GuiClient
 
                 Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
-                if (getUsersInRoomMessage.GetCode() == Const.START_GAME_CODE)
+                if (getUsersInRoomResponse.GetCode() == Const.START_GAME_CODE)
                     throw new GameStartedException();
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
                     throw new Exception("room closed");

@@ -21,7 +21,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo req) {
 	else if (req.buffer[0] == LEAVE_GAME_CODE)
 		return leaveGame();
 	else if (req.buffer[0] == GET_ROOM_STATE_CODE)
-		return {JsonResponsePacketSerializer::serializeResponse(StartGameResponse{0})};
+		return {JsonResponsePacketSerializer::serializeResponse(StartGameResponse{0}), this};
 }
 
 HANDLER_TYPE GameRequestHandler::getType() const {
