@@ -12,6 +12,8 @@ public:
 	bool isRequestRelevant(struct RequestInfo req) override;
 	RequestResult handleRequest(struct RequestInfo req) override;
 	std::string getUsername() const override;
+
+	RequestResult leaveGame();
 	
 	Game& getGame();
 	unsigned int getRoomId() const;
@@ -26,5 +28,5 @@ private:
 	RequestResult getResults();
 	RequestResult submitAns(RequestInfo req);
 	RequestResult questionResponse();
-	RequestResult leaveGame();
+	
 };

@@ -132,6 +132,8 @@ void Communicator::handleNewClient(SOCKET sock) {
 			((RoomAdminRequestHandler*)m_clients[sock])->closeRoom();
 		else if (typeid(m_clients[sock]) == typeid(RoomMemberRequestHandler*))
 			((RoomMemberRequestHandler*)m_clients[sock])->leaveRoom();
+		else if (typeid(m_clients[sock]) == typeid(GameRequestHandler*))
+			((GameRequestHandler*)m_clients[sock])->leaveGame();
 	}
 	catch (...) {}
 
