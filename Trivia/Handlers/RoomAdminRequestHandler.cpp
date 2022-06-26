@@ -75,4 +75,6 @@ void RoomAdminRequestHandler::changeHandlerOfUsersInRoom(const RequestResult& re
 
 		}
 	}
+	if (msgType == START_GAME_CODE)
+		delete req.newHandler;
 }
