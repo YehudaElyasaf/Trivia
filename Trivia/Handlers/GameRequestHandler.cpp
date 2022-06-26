@@ -42,12 +42,16 @@ RequestResult GameRequestHandler::getResults() {
 		resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
 			user.second.wrongAnswerCount, user.second.averageAnswerTime);
 	}
-	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
+	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createMenuRequestHandler(m_user.m_username) };
 }
 
 RequestResult GameRequestHandler::leaveGame() {
-	m_game.removePlayer(m_user);
-	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{m_game.removePlayer(m_user)}}), m_handlerFactory.createMenuRequestHandler(getUsername())};
+	unsigned int status = m_game.removePlayer(m_user);
+	if (m_game.getPlayers().size() == 0) {
+		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
+		m_handlerFactory.getRoomManager().deleteRoom(m_roomId);
+	}
+	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{status}}), m_handlerFactory.createMenuRequestHandler(m_user.m_username)};
 }
 
 RequestResult GameRequestHandler::submitAns(RequestInfo req) {

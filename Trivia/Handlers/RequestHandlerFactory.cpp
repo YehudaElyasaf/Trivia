@@ -35,6 +35,10 @@ RoomManager& RequestHandlerFactory::getRoomManager() {
     return m_roomManager;
 }
 
+GameManager& RequestHandlerFactory::getGameManager() {
+    return m_gameManager;
+}
+
 void RequestHandlerFactory::setCommunicator(Communicator* communicator) {
     m_communicator = communicator;
 }
