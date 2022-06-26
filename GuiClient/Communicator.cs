@@ -89,16 +89,13 @@ namespace GuiClient
                 throw new Exception("Invalid opening message from server:\n" + Encoding.Default.GetString(_buffer).Substring(0, Const.OPENING_MESSAGE.Length));
         }
 
-        private Message SendToServer(Message msg, bool readOnly)
+        private Message SendToServer(Message msg)
         {
             try
             {
                 byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-                if (!readOnly)
-                {
-                    _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
-                    _clientStream.Write(_buffer, 0, _buffer.Length);
-                }
+                _buffer = new ASCIIEncoding().GetBytes(msg.ToString());
+                _clientStream.Write(_buffer, 0, _buffer.Length);
                 _clientStream.Flush();
 
                 _buffer = new byte[Const.MAX_BUFFER_SIZE];
@@ -114,13 +111,17 @@ namespace GuiClient
             {
                 throw new NoDataToReadException(ex.Message);
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool Login(string username, string password)
         {
             Message loginMessage = new Message(Const.LOGIN_CODE,
                 new Dictionary<string, string> { { "username", username }, { "password", password } });
-            Message loginResponse = SendToServer(loginMessage, false);
+            Message loginResponse = SendToServer(loginMessage);
 
             return loginResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
@@ -132,7 +133,7 @@ namespace GuiClient
             Message signupMessage = new Message(Const.SIGNUP_CODE,
                 new Dictionary<string, string> { { "username", username }, { "password", password }, { "email", email } });
 
-            Message signupResponse = SendToServer(signupMessage, false);
+            Message signupResponse = SendToServer(signupMessage);
             if (signupResponse.GetData()["status"] == Const.FAILURE_STATUS.ToString())
                 return false;
 
@@ -150,7 +151,7 @@ namespace GuiClient
             Message createRoomMessage = new Message(Const.CREATE_ROOM_CODE, new Dictionary<string, string> { { "roomName", name },
                 { "maxUsers", maxUsers }, { "questionCount", questionsCount }, { "answerTimeout", answerTime } });
 
-            Message createRoomResponse = SendToServer(createRoomMessage, false);
+            Message createRoomResponse = SendToServer(createRoomMessage);
 
             return createRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
@@ -160,7 +161,7 @@ namespace GuiClient
             Message getPlayersMessage = new Message(Const.GET_PLAYERS_CODE,
                 new Dictionary<string, string> { { "RoomId", roomId } });
 
-            Message getPlayersResponse = SendToServer(getPlayersMessage, false);
+            Message getPlayersResponse = SendToServer(getPlayersMessage);
 
             return getPlayersResponse.GetData()["PlayersInRoom"].Split(Const.LIST_SEPERATOR);
         }
@@ -169,7 +170,7 @@ namespace GuiClient
             Message getStatisticsMessage = new Message(Const.PERSONAL_STATS_CODE,
                 new Dictionary<string, string> { });
 
-            Message getStatisticsResponse = SendToServer(getStatisticsMessage, false);
+            Message getStatisticsResponse = SendToServer(getStatisticsMessage);
 
             return getStatisticsResponse.GetData()["UserStatistics"].Split(Const.LIST_SEPERATOR);
         }
@@ -178,7 +179,7 @@ namespace GuiClient
             Message getTopRatedUsersMessage = new Message(Const.HIGH_SCORE_CODE,
                 new Dictionary<string, string> { });
 
-            Message getTopRatedUsersResponse = SendToServer(getTopRatedUsersMessage, false);
+            Message getTopRatedUsersResponse = SendToServer(getTopRatedUsersMessage);
 
             return getTopRatedUsersResponse.GetData()["HighScores"].Split(Const.LIST_SEPERATOR);
         }
@@ -186,7 +187,7 @@ namespace GuiClient
         public Dictionary<string, string> GetRooms()
         {
             Message getRoomsMessage = new Message(Const.GET_ROOMS_CODE, new Dictionary<string, string> { });
-            Message getRoomsResponse = SendToServer(getRoomsMessage, false);
+            Message getRoomsResponse = SendToServer(getRoomsMessage);
             return getRoomsResponse.GetData();
         }
 
@@ -194,7 +195,7 @@ namespace GuiClient
         {
             Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
-            Message joinRoomResponse = SendToServer(joinRoomMessage, false);
+            Message joinRoomResponse = SendToServer(joinRoomMessage);
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
@@ -202,7 +203,7 @@ namespace GuiClient
         {
             try
             {
-                Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }), false);
+                Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }));
                 if (PlayerResults.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
                     //status = is game active
                     throw new GameStartedException();
@@ -227,7 +228,7 @@ namespace GuiClient
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
 
-                Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage, false);
+                Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
                     throw new Exception("room closed");
@@ -261,7 +262,7 @@ namespace GuiClient
                 leaveRoomMessage = new Message(Const.LEAVE_ROOM_CODE,
                     new Dictionary<string, string> { });
 
-            Message leaveRoomResponse = SendToServer(leaveRoomMessage, false);
+            Message leaveRoomResponse = SendToServer(leaveRoomMessage);
 
             return leaveRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
@@ -269,7 +270,7 @@ namespace GuiClient
         {
             Message startGameMessage = new Message(Const.START_GAME_CODE, new Dictionary<string, string> { });
 
-            Message startGameResponse = SendToServer(startGameMessage, false);
+            Message startGameResponse = SendToServer(startGameMessage);
 
             return startGameResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
@@ -277,10 +278,9 @@ namespace GuiClient
         public Question GetQuestion()
         {
             Message request = new Message(Const.GET_QUESTION_RESP_CODE, new Dictionary<string, string> { });
-            Message response = SendToServer(request, false);
+            Message response = SendToServer(request);
 
             while (true)
-            {
                 try
                 {
                     Question question = new Question
@@ -295,13 +295,12 @@ namespace GuiClient
 
                     return question;
                 }
-                catch (KeyNotFoundException)
+                catch (Exception)
                 {
-                    response = SendToServer(request, true);
-                    continue;
-                    //try again
+                    byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                    _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+                    response = new Message(Encoding.Default.GetString(_buffer));
                 }
-            }
         }
 
         //return correct answer id
@@ -310,18 +309,28 @@ namespace GuiClient
             Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> {
                 { "answer", answer}
             });
-            Message response = SendToServer(request, false);
+            Message response = SendToServer(request);
 
-            if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
-                throw new TimeoutException();
+            while (true)
+                try
+                {
+                    if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
+                        throw new TimeoutException();
 
-            return response.GetData()["CorrectAns"];
+                    return response.GetData()["CorrectAns"];
+                }
+                catch (Exception)
+                {
+                    byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                    _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+                    response = new Message(Encoding.Default.GetString(_buffer));
+                }
         }
 
         public List<PlayerResult> GetResults()
         {
             Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
-            Message response = SendToServer(request, false);
+            Message response = SendToServer(request);
 
             List<PlayerResult> results = new List<PlayerResult>();
             foreach (KeyValuePair<string, string> resultAsPair in response.GetData())

@@ -60,10 +60,6 @@ namespace GuiClient
             {
                 Invoke((MethodInvoker)(() => _controller.ShowGameRoom(_roomData)));
             }
-            catch (Exception ex)
-            {
-                Invoke((MethodInvoker)(() => _controller.ShowMainMenu()));
-            }
         }
 
         private void startGameButton_Click(object sender, EventArgs e)

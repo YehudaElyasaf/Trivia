@@ -29,6 +29,8 @@ namespace GuiClient
 
             timer.Tick += new EventHandler(TimerTick);
             timer.Interval = 1 * Const.SECONDS_TO_MS;
+
+            getNewQuestion();
         }
 
         private void questionsRemainingLabel_Click(object sender, EventArgs e)
@@ -44,8 +46,6 @@ namespace GuiClient
 
         private void GameRoom_Load(object sender, EventArgs e)
         {
-            getNewQuestion();
-
             correctAnswerLabel.Hide();
             wrongAnswerLabel.Hide();
             timeoutLabel.Hide();
