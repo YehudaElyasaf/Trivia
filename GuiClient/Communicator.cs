@@ -199,37 +199,17 @@ namespace GuiClient
             return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
         }
 
-        private void checkIfGameStarted()
+        public RoomData GetRoomData()
         {
             try
             {
-                Message PlayerResults = SendToServer(new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { }));
-                if (PlayerResults.GetData()["status"] == Const.SUCCESS_STATUS.ToString())
-                    //status = is game active
-                    throw new GameStartedException();
-            }
-            catch (GameStartedException ex)
-            {
-                throw ex;
-            }
-            catch (Exception)
-            {
-                //do nothing
-                //game didn't start, the server can't recognize message
-            }
-        }
-        public RoomData GetRoomData(bool isAdmin)
-        {
-            try
-            {
-                if (!isAdmin)
-                    checkIfGameStarted();
-
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
 
                 Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
+                if (getUsersInRoomMessage.GetCode() == Const.START_GAME_CODE)
+                    throw new GameStartedException();
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
                     throw new Exception("room closed");
 
@@ -239,9 +219,9 @@ namespace GuiClient
                 roomData.answerTimeout = int.Parse(getUsersInRoomResponse.GetData()["AnswerTimeout"]);
                 return roomData;
             }
-            catch (GameStartedException)
+            catch (GameStartedException ex)
             {
-                throw new GameStartedException();
+                throw ex;
             }
             catch (Exception ex)
             {

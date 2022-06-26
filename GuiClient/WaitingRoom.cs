@@ -50,7 +50,7 @@ namespace GuiClient
         {
             try
             {
-                _roomData = _communicator.GetRoomData(isAdmin);
+                _roomData = _communicator.GetRoomData();
                 if (_roomData.useres.Length > 0)
                     _roomData.useres[0] += " (admin)";
 
