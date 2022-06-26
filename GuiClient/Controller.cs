@@ -166,6 +166,8 @@ namespace GuiClient
                         ((JoinRoom)_currentScreen).RefreshScreen();
                     else if (_currentScreen.GetType() == typeof(WaitingRoom))
                         ((WaitingRoom)_currentScreen).RefreshScreen();
+                    else if (_currentScreen.GetType() == typeof(Results))
+                        ((Results)_currentScreen).RefreshScreen();
                 }
                 catch (Exception)
                 {
