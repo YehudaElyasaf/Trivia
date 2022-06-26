@@ -3,7 +3,7 @@
 GameManager::GameManager(IDatabase* database) :
 	m_database(database), m_nextId(0) {}
 
-Game& GameManager::createGame(const Room& room)
+Game& GameManager::createGame(Room& room)
 {
 	std::list<Question> questions = m_database->getQuestions(room.getRoomData().numOfQuestionsInGame);
 

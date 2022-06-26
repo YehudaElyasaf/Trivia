@@ -9,7 +9,7 @@ public:
     //create a room and return its index
     int createRoom(const LoggedUser& roomCreator, RoomData& roomData);
     bool deleteRoom(const int id);
-    unsigned int getRoomState(const int id) const;
+    unsigned int getRoomState(const int id);
     std::vector<RoomData> getRooms() const;
     Room& getRoomById(const int id);
 private:

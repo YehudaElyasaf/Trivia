@@ -38,6 +38,10 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
 	}
 }
 
+HANDLER_TYPE MenuRequestHandler::getType() const {
+	return MENU;
+}
+
 std::string MenuRequestHandler::getUsername() const
 {
 	return m_username;

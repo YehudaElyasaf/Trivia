@@ -125,17 +125,15 @@ void Communicator::handleNewClient(SOCKET sock) {
 	// if it's not a logged in user, it wouldnt be able to get its username, and throw an exception.
 	// it doesnt matter to us, because at this point, if it's not a menu request handler it means it couldn't connect,
 	// so it has nothing to log out from.
-	try {
+	if (m_clients[sock]->getType() != LOGIN)
 		m_handlerFactory.getLoginManager().logout(m_clients[sock]->getUsername());
-
-		if (typeid(m_clients[sock]) == typeid(RoomAdminRequestHandler*))
-			((RoomAdminRequestHandler*)m_clients[sock])->closeRoom();
-		else if (typeid(m_clients[sock]) == typeid(RoomMemberRequestHandler*))
-			((RoomMemberRequestHandler*)m_clients[sock])->leaveRoom();
-		else if (typeid(m_clients[sock]) == typeid(GameRequestHandler*))
-			((GameRequestHandler*)m_clients[sock])->leaveGame();
-	}
-	catch (...) {}
+	
+	if (m_clients[sock]->getType() == ADMIN)
+		((RoomAdminRequestHandler*)m_clients[sock])->closeRoom();
+	else if (m_clients[sock]->getType() == MEMBER)
+		((RoomMemberRequestHandler*)m_clients[sock])->leaveRoom();
+	else if (m_clients[sock]->getType() == GAME)
+		((GameRequestHandler*)m_clients[sock])->leaveGame();
 
 	delete m_clients[sock];
 	m_clients.erase(sock);

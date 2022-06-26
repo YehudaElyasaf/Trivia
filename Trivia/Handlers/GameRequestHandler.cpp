@@ -22,6 +22,10 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo req) {
 		return leaveGame();
 }
 
+HANDLER_TYPE GameRequestHandler::getType() const {
+	return GAME;
+}
+
 std::string GameRequestHandler::getUsername() const {
 	return m_user.m_username;
 }

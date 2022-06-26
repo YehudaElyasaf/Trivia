@@ -23,6 +23,10 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo req) {
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
 }
 
+HANDLER_TYPE RoomAdminRequestHandler::getType() const {
+	return ADMIN;
+}
+
 std::string RoomAdminRequestHandler::getUsername() const {
 	return m_user.m_username;
 }
