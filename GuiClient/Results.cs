@@ -27,7 +27,7 @@ namespace GuiClient
                 {
                     return _communicator.GetResults();
                 }
-                catch (Exception)
+                catch (GameNotFinishedException)
                 {
                     System.Threading.Thread.Sleep(1 * Const.SECONDS_TO_MS);
                     //try again

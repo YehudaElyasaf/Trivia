@@ -38,4 +38,21 @@ namespace GuiClient
         {
         }
     }
+
+    public class GameNotFinishedException : Exception
+    {
+        public GameNotFinishedException()
+        {
+        }
+
+        public GameNotFinishedException(string message)
+            : base(message)
+        {
+        }
+
+        public GameNotFinishedException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
 }

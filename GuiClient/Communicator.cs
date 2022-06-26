@@ -312,7 +312,10 @@ namespace GuiClient
             Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
             Message response = SendToServer(request);
 
-            List<PlayerResult> results = new List<PlayerResult>();
+            if (response.GetData()["status"] == Const.FAILURE_STATUS.ToString())
+                throw new GameNotFinishedException();
+
+            List <PlayerResult> results = new List<PlayerResult>();
             foreach (KeyValuePair<string, string> resultAsPair in response.GetData())
             {
                 if (resultAsPair.Key.Equals("status"))
