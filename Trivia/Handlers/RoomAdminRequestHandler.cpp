@@ -41,7 +41,7 @@ RequestResult RoomAdminRequestHandler::closeRoom() {
 }
 
 RequestResult RoomAdminRequestHandler::startGame() {
-	Game game = m_gameManager.createGame(m_roomManager.getRoomById(m_roomId));
+	Game& game = m_gameManager.createGame(m_roomManager.getRoomById(m_roomId));
 	changeHandlerOfUsersInRoom({ JsonResponsePacketSerializer::serializeResponse(StartGameResponse{true}), m_handlerFactory.createGameRequestHandler("", m_roomId, game) }, START_GAME_CODE);
 
 	StartGameResponse resp{ true };

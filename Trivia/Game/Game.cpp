@@ -40,6 +40,7 @@ std::string Game::submitAnswer(const LoggedUser& user, const std::string& answer
 	//check if question time passed
 	if (currentQuestionAnswerTime > m_maxQuestionTime) {
 		gameData.wrongAnswerCount++;
+		gameData.currentQuestionId++;
 		throw QuestionTimeOutException();
 	}
 
