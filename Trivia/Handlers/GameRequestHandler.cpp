@@ -58,9 +58,9 @@ RequestResult GameRequestHandler::getResults() {
 
 RequestResult GameRequestHandler::leaveGame() {
 	unsigned int status = m_game.removePlayer(m_user);
-	if (m_game.isGameFinished()) {
-		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
+	if (m_game.getPlayers().size() == 0) {
 		m_handlerFactory.getRoomManager().deleteRoom(m_roomId);
+		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
 	}
 	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{status}}), m_handlerFactory.createMenuRequestHandler(m_user.m_username)};
 }
