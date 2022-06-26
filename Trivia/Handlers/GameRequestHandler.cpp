@@ -46,6 +46,7 @@ RequestResult GameRequestHandler::getResults() {
 }
 
 RequestResult GameRequestHandler::leaveGame() {
+	m_game.removePlayer(m_user);
 	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{m_game.removePlayer(m_user)}}), m_handlerFactory.createMenuRequestHandler(getUsername())};
 }
 
@@ -57,6 +58,7 @@ RequestResult GameRequestHandler::submitAns(RequestInfo req) {
 	// if the client was out of time, the status tells it has failed.
 	try {
 		correctAns = m_game.submitAnswer(m_user, request.answer);
+		m_roomManager.getRoomById(m_roomId).getRoomData().isActive = m_game.isGameFinished();
 	}
 	catch (const QuestionTimeOutException& ex) {
 		status = false;
