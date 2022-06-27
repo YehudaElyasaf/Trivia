@@ -29,5 +29,7 @@ private:
 	RequestResult getResults();
 	RequestResult submitAns(RequestInfo req);
 	RequestResult questionResponse();
+
+	bool canDeleteGame(const int gameId) const;
 	
 };
