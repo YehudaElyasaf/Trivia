@@ -293,20 +293,10 @@ namespace GuiClient
             });
             Message response = SendToServer(request);
 
-            while (true)
-                try
-                {
-                    if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
-                        throw new TimeoutException();
+            if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
+                throw new TimeoutException();
 
-                    return response.GetData()["CorrectAns"];
-                }
-                catch (Exception)
-                {
-                    byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
-                    _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-                    response = new Message(Encoding.Default.GetString(_buffer));
-                }
+            return response.GetData()["CorrectAns"];
         }
 
         public List<PlayerResult> GetResults()
