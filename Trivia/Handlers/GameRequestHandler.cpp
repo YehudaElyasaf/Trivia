@@ -46,7 +46,7 @@ RequestResult GameRequestHandler::getResults() {
 	if (resp.status) {
 		for (auto user : m_game.getPlayers()) {
 			resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
-									  user.second.wrongAnswerCount, user.second.averageAnswerTime);
+				user.second.wrongAnswerCount, user.second.averageAnswerTime);
 		}
 		
 		RequestResult res = leaveGame();
@@ -58,7 +58,7 @@ RequestResult GameRequestHandler::getResults() {
 
 RequestResult GameRequestHandler::leaveGame() {
 	unsigned int status = m_game.removePlayer(m_user);
-	if (m_game.getPlayers().size() == 0) {
+	if (canDeleteGame(m_game.getId())) {
 		m_handlerFactory.getRoomManager().deleteRoom(m_roomId);
 		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
 	}
@@ -86,4 +86,20 @@ RequestResult GameRequestHandler::questionResponse() {
 	GetQuestionResponse resp{ true, q.getQuestion(), q.getPossibleAnswers() };
 
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
+}
+
+bool GameRequestHandler::canDeleteGame(const int gameId) const {
+	// The handler can delete the game (and the room) only if there is no other game handler
+	// in this game. if we would check if the game has ended, only some handlers would get proper results,
+	// because only them have a game that is not deleted.
+
+	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
+		if (client.second == this)
+			continue;
+		if (client.second && client.second->getType() == GAME && ((GameRequestHandler*)client.second)->m_game.getId() == gameId) {
+			return false;
+		}
+	}
+	
+	return true;
 }
