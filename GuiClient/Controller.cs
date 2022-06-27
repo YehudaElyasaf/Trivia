@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace GuiClient
 {
@@ -20,6 +21,11 @@ namespace GuiClient
         public Controller()
         {
             InitializeComponent();
+
+            //bg music
+            SoundPlayer player = new SoundPlayer();
+            player.SoundLocation = "VeryNoise.wav";
+            player.Play();
         }
 
         public void ShowConnectionError(string errorMessage)
