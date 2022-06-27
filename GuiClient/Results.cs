@@ -40,11 +40,10 @@ namespace GuiClient
 
             List<PlayerResult> results = _communicator.GetResults();
             waitingLabel.Hide();
-            results.OrderBy(o => o.grade * Const.DESCENDING_ORDER);
-
             resultsList.Show();
             resultsList.Items.Clear();
-            foreach (PlayerResult result in results)
+
+            foreach (PlayerResult result in results.OrderByDescending(o => o.grade))
             {
                 ListViewItem item = new ListViewItem(result.username);
                 item.SubItems.Add(result.grade.ToString());

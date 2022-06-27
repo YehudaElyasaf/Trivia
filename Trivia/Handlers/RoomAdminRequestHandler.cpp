@@ -50,7 +50,7 @@ RequestResult RoomAdminRequestHandler::startGame() {
 }
 
 void RoomAdminRequestHandler::changeHandlerOfUsersInRoom(const RequestResult& req, const int msgType) {
-	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
+	for (auto& client : m_handlerFactory.getCommunicator()->getClients()) {
 		for (LoggedUser user : m_roomManager.getRoomById(m_roomId).getAllUsers()) {
 			if (user == m_user)
 				continue;
