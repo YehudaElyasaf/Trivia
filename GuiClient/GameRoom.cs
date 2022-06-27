@@ -124,12 +124,10 @@ namespace GuiClient
             int timeRemaining = int.Parse(timerLabel.Text);
             timeRemaining--;
 
-            if (timeRemaining < 1)
+            if (timeRemaining < 0)
                 SubmitAnswer("");
             else
-            {
                 timerLabel.Text = timeRemaining.ToString();
-            }
         }
 
         private void questionTextTextbox_TextChanged(object sender, EventArgs e)
