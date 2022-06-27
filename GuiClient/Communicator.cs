@@ -195,10 +195,18 @@ namespace GuiClient
 
         public bool JoinRoom(string roomId)
         {
-            Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
+            try
+            {
+                Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
-            Message joinRoomResponse = SendToServer(joinRoomMessage);
-            return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+                Message joinRoomResponse = SendToServer(joinRoomMessage);
+                return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+            }
+            catch (Exception)
+            {
+                //join failed
+                return false;
+            }
         }
 
         public RoomData GetRoomData()
