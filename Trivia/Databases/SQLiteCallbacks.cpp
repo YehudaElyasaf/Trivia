@@ -3,8 +3,8 @@
 #include <list>
 
 int doesExistCallback(void* data, int argc, char** argv, char** azColumnName) {
-	bool* pDoesExist = (bool*)data;
-	*pDoesExist = true;
+	bool& pDoesExist = *(bool*)data;
+	pDoesExist = true;
 
 	return 0;
 }
