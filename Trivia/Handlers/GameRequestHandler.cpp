@@ -1,0 +1,104 @@
+#include "GameRequestHandler.h"
+#include "../Defines/responses.h"
+#include "../Serializing/JsonResponsePacketSerializer.h"
+#include "../Serializing/JsonRequestPacketDeserializer.h"
+#include "../Game/Game.h"
+
+GameRequestHandler::GameRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& fact, Game& game):
+	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact), m_game(game) {}
+
+bool GameRequestHandler::isRequestRelevant(RequestInfo req) {
+	return req.buffer[0] >= GET_RESULTS_CODE && req.buffer[0] <= LEAVE_GAME_CODE || req.buffer[0] == GET_ROOM_STATE_CODE;
+}
+
+RequestResult GameRequestHandler::handleRequest(RequestInfo req) {
+	if (req.buffer[0] == GET_RESULTS_CODE)
+		return getResults();
+	else if (req.buffer[0] == SUBMIT_ANS_CODE)
+		return submitAns(req);
+	else if (req.buffer[0] == GET_QUESTION_RESP_CODE)
+		return questionResponse();
+	else if (req.buffer[0] == LEAVE_GAME_CODE)
+		return leaveGame();
+	else if (req.buffer[0] == GET_ROOM_STATE_CODE)
+		return {JsonResponsePacketSerializer::serializeResponse(StartGameResponse{0}), this};
+}
+
+HANDLER_TYPE GameRequestHandler::getType() const {
+	return GAME;
+}
+
+std::string GameRequestHandler::getUsername() const {
+	return m_user.m_username;
+}
+
+Game& GameRequestHandler::getGame() {
+	return m_game;
+}
+
+unsigned int GameRequestHandler::getRoomId() const {
+	return m_roomId;
+}
+
+RequestResult GameRequestHandler::getResults() {
+	GetGameResultsResponse resp;
+	resp.status = m_game.isGameFinished();
+	if (resp.status) {
+		for (auto user : m_game.getPlayers()) {
+			resp.results.emplace_back(user.first.m_username, user.second.correctAnswerCount,
+				user.second.wrongAnswerCount, user.second.averageAnswerTime);
+		}
+		
+		RequestResult res = leaveGame();
+		res.response = JsonResponsePacketSerializer::serializeResponse(resp);
+		return res;
+	}
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this};
+}
+
+RequestResult GameRequestHandler::leaveGame() {
+	unsigned int status = m_game.removePlayer(m_user);
+	if (canDeleteGame(m_game.getId())) {
+		m_handlerFactory.getRoomManager().deleteRoom(m_roomId);
+		m_handlerFactory.getGameManager().deleteGame(m_game.getId());
+	}
+	return { JsonResponsePacketSerializer::serializeResponse({LeaveGameResponse{status}}), m_handlerFactory.createMenuRequestHandler(m_user.m_username)};
+}
+
+RequestResult GameRequestHandler::submitAns(RequestInfo req) {
+	SubmitAnswerRequest request = JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(req.buffer);
+	std::string correctAns("");
+	unsigned int status = true;
+
+	// if the client was out of time, the status tells it has failed.
+	try {
+		correctAns = m_game.submitAnswer(m_user, request.answer);
+	}
+	catch (const QuestionTimeOutException& ex) {
+		status = false;
+	}
+	return { JsonResponsePacketSerializer::serializeResponse({SubmitAnswerResponse{status, correctAns}}), this };
+}
+
+RequestResult GameRequestHandler::questionResponse() {
+	Question q = m_game.getQuestionForUser(m_user);
+	GetQuestionResponse resp{ true, q.getQuestion(), q.getPossibleAnswers() };
+
+	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
+}
+
+bool GameRequestHandler::canDeleteGame(const int gameId) const {
+	// The handler can delete the game (and the room) only if there is no other game handler
+	// in this game. if we would check if the game has ended, only some handlers would get proper results,
+	// because only them have a game that is not deleted.
+
+	for (auto client : m_handlerFactory.getCommunicator()->getClients()) {
+		if (client.second == this)
+			continue;
+		if (client.second && client.second->getType() == GAME && ((GameRequestHandler*)client.second)->m_game.getId() == gameId) {
+			return false;
+		}
+	}
+	
+	return true;
+}

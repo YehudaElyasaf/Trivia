@@ -56,6 +56,10 @@ void SQLiteDatabase::addNewUser(const std::string& name, const std::string& pass
 	sqlStatement = "INSERT INTO USERS (NAME, PASSWORD, MAIL) VALUES ('" + name + "', '" + password + "', '" + mail + "');";
 
 	executeAndValidate(sqlStatement);
+
+	sqlStatement = "INSERT INTO STATISTICS (USERNAME, TOTAL_ANSWERS, CORRECT_ANSWERS, ANSWER_TIME_SECONDS, NUM_OF_GAMES) VALUES ('" + name + "', 0, 0, 0, 0);";
+
+	executeAndValidate(sqlStatement);
 }
 
 void SQLiteDatabase::addNewQuestion(const Question& q) {
@@ -73,7 +77,7 @@ void SQLiteDatabase::addNewQuestion(const Question& q) {
 
 std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 	std::list<Question> out;
-	std::string sqlStatement = "SELECT * FROM QUESTIONS";
+	std::string sqlStatement = "SELECT * FROM QUESTIONS ORDER BY RANDOM()";
 	if (limit > 0)
 		sqlStatement += " LIMIT " + std::to_string(limit);
 	sqlStatement += ";";
@@ -84,7 +88,7 @@ std::list<Question> SQLiteDatabase::getQuestions(const int limit) {
 std::string SQLiteDatabase::getPlayerAverageAnswerTime(const std::string& name) {
 	std::string averageAnswerTime = EMPTY_VALUE;
 	std::string sqlStatement;
-	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "';";
+	sqlStatement = "SELECT CAST(ANSWER_TIME_SECONDS AS float) / TOTAL_ANSWERS FROM STATISTICS WHERE USERNAME = '" + name + "' AND STATISTICS.TOTAL_ANSWERS <> 0;";
 	executeAndValidate(sqlStatement, &averageAnswerTime, getOneNumberAsStringCallback);
 
 	return averageAnswerTime;
@@ -121,10 +125,37 @@ std::vector<std::string> SQLiteDatabase::getTopRatedUsers(const int numberOfUser
 {
 	std::vector<std::string> topUsers;
 	std::string sqlStatement;
-	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers);
-	executeAndValidate(sqlStatement, &topUsers, getTopRatedUserCallback);
+	sqlStatement = "SELECT USERNAME FROM STATISTICS ORDER BY (CORRECT_ANSWERS / TOTAL_ANSWERS) DESC LIMIT " + std::to_string(numberOfUsers) + ";";
+
+	while (topUsers.size() < numberOfUsers)
+		topUsers.push_back(EMPTY_VALUE);
 
 	return topUsers;
+}
+
+void SQLiteDatabase::addToAnswerTime(const std::string& username, const unsigned int timeToAdd) {
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET ANSWER_TIME_SECONDS = ANSWER_TIME_SECONDS + " + std::to_string(timeToAdd) + " WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
+}
+
+void SQLiteDatabase::addToCorrectAnswers(const std::string& username, const unsigned int correctAnswersToAdd) {
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET CORRECT_ANSWERS = CORRECT_ANSWERS + " + std::to_string(correctAnswersToAdd) + " WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
+}
+
+void SQLiteDatabase::addToTotalAnswers(const std::string& username, const unsigned int answersToAdd) {
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET TOTAL_ANSWERS = TOTAL_ANSWERS + " + std::to_string(answersToAdd) + " WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
+}
+
+void SQLiteDatabase::increaseTotalGames(const std::string& username)
+{
+	std::string sqlStatement;
+	sqlStatement = "UPDATE STATISTICS SET NUM_OF_GAMES = NUM_OF_GAMES + 1 WHERE USERNAME = '" + username + "';";
+	executeAndValidate(sqlStatement);
 }
 
 
@@ -155,15 +186,24 @@ void SQLiteDatabase::initDatabase() {
 	this->addNewQuestion(Question("0^0", { "1", "-8", "0", "Not Defined" }));
 	this->addNewQuestion(Question("5+5", { "10", "-16", "21", "Batman" }));
 	this->addNewQuestion(Question("Conventziot?", { "I like Linux and Injeras!", "Maybe?", "Yes... Clion is the best!", "No!!!!" }));
+	this->addNewQuestion(Question("Which is the most interesting Masechet?", { "Makot", "Mishna", "Kodashim", "Yesodey Hatorah" }));
+	this->addNewQuestion(Question("What is the name of froilich?", { "Al", "Aliyahoo", "AI", "AL" }));
+	this->addNewQuestion(Question("Which is the best gender?", { "There is no such thing \"gender\"", "bisexual", "female", "homosexual" }));
+	this->addNewQuestion(Question("Which comes before: private or public?", { "private", "public", "depending on the programming langauge", "it does not matter" }));
+	this->addNewQuestion(Question("What is the value of G?", { "6.67 * 10^-11 m^3*kg^-1*sec^-2", "1 kg * m * sec^-2", "10N (Newtons)", "G is not constant" }));
+	this->addNewQuestion(Question("The last words of Pythagoras were...", { "Do not touch my circles!","eureka","nobody knows","Heil Hitler!" }));
+	this->addNewQuestion(Question("How did Muhamad die?", { "he did not","in a car crash","he fell of his unicorn","he was very old" }));
+	this->addNewQuestion(Question("What is the meaning of life?", { "life has no meaning","life has no meaning.","life has no meaning!","life has no meaning!!!" })); //purposely the same
+	this->addNewQuestion(Question("just guess the answer", { "1","2","3","4" }));
+	this->addNewQuestion(Question("Who is called \"King David\"?", { "King David","Yosi Yafe","Many peoples","David Yurman" }));
+	this->addNewQuestion(Question("2 + 2 * 2 = ?", { "6","8","0","Math Error" }));
+	this->addNewQuestion(Question("Itetey itetey are...", { "amtahta deachnaey","go to the kitchen","useless","inferior" }));
 }
 
 void SQLiteDatabase::testDatabase() {
-	this->addNewUser("user1", "123", "user1@shovinism.com");
-	this->addNewUser("user2", "456", "user2@homofobism.com");
-
-	std::cout << "does passwords match? (yes): " << this->doesPasswordMatch("user1", "123") << "\n";
-	std::cout << "does passwords match? (no): " << this->doesPasswordMatch("user1", "456") << "\n";
-
-	std::cout << "does user exists? (yes): " << this->doesUserExists("user2") << "\n";
-	std::cout << "does user exists? (no): " << this->doesUserExists("user 2") << "\n";
+	this->addNewUser("1", "1", "user1@shovinism.com");
+	this->addNewUser("2", "2", "user2@homofobism.com");
+	this->addNewUser("3", "3", "user2@shovinism.com");
+	this->addNewUser("4", "4", "user4@homofobism.com");
+	this->addNewUser("5", "5", "user5@homofobism.com");
 }

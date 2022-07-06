@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <map>
 #include "../Room/Room.h"
 
 struct LoginResponse {
@@ -50,7 +51,7 @@ struct GetPersonalStatsResponse {
 	* 3 - NumOfTotalAnswers
 	* 4 - NumOfPlayerGames
 	*/
-	
+
 	std::vector<std::string> statistics;
 };
 
@@ -72,4 +73,39 @@ struct GetRoomStateResponse {
 
 struct LeaveRoomResponse {
 	unsigned int status;
+};
+
+struct LeaveGameResponse {
+	unsigned int status;
+};
+
+struct GetQuestionResponse {
+	unsigned int status;
+	std::string question;
+	std::vector<std::string> answers;
+};
+
+struct SubmitAnswerResponse {
+	unsigned int status;
+	std::string correctAnswer;
+};
+
+struct PlayerResult {
+	//for some reason the linker asked me to add this c'tor
+	PlayerResult(const std::string& username, const unsigned int correctAnswerCount, const unsigned int wrongAnswerCount, const int averageAnswerTime) {
+		this->username = username;
+		this->correctAnswerCount = correctAnswerCount;
+		this->wrongAnswerCount = wrongAnswerCount;
+		this->averageAnswerTime = averageAnswerTime;
+	}
+
+	std::string username;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	int averageAnswerTime;
+};
+
+struct GetGameResultsResponse {
+	unsigned int status;
+	std::vector<PlayerResult> results;
 };

@@ -3,13 +3,14 @@
 #include "../Serializing/JsonRequestPacketDeserializer.h"
 
 #define NULL_ID 0
+#define MAX_QUESTION_COUNT 20
 
 MenuRequestHandler::MenuRequestHandler(const std::string& username, RoomManager& roomMngr, StatisticsManager& statsMngr, RequestHandlerFactory& fact) :
 	m_username(username), m_roomManager(roomMngr), m_statisticsManager(statsMngr), m_handlerFactory(fact) {}
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo req) {
 	int code = (unsigned char)req.buffer[0];
-	return code >= GET_ROOMS_CODE && code <= PERSONAL_STATS_CODE;
+	return code >= GET_ROOMS_CODE && code <= PERSONAL_STATS_CODE || code == GET_ROOM_STATE_CODE;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
@@ -32,9 +33,16 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo req) {
 	case PERSONAL_STATS_CODE:
 		return getStats(req.buffer);
 		break;
+	case GET_ROOM_STATE_CODE:
+		return { JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse{0}), this };
+		break;
 	default:
 		throw std::exception("Invalid code!");
 	}
+}
+
+HANDLER_TYPE MenuRequestHandler::getType() const {
+	return MENU;
 }
 
 std::string MenuRequestHandler::getUsername() const
@@ -43,7 +51,7 @@ std::string MenuRequestHandler::getUsername() const
 }
 
 RequestResult MenuRequestHandler::getRooms(const std::string& buffer) {
-	GetRoomsResponse resp{ true, m_roomManager.getRooms() };
+	GetRoomsResponse resp{ true, m_roomManager.getInactiveRooms() };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), this };
 }
 
@@ -66,13 +74,26 @@ RequestResult MenuRequestHandler::getPlayersInRoom(const std::string& buffer) {
 
 RequestResult MenuRequestHandler::joinRoom(const std::string& buffer) {
 	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(buffer);
-	m_roomManager.getRoomById(request.roomId).addUser({ m_username });
+	Room& room = m_roomManager.getRoomById(request.roomId);
+
+	if (room.getRoomData().isActive)
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Game alreaby started!"}), this };
+
+	if (room.getRoomData().maxPlayers > room.getAllUsers().size())
+		m_roomManager.getRoomById(request.roomId).addUser({ m_username });
+	else
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Room is Full!"}), this };
+
 	JoinRoomResponse resp{ true };
 	return { JsonResponsePacketSerializer::serializeResponse(resp), m_handlerFactory.createRoomMemberRequestHandler(m_username, request.roomId) };
 }
 
 RequestResult MenuRequestHandler::createRoom(const std::string& buffer) {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(buffer);
+
+	if (request.questionCount > MAX_QUESTION_COUNT)
+		return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Too many questions, " + std::to_string(MAX_QUESTION_COUNT) + " is the maximum"}) };
+
 	RoomData roomData{ NULL_ID, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false };
 	unsigned int roomId = m_roomManager.createRoom({ m_username }, roomData);
 	CreateRoomResponse resp{ true };

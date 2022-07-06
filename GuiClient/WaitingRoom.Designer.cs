@@ -31,6 +31,7 @@
             this.waitingRoomLabel = new System.Windows.Forms.Label();
             this.connectedUsersLabel = new System.Windows.Forms.Label();
             this.connectedUsersListLabel = new System.Windows.Forms.Label();
+            this.startGameButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // waitingRoomLabel
@@ -63,10 +64,22 @@
             this.connectedUsersListLabel.TabIndex = 2;
             this.connectedUsersListLabel.Text = "------\r\n------\r\n------\r\n------";
             // 
+            // startGameButton
+            // 
+            this.startGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
+            this.startGameButton.Location = new System.Drawing.Point(578, 155);
+            this.startGameButton.Name = "startGameButton";
+            this.startGameButton.Size = new System.Drawing.Size(167, 104);
+            this.startGameButton.TabIndex = 3;
+            this.startGameButton.Text = "START\r\nGAME";
+            this.startGameButton.UseVisualStyleBackColor = true;
+            this.startGameButton.Click += new System.EventHandler(this.startGameButton_Click);
+            // 
             // WaitingRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.startGameButton);
             this.Controls.Add(this.connectedUsersListLabel);
             this.Controls.Add(this.connectedUsersLabel);
             this.Controls.Add(this.waitingRoomLabel);
@@ -83,5 +96,6 @@
         private System.Windows.Forms.Label waitingRoomLabel;
         private System.Windows.Forms.Label connectedUsersLabel;
         private System.Windows.Forms.Label connectedUsersListLabel;
+        private System.Windows.Forms.Button startGameButton;
     }
 }

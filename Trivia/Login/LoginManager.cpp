@@ -16,9 +16,8 @@ bool LoginManager::signup(const std::string& name, const std::string& password, 
 
 bool LoginManager::login(const std::string& name, const std::string& password) {
 	for (int i = 0; i < m_loggedUsers.size(); i++)
-		if (m_loggedUsers[i].m_username == name) {
+		if (m_loggedUsers[i].m_username == name)
 			return false;
-		}
 
 	if (m_database->doesPasswordMatch(name, password)) {
 		m_loggedUsers.push_back(name);

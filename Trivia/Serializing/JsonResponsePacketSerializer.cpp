@@ -31,7 +31,6 @@ std::string JsonResponsePacketSerializer::join(const std::vector<LoggedUser>& li
 	return join(stringList, divider);
 }
 
-
 std::string JsonResponsePacketSerializer::serializeResponse(const ErrorResponse& resp) {
 	std::string out = { (unsigned char)ERROR_CODE };
 	json data{ {"message", resp.message} };
@@ -164,10 +163,50 @@ std::string JsonResponsePacketSerializer::serializeResponse(const GetRoomStateRe
 	return out;
 }
 
-std::string JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& resp)
-{
+std::string JsonResponsePacketSerializer::serializeResponse(const LeaveRoomResponse& resp) {
 	std::string out = { (unsigned char)LEAVE_ROOM_CODE };
 	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const LeaveGameResponse& resp) {
+	std::string out = { (unsigned char)LEAVE_GAME_CODE };
+	json data{ {"status", resp.status} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const GetGameResultsResponse& resp) {
+	std::string out = { (unsigned char)GET_RESULTS_CODE };
+	json data{ {"status", resp.status} };
+	for (PlayerResult result : resp.results) {
+		json resultAsJson{ {"CorrectAnswerCount", result.correctAnswerCount}, {"WrongAnswerCount", result.wrongAnswerCount}, {"AverageAnswerTime", result.averageAnswerTime} };
+		data += {result.username, resultAsJson.dump()};
+	}
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const GetQuestionResponse& resp) {
+	std::string out = { (unsigned char)GET_QUESTION_RESP_CODE };
+
+	json data{ {"status", resp.status}, {"Question", resp.question}, {"Ans1", resp.answers.at(0)}, {"Ans1", resp.answers.at(0)}, {"Ans2", resp.answers.at(1)}, {"Ans3", resp.answers.at(2)}, {"Ans4", resp.answers.at(3)} };
+
+	out += bitwiseLen(data);
+	out += data.dump();
+	return out;
+}
+
+std::string JsonResponsePacketSerializer::serializeResponse(const SubmitAnswerResponse& resp) {
+	std::string out = { (unsigned char)SUBMIT_ANS_CODE };
+	json data{ {"status", resp.status}, {"CorrectAns", resp.correctAnswer} };
 
 	out += bitwiseLen(data);
 	out += data.dump();

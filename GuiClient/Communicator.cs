@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ static class Const
     public const char LIST_SEPERATOR = ',';
 
     //message codes
+    public const int TIMEOUT_CODE = 0;
     public const int ERROR_CODE = 1;
     public const int LOGIN_CODE = 2;
     public const int SIGNUP_CODE = 3;
@@ -29,6 +31,11 @@ static class Const
     public const int START_GAME_CODE = 12;
     public const int GET_ROOM_STATE_CODE = 13;
     public const int LEAVE_ROOM_CODE = 14;
+    public const int GET_RESULTS_CODE = 15;
+    public const int SUBMIT_ANS_CODE = 16;
+    public const int GET_QUESTION_RESP_CODE = 17;
+    public const int LEAVE_GAME_CODE = 18;
+
 
     public const int HEADERS_LENGTH = 5;
 
@@ -37,10 +44,32 @@ static class Const
 
     public const int REFRESH_INTERVAL_MS = 3000;
     public const int NOT_FOUND = -1;
+    public const int MAX_NUM_OF_QUESTIONS = 20;
+    public const int SECONDS_TO_MS = 1000;
+    public const int ERROR_ID = -1;
+    public const int NUM_OF_ANSWERS = 4;
+    public const int DESCENDING_ORDER = -1;
+    public const int THOUSANDS_OF_POINTS = 1000;
 }
 
 namespace GuiClient
 {
+    public class Question
+    {
+        public string question;
+        public string[] answers;
+    }
+
+    public class PlayerResult
+    {
+        public string username;
+        public int correctAnswerCount;
+        public int wrongAnswerCount;
+        public int averageAnswerTime;
+        //grade = (correctAnswerCount / averageAnswerTime) + 1
+        public int grade;
+    }
+
     public class Communicator
     {
         private TcpClient _client;
@@ -73,7 +102,6 @@ namespace GuiClient
 
                 _buffer = new byte[Const.MAX_BUFFER_SIZE];
                 _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
-
                 Message resp = new Message(Encoding.Default.GetString(_buffer));
 
                 if (resp.GetCode() == Const.ERROR_CODE)
@@ -84,6 +112,10 @@ namespace GuiClient
             catch (System.IO.IOException ex)
             {
                 throw new NoDataToReadException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -163,22 +195,43 @@ namespace GuiClient
 
         public bool JoinRoom(string roomId)
         {
-            Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
+            try
+            {
+                Message joinRoomMessage = new Message(Const.JOIN_ROOM_CODE, new Dictionary<string, string> {
                 { "roomId", roomId }});
-            Message joinRoomResponse = SendToServer(joinRoomMessage);
-            return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+                Message joinRoomResponse = SendToServer(joinRoomMessage);
+                return joinRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+            }
+            catch (Exception)
+            {
+                //join failed
+                return false;
+            }
         }
-        public string[] GetUsersInRoom()
+
+        public RoomData GetRoomData()
         {
-            try {
+            try
+            {
                 Message getUsersInRoomMessage = new Message(Const.GET_ROOM_STATE_CODE,
                     new Dictionary<string, string> { });
 
                 Message getUsersInRoomResponse = SendToServer(getUsersInRoomMessage);
 
+                if (getUsersInRoomResponse.GetCode() == Const.START_GAME_CODE)
+                    throw new GameStartedException();
                 if (getUsersInRoomResponse.GetCode() == Const.LEAVE_ROOM_CODE)
-                    throw new Exception("Room closed");
-                return getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+                    throw new Exception("room closed");
+
+                RoomData roomData = new RoomData();
+                roomData.useres = getUsersInRoomResponse.GetData()["Players"].Split(Const.LIST_SEPERATOR);
+                roomData.questionCount = int.Parse(getUsersInRoomResponse.GetData()["QuestionCount"]);
+                roomData.answerTimeout = int.Parse(getUsersInRoomResponse.GetData()["AnswerTimeout"]);
+                return roomData;
+            }
+            catch (GameStartedException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -202,6 +255,95 @@ namespace GuiClient
             Message leaveRoomResponse = SendToServer(leaveRoomMessage);
 
             return leaveRoomResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+        public bool StartGame()
+        {
+            Message startGameMessage = new Message(Const.START_GAME_CODE, new Dictionary<string, string> { });
+
+            Message startGameResponse = SendToServer(startGameMessage);
+
+            return startGameResponse.GetData()["status"] == Const.SUCCESS_STATUS.ToString();
+        }
+
+        public Question GetQuestion()
+        {
+            Message request = new Message(Const.GET_QUESTION_RESP_CODE, new Dictionary<string, string> { });
+            Message response = SendToServer(request);
+
+            while (true)
+                try
+                {
+                    Question question = new Question
+                    {
+                        question = response.GetData()["Question"],
+                        answers = new string[Const.NUM_OF_ANSWERS]
+                    };
+                    question.answers[0] = response.GetData()["Ans1"];
+                    question.answers[1] = response.GetData()["Ans2"];
+                    question.answers[2] = response.GetData()["Ans3"];
+                    question.answers[3] = response.GetData()["Ans4"];
+
+                    return question;
+                }
+                catch (Exception)
+                {
+                    byte[] _buffer = new byte[Const.MAX_BUFFER_SIZE];
+                    _clientStream.Read(_buffer, 0, Const.MAX_BUFFER_SIZE);
+                    response = new Message(Encoding.Default.GetString(_buffer));
+                }
+        }
+
+        //return correct answer id
+        public string SubmitAnswer(string answer)
+        {
+            Message request = new Message(Const.SUBMIT_ANS_CODE, new Dictionary<string, string> {
+                { "answer", answer}
+            });
+            Message response = SendToServer(request);
+
+            if (int.Parse(response.GetData()["status"]) == Const.TIMEOUT_CODE)
+                throw new TimeoutException();
+
+            return response.GetData()["CorrectAns"];
+        }
+
+        public List<PlayerResult> GetResults()
+        {
+            Message request = new Message(Const.GET_RESULTS_CODE, new Dictionary<string, string> { });
+            Message response = SendToServer(request);
+
+            if (response.GetData()["status"] == Const.FAILURE_STATUS.ToString())
+                throw new GameNotFinishedException();
+
+            List<PlayerResult> results = new List<PlayerResult>();
+            foreach (KeyValuePair<string, string> resultAsPair in response.GetData())
+            {
+                if (resultAsPair.Key.Equals("status"))
+                    continue;
+                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultAsPair.Value);
+                PlayerResult playerResult = new PlayerResult
+                {
+                    username = resultAsPair.Key,
+                    correctAnswerCount = int.Parse(result["CorrectAnswerCount"]),
+                    wrongAnswerCount = int.Parse(result["WrongAnswerCount"]),
+                    averageAnswerTime = int.Parse(result["AverageAnswerTime"])
+                };
+
+                //calculate grade
+                if (playerResult.averageAnswerTime <= 0)
+                    playerResult.averageAnswerTime = 1;
+                playerResult.grade = ((playerResult.correctAnswerCount * Const.THOUSANDS_OF_POINTS) / playerResult.averageAnswerTime);
+
+                results.Add(playerResult);
+            }
+
+            return results;
+        }
+
+        public void LeaveGame()
+        {
+            Message request = new Message(Const.LEAVE_GAME_CODE, new Dictionary<string, string> { });
+            SendToServer(request);
         }
     }
 }

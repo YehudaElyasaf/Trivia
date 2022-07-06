@@ -25,18 +25,38 @@ bool RoomManager::deleteRoom(const int id)
 	return true;
 }
 
-unsigned int RoomManager::getRoomState(const int id) const
+unsigned int RoomManager::getRoomState(const int id)
 {
 	return m_rooms.at(id).getRoomData().isActive;
 }
 
-std::vector<RoomData> RoomManager::getRooms() const
+std::vector<RoomData>& RoomManager::getRooms()
 {
 	std::vector<RoomData> roomDatas;
 	for (auto room : m_rooms)
 		roomDatas.push_back(room.second.getRoomData());
 
 	return roomDatas;
+}
+
+std::vector<RoomData> RoomManager::getInactiveRooms() const
+{
+	std::vector<RoomData> roomDatas;
+	for (auto room : m_rooms)
+		if (!room.second.getRoomData().isActive)
+		roomDatas.push_back(room.second.getRoomData());
+
+	return roomDatas;
+}
+
+bool RoomManager::activateRoom(const int id) {
+	if (m_rooms.find(id) == m_rooms.end())
+		//doesn't exist
+		return false;
+
+	//exists
+	m_rooms.at(id).getRoomData().isActive = true;
+	return true;
 }
 
 Room& RoomManager::getRoomById(const int id) {

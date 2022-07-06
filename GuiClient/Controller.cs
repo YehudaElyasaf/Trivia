@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace GuiClient
 {
@@ -20,6 +21,11 @@ namespace GuiClient
         public Controller()
         {
             InitializeComponent();
+
+            //bg music
+            SoundPlayer player = new SoundPlayer();
+            player.SoundLocation = "VeryNoise.wav";
+            player.Play();
         }
 
         public void ShowConnectionError(string errorMessage)
@@ -34,9 +40,9 @@ namespace GuiClient
         {
             try
             {
-            this.Invoke((MethodInvoker)(() => Controls.Clear()));
+                this.Invoke((MethodInvoker)(() => Controls.Clear()));
             }
-            catch(NoDataToReadException)
+            catch (NoDataToReadException)
             {
                 //do nothing
                 //because Communicator::SendToServer didn't get any message from server
@@ -45,6 +51,15 @@ namespace GuiClient
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new MainMenu(_communicator, this)));
             this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
             _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
+        }
+        public void ShowGameRoom(RoomData roomData)
+        {
+            Invoke((MethodInvoker)(() => Controls.Clear()));
+
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen = new GameRoom(_communicator, this, roomData.questionCount, roomData.answerTimeout)));
+            this.Invoke((MethodInvoker)(() => Controls.Add(_currentScreen)));
+            _currentScreen.Invoke((MethodInvoker)(() => _currentScreen.BringToFront()));
+            ShowHomeBtn();
         }
 
         public void ShowLoginScreen()
@@ -58,7 +73,7 @@ namespace GuiClient
         public void ShowCreateRoom()
         {
             Controls.Clear();
-            _currentScreen= new CreateRoom(_communicator, this);
+            _currentScreen = new CreateRoom(_communicator, this);
             Controls.Add(_currentScreen);
             _currentScreen.BringToFront();
             ShowHomeBtn();
@@ -89,12 +104,20 @@ namespace GuiClient
             _currentScreen.BringToFront();
             ShowHomeBtn();
         }
+        public void ShowResults()
+        {
+            Controls.Clear();
+            _currentScreen = new Results(_communicator, this);
+            Controls.Add(_currentScreen);
+            _currentScreen.BringToFront();
+            ShowHomeBtn();
+        }
 
         public void ResetCommunicator()
         {
             try
             {
-                if (_communicator!=null)
+                if (_communicator != null)
                     _communicator.Close();
                 _communicator = new Communicator();
                 ShowLoginScreen();
@@ -133,18 +156,29 @@ namespace GuiClient
         {
             if (_currentScreen.GetType() == typeof(WaitingRoom))
                 _communicator.LeaveRoom(((WaitingRoom)_currentScreen).isAdmin);
+            if (_currentScreen.GetType() == typeof(GameRoom))
+                _communicator.LeaveGame();
             ShowMainMenu();
         }
         private void AutoRefresh()
         {
             while (true)
             {
-                Thread.Sleep(Const.REFRESH_INTERVAL_MS);
+                try
+                {
+                    Thread.Sleep(Const.REFRESH_INTERVAL_MS);
 
-                if (_currentScreen.GetType() == typeof(JoinRoom))
-                    ((JoinRoom)_currentScreen).RefreshScreen();
-                else if (_currentScreen.GetType() == typeof(WaitingRoom))
-                    ((WaitingRoom)_currentScreen).RefreshScreen();
+                    if (_currentScreen.GetType() == typeof(JoinRoom))
+                        ((JoinRoom)_currentScreen).RefreshScreen();
+                    else if (_currentScreen.GetType() == typeof(WaitingRoom))
+                        ((WaitingRoom)_currentScreen).RefreshScreen();
+                    else if (_currentScreen.GetType() == typeof(Results))
+                        ((Results)_currentScreen).RefreshScreen();
+                }
+                catch (Exception)
+                {
+                    //
+                }
             }
         }
     }

@@ -62,34 +62,27 @@ namespace GuiClient
 
         public void RefreshScreen()
         {
-            try
+            Dictionary<string, string> rooms = _communicator.GetRooms();
+            if (roomsList.Items.Count != 0 &&
+                rooms["Rooms"].Split(Const.LIST_SEPERATOR).SequenceEqual(roomsList.Items.Cast<string>()))
+                return;
+
+            roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Clear()));
+            foreach (string roomName in rooms["Rooms"].Split(Const.LIST_SEPERATOR))
             {
-
-                Dictionary<string, string> rooms = _communicator.GetRooms();
-                if (roomsList.Items.Count != 0 &&
-                    rooms["Rooms"].Split(Const.LIST_SEPERATOR).SequenceEqual(roomsList.Items.Cast<string>()))
-                    return;
-
-                roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Clear()));
-				foreach (string roomName in rooms["Rooms"].Split(Const.LIST_SEPERATOR))
-                {
-                    roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Add(roomName)));
-                }
-
-                if (rooms["Ids"] != "")
-                    _roomIds = rooms["Ids"].Split(Const.LIST_SEPERATOR);
+                roomsList.Invoke((MethodInvoker)(() => roomsList.Items.Add(roomName)));
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+
+            if (rooms["Ids"] != "")
+                _roomIds = rooms["Ids"].Split(Const.LIST_SEPERATOR);
         }
 
-		private void roomsList_ItemCheck(object sender, ItemCheckEventArgs e) {
+        private void roomsList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
             if (e.NewValue == CheckState.Checked)
                 for (int i = 0; i < roomsList.Items.Count; i++)
                     if (e.Index != i)
                         roomsList.SetItemChecked(i, false);
-		}
-	}
+        }
+    }
 }

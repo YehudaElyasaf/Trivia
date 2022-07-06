@@ -29,7 +29,7 @@ std::vector<LoggedUser> Room::getAllUsers() const {
 	return m_users;
 }
 
-RoomData Room::getRoomData() const
+RoomData& Room::getRoomData()
 {
 	return m_roomdata;
 }

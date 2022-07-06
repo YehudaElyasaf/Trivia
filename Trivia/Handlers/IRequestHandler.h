@@ -15,6 +15,9 @@ struct RequestResult {
 	IRequestHandler* newHandler;
 };
 
+enum HANDLER_TYPE {
+	I, LOGIN, MENU, MEMBER, ADMIN, GAME
+};
 
 class IRequestHandler {
 public:
@@ -22,4 +25,5 @@ public:
 	virtual bool isRequestRelevant(struct RequestInfo req)=0;
 	virtual RequestResult handleRequest(struct RequestInfo req)=0;
 	virtual std::string getUsername() const = 0;
+	virtual HANDLER_TYPE getType() const = 0;
 };

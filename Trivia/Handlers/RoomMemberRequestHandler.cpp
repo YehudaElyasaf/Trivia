@@ -2,7 +2,7 @@
 #include "../Serializing/JsonResponsePacketSerializer.h"
 
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(const unsigned int roomId, const LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& fact) :
+RoomMemberRequestHandler::RoomMemberRequestHandler(const unsigned int roomId, const LoggedUser& user, RoomManager& roomManager, RequestHandlerFactory& fact) :
 	m_roomId(roomId), m_user(user), m_roomManager(roomManager), m_handlerFactory(fact) {}
 
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo req) {
@@ -16,6 +16,10 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo req) {
 		return leaveRoom();
 
 	return { JsonResponsePacketSerializer::serializeResponse(ErrorResponse{"Wrong message code!"}), this };
+}
+
+HANDLER_TYPE RoomMemberRequestHandler::getType() const {
+	return MEMBER;
 }
 
 std::string RoomMemberRequestHandler::getUsername() const {

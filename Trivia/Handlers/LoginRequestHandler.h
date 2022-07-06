@@ -3,6 +3,7 @@
 #include "../Handlers/IRequestHandler.h"
 #include "../Handlers/RequestHandlerFactory.h"
 #include "../Login/LoginManager.h"
+#include "../Defines/Exceptions.h"
 
 class RequestHandlerFactory;
 
@@ -12,7 +13,8 @@ public:
 	//check if the message code is valid
 	bool isRequestRelevant(RequestInfo req) override;
 	RequestResult handleRequest(RequestInfo req) override;
-	std::string getUsername() const { throw std::exception("Action not supported, no user logged in\n"); }
+	HANDLER_TYPE getType() const override;
+	std::string getUsername() const;
 
 private:
 	LoginManager& m_loginManager;
